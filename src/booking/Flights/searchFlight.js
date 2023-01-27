@@ -61,7 +61,7 @@ const SearchFlights = ({navigation, route}) => {
                     return (
                       <View key={id} style={{flexDirection: 'row'}}>
                         <Image
-                          source={require('../../../assets/AirlineLogo/6E.png')}
+                          //  source={require('../../../assets/AirlineLogo/6E.png')}
                           // source={{
                           //   uri: `file://../../../assets/AirlineLogo/${name.Airline.AirlineCode}.png`,
                           // }}
