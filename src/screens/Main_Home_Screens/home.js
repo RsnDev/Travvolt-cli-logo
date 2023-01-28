@@ -125,7 +125,7 @@ const MHome = ({navigation}) => {
               width: 70,
               //backgroundColor: "#fff",
               marginTop: 30,
-              marginLeft: 15,
+              marginLeft: 14,
               justifyContent: 'center',
               borderRadius: 6,
             }}>
