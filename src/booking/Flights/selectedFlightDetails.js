@@ -13,6 +13,8 @@ import {
   Button,
 } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //import retrieveToken from '../../screens/Main_Home_Screens/home';
 const {width, height} = Dimensions.get('window');
 
@@ -21,14 +23,9 @@ const SelectedFlightDetails = ({navigation, route}) => {
   const ResultIndex = route?.params?.ResultIndex;
   console.log(ResultIndex);
 
-  // const [token, setToken] = useState();
-  // useEffect(() => {
-  //   retrieveToken().then(tokenValue => {
-  //     if (tokenValue) {
-  //       setToken(tokenValue);
-  //     }
-  //   });
-  // }, []);
+  AsyncStorage.getItem('token', token => {
+    console.log(token);
+  });
 
   useEffect(() => {
     const requestBody = {

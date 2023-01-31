@@ -22,13 +22,15 @@ import {Roboto_100Thin} from '@expo-google-fonts/roboto';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import items from './city.json';
 import axios from 'axios';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Picker} from '@react-native-picker/picker';
 
 const {width, height} = Dimensions.get('window');
 
 const OneWayFlight = ({route, navigation}) => {
   const data = route.params;
   const TokenIdd = data?.data;
+
   console.log(TokenIdd);
   const [visible, setVisible] = useState(false);
 
@@ -57,6 +59,7 @@ const OneWayFlight = ({route, navigation}) => {
 
     let PreferredDepartureTime = selectedDat;
     let PreferredArrivalTime = selectedDat;
+    let FlightCabinClass = selectedClass;
 
     let payload = {
       EndUserIp: ip,
@@ -72,7 +75,7 @@ const OneWayFlight = ({route, navigation}) => {
         {
           Origin: selectedItemId,
           Destination: selectdItmId,
-          FlightCabinClass: '1',
+          FlightCabinClass: selectedClass,
           PreferredDepartureTime: selectedDat,
           PreferredArrivalTime: selectedDat,
         },
@@ -95,20 +98,12 @@ const OneWayFlight = ({route, navigation}) => {
         // console.log(res);
         const response2 = response1?.data?.Response;
         console.log('TraceId', JSON.stringify(response2?.TraceId));
-
-        // Store the TraceId in AsyncStorage
-        //   AsyncStorage.setItem('TraceId', JSON.stringify(response2?.TraceId));
-        // .then(() => {
-        //   console.log('TraceId stored successfully');
-        // })
-        // .catch(error => {
-        //   console.log('Error storing TraceId: ', error);
-        // });
-
         const response3 = response2?.Results;
         console.log('data===', response3);
         ToastAndroid.show('Results', ToastAndroid.SHORT);
-        navigation.navigate('SearchFlights', {data: response3});
+        navigation.navigate('SearchFlights', {
+          data: response3,
+        });
       });
     } catch (error) {
       setVisible(false);
@@ -173,7 +168,8 @@ const OneWayFlight = ({route, navigation}) => {
 
     setSelectedDat(Demo);
   };
-  // console.log(selectedItemId);
+  const [selectedClass, setSelectedClass] = useState('');
+  // console.log(selectedClass);
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -394,7 +390,7 @@ const OneWayFlight = ({route, navigation}) => {
                     marginTop: 3,
                     fontWeight: '500',
                   }}>
-                  From
+                  To
                 </Text>
                 <View
                   style={{
@@ -530,7 +526,7 @@ const OneWayFlight = ({route, navigation}) => {
             </TouchableOpacity>
           </View>
 
-          {/* travellers & class  */}
+          {/* travellers   */}
           <View
             style={{
               width: '85%',
@@ -556,26 +552,78 @@ const OneWayFlight = ({route, navigation}) => {
               style={{
                 flexDirection: 'column',
               }}>
-              <Text
-                style={{
-                  marginLeft: 9,
-                  color: '#4A4747',
-                  fontWeight: '500',
-                }}>
-                Travellers & Class
-              </Text>
-              <TextInput
-                style={{
-                  height: 30,
-                  width: 270,
-                  backgroundColor: '#fff',
-                  fontSize: 15,
-                  borderRadius: 10,
-                  marginLeft: 9,
-                }}
-                placeholder="adults.."
-              />
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    marginLeft: 9,
+                    color: '#4A4747',
+                    fontWeight: '500',
+                  }}>
+                  Adult
+                </Text>
+              </TouchableOpacity>
             </View>
+          </View>
+
+          {/*  class  */}
+          <View
+            style={{
+              width: '85%',
+              marginLeft: 28,
+              marginRight: 28,
+              marginTop: 15,
+              height: 51,
+              borderRadius: 10,
+              backgroundColor: '#fff',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../../assets/logo/guest.png')}
+              style={{
+                width: 25,
+                height: 20,
+                marginLeft: 0,
+              }}
+            />
+            <Picker
+              selectedValue={selectedClass}
+              style={{height: 60, width: 250}}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedClass(itemValue)
+              }>
+              <Picker.Item
+                label="All"
+                value="1"
+                style={{color: 'black', fontWeight: '900', fontSize: 16}}
+              />
+              <Picker.Item
+                label="Economy"
+                value="2"
+                style={{color: 'black', fontWeight: '900', fontSize: 16}}
+              />
+              <Picker.Item
+                label="Premium Economy"
+                value="3"
+                style={{color: 'black', fontWeight: '900', fontSize: 16}}
+              />
+              <Picker.Item
+                label="Business"
+                value="4"
+                style={{color: 'black', fontWeight: '900', fontSize: 16}}
+              />
+              <Picker.Item
+                label="Premium Business"
+                value="5"
+                style={{color: 'black', fontWeight: '900', fontSize: 16}}
+              />
+              <Picker.Item
+                label="First"
+                value="6"
+                style={{color: 'black', fontWeight: '900', fontSize: 16}}
+              />
+            </Picker>
           </View>
 
           {/* Special option */}
@@ -827,6 +875,8 @@ const OneWayFlight = ({route, navigation}) => {
             onConfirm={onConfirm}
           />
         </ScrollView>
+
+        {/* for from */}
         <Modal
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}>

@@ -11,12 +11,12 @@ import {
   ToastAndroid,
   ScrollView,
 } from 'react-native';
-
+import {useSelector} from 'react-redux';
 const {width, height} = Dimensions.get('window');
+import RNFS from 'react-native-fs';
 
 const SearchFlights = ({navigation, route}) => {
   const data = route?.params?.data;
-  // console.log(data);
 
   const tabData = data.map(innerArray => {
     return innerArray.map(index => {
@@ -57,14 +57,12 @@ const SearchFlights = ({navigation, route}) => {
               {index?.Segments.map(airline => {
                 return airline.map((name, id) => {
                   {
+                    const imagePath = `${RNFS.MainBundlePath}/assets/FlightImages/${name.Airline.AirlineCode}.png`;
                     //  console.log(`images${name.Airline.AirlineCode}.png`);
                     return (
                       <View key={id} style={{flexDirection: 'row'}}>
                         <Image
-                          //  source={require('../../../assets/AirlineLogo/6E.png')}
-                          // source={{
-                          //   uri: `file://../../../assets/AirlineLogo/${name.Airline.AirlineCode}.png`,
-                          // }}
+                          source={{uri: imagePath}}
                           style={{
                             width: 15,
                             height: 15,

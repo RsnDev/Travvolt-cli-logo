@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import HomeScreen from '../../component/slider';
 import publicIP from 'react-native-public-ip';
-import {AsyncStorage} from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from 'axios';
 
@@ -40,39 +40,108 @@ const MHome = ({navigation}) => {
 
   // flight api
   console.log(ip);
+  // const flightsearchapi = async () => {
+  //   setVisible(true);
+
+  //   let payload = {
+  //     EndUserIp: ip,
+  //   };
+  //   try {
+  //     await axios({
+  //       method: 'post',
+  //       url: 'https://api.travvolt.com/travvolt/token',
+  //       data: payload,
+  //       config: {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //       },
+  //     }).then(res => {
+  //       // console.log(res.data);
+  //       const response1 = res.data;
+  //       const response = response1.data.TokenId;
+  //       let setData = await AsyncStorage.setItem('token', response);
+
+  //       const getToken = await AsyncStorage.getItem('token');
+  //       console.log('token : ');
+  //       ToastAndroid.show('FlightSearch', ToastAndroid.SHORT);
+  //       navigation.navigate('OneWayFlight', {data: response});
+  //     });
+  //   } catch (error) {
+  //     setVisible(false);
+  //     ToastAndroid.show(
+  //       'check your Internet connection',
+  //       //  error?.response?.data?.message + "!",
+  //       ToastAndroid.SHORT,
+  //     );
+  //   }
+  // };
+
+  // hotel api
+
+  // const flightsearchapi = async () => {
+  //   setVisible(true);
+  //   let payload = {
+  //     EndUserIp: ip,
+  //   };
+  //   try {
+  //     const res = await axios({
+  //       method: 'post',
+  //       url: 'https://api.travvolt.com/travvolt/token',
+  //       data: payload,
+  //       config: {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //       },
+  //     });
+  //     const response1 = res.data;
+  //     const response = response1.data.TokenId;
+  //     let setData = await AsyncStorage.setItem('token', response);
+  //     const getToken = await AsyncStorage.getItem('token');
+  //     console.log('token : ');
+  //     ToastAndroid.show('FlightSearch', ToastAndroid.SHORT);
+  //     navigation.navigate('OneWayFlight', {data: response});
+  //   } catch (error) {
+  //     setVisible(false);
+  //     ToastAndroid.show('check your Internet connection', ToastAndroid.SHORT);
+  //   }
+  // };
+
   const flightsearchapi = async () => {
     setVisible(true);
-
     let payload = {
       EndUserIp: ip,
     };
     try {
-      await axios({
+      const res = await axios({
         method: 'post',
         url: 'https://api.travvolt.com/travvolt/token',
         data: payload,
-        confif: {
+        config: {
           headers: {
             'Content-Type': 'application/json',
           },
         },
-      }).then(res => {
-        const response1 = res.data;
-        const response = response1.data.TokenId;
+      });
+      const response1 = res.data;
+      const response = response1.data.TokenId;
+
+      try {
+        await AsyncStorage.setItem('token', response);
+        const getToken = await AsyncStorage.getItem('token');
+        console.log('token : ', getToken);
         ToastAndroid.show('FlightSearch', ToastAndroid.SHORT);
         navigation.navigate('OneWayFlight', {data: response});
-      });
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       setVisible(false);
-      ToastAndroid.show(
-        'check your Internet connection',
-        //  error?.response?.data?.message + "!",
-        ToastAndroid.SHORT,
-      );
+      ToastAndroid.show('check your Internet connection', ToastAndroid.SHORT);
     }
   };
 
-  // hotel api
   const hotelsearchapi = async () => {
     setVisible(true);
 
