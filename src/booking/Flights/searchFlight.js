@@ -58,7 +58,7 @@ const SearchFlights = ({navigation, route}) => {
                 return airline.map((name, id) => {
                   {
                     const imagePath = `${RNFS.MainBundlePath}/assets/FlightImages/${name.Airline.AirlineCode}.png`;
-                    //  console.log(`images${name.Airline.AirlineCode}.png`);
+                    // console.log(`${name.Airline.AirlineCode}.png`);
                     return (
                       <View key={id} style={{flexDirection: 'row'}}>
                         <Image

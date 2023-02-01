@@ -19,26 +19,49 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const {width, height} = Dimensions.get('window');
 
 const SelectedFlightDetails = ({navigation, route}) => {
-  const [data, setData] = useState(null);
+  //  const [data, setData] = useState(null);
   const ResultIndex = route?.params?.ResultIndex;
-  console.log(ResultIndex);
+  //console.log(ResultIndex);
+  const [responseData, setResponseData] = useState(null);
 
-  AsyncStorage.getItem('token', token => {
-    console.log(token);
-  });
+  // AsyncStorage.getItem('token', token => {
+  //   console.log(token);
+  // });
+
+  // useEffect(() => {
+  //   const requestBody = {
+  //     EndUserIp: '103.154.247.217',
+  //     TokenId: '4fdb791a-c320-4569-95f2-8e2eaa5eef6d',
+  //     TraceId: 'b6741e50-d925-497c-88aa-f6c3f9ddd5c5',
+  //     ResultIndex: 'OB1',
+  //   };
+  //   axios
+  //     .post('https://api.travvolt.com/travvolt/flight/farequote', requestBody)
+  //     .then(res => {
+  //       //console.log(response.data.data.Response.Results);
+  //       const response = res?.data.data.Response.Results;
+  //       // console.log('resss', response);
+  //       const response2 = response?.Segments;
+  //       console.log('resss', response2);
+  //     })
+  //     .catch(error => console.log(error));
+  // }, []);
 
   useEffect(() => {
     const requestBody = {
-      EndUserIp: '103.154.247.2',
-      TokenId: '6183b79a-fdec-4093-bb5e-387f0ce8f72c',
-      TraceId: '2bd0eb90-7b7d-44a4-a207-2bb8fc7f4dfc',
+      EndUserIp: '103.154.247.239',
+      TokenId: '679725dc-d9ca-4206-ad9e-4d68320cf6c7',
+      TraceId: 'cc303a5a-9b77-49b3-bedf-94ff5b3a9fb5',
       ResultIndex: 'OB1',
     };
     axios
       .post('https://api.travvolt.com/travvolt/flight/farequote', requestBody)
-      .then(response => {
-        console.log(response.data.data.Response.Results);
-        setData(response.data);
+      .then(res => {
+        //console.log(response.data.data.Response.Results);
+        const response = res?.data.data.Response.Results;
+        // console.log('resss', response);
+        const response2 = response?.Segments;
+        setResponseData(response2);
       })
       .catch(error => console.log(error));
   }, []);
@@ -72,17 +95,22 @@ const SelectedFlightDetails = ({navigation, route}) => {
                 }}
               />
             </TouchableOpacity>
-
-            <Text
-              style={{
-                color: '#fff',
-                marginTop: 35,
-                marginLeft: 16,
-                fontSize: 17,
-                fontWeight: '500',
-              }}>
-              From => TO
-            </Text>
+            {responseData?.map(data1 => {
+              return data1?.map(data2 => {
+                return (
+                  <View>
+                    <Text
+                      style={{
+                        marginTop: 40,
+                        marginLeft: 20,
+                        color: '#fff',
+                      }}>
+                      {data2?.Origin?.Airport?.AirportCode}
+                    </Text>
+                  </View>
+                );
+              });
+            })}
           </View>
 
           {/* details */}
