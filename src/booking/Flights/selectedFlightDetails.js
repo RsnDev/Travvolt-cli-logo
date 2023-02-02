@@ -49,9 +49,9 @@ const SelectedFlightDetails = ({navigation, route}) => {
 
   useEffect(() => {
     const requestBody = {
-      EndUserIp: '103.154.247.239',
-      TokenId: '679725dc-d9ca-4206-ad9e-4d68320cf6c7',
-      TraceId: 'cc303a5a-9b77-49b3-bedf-94ff5b3a9fb5',
+      EndUserIp: '116.206.156.58',
+      TokenId: 'e064d5cf-02fe-4be1-b87c-54ace2f27a0f',
+      TraceId: '014ab14f-0a83-4d36-951a-b06e0ec29f24',
       ResultIndex: 'OB1',
     };
     axios
