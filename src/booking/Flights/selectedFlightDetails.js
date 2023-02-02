@@ -15,56 +15,47 @@ import {
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//import retrieveToken from '../../screens/Main_Home_Screens/home';
 const {width, height} = Dimensions.get('window');
-
 const SelectedFlightDetails = ({navigation, route}) => {
-  //  const [data, setData] = useState(null);
   const ResultIndex = route?.params?.ResultIndex;
-  //console.log(ResultIndex);
   const [responseData, setResponseData] = useState(null);
-
-  // AsyncStorage.getItem('token', token => {
-  //   console.log(token);
-  // });
-
-  // useEffect(() => {
-  //   const requestBody = {
-  //     EndUserIp: '103.154.247.217',
-  //     TokenId: '4fdb791a-c320-4569-95f2-8e2eaa5eef6d',
-  //     TraceId: 'b6741e50-d925-497c-88aa-f6c3f9ddd5c5',
-  //     ResultIndex: 'OB1',
-  //   };
-  //   axios
-  //     .post('https://api.travvolt.com/travvolt/flight/farequote', requestBody)
-  //     .then(res => {
-  //       //console.log(response.data.data.Response.Results);
-  //       const response = res?.data.data.Response.Results;
-  //       // console.log('resss', response);
-  //       const response2 = response?.Segments;
-  //       console.log('resss', response2);
-  //     })
-  //     .catch(error => console.log(error));
-  // }, []);
-
+  const [token, setToken] = useState(null);
+  const [traceId, setTraceId] = useState(null);
+  //console.log(ResultIndex);
   useEffect(() => {
-    const requestBody = {
-      EndUserIp: '116.206.156.58',
-      TokenId: 'e064d5cf-02fe-4be1-b87c-54ace2f27a0f',
-      TraceId: '014ab14f-0a83-4d36-951a-b06e0ec29f24',
-      ResultIndex: 'OB1',
+    const fetchData = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('token');
+        setToken(storedToken);
+        console.log(storedToken);
+        const trace = await AsyncStorage.getItem('trace');
+        setTraceId(trace);
+        console.log(trace);
+
+        const requestBody = {
+          EndUserIp: '116.206.156.58',
+          TokenId: token,
+          TraceId: traceId,
+          ResultIndex: ResultIndex,
+        };
+        axios
+          .post(
+            'https://api.travvolt.com/travvolt/flight/farequote',
+            requestBody,
+          )
+          .then(res => {
+            const response = res?.data.data.Response.Results;
+            const response2 = response?.Segments;
+            setResponseData(response2);
+            console.log(response2);
+          })
+          .catch(error => console.log(error));
+      } catch (error) {
+        console.error(error);
+      }
     };
-    axios
-      .post('https://api.travvolt.com/travvolt/flight/farequote', requestBody)
-      .then(res => {
-        //console.log(response.data.data.Response.Results);
-        const response = res?.data.data.Response.Results;
-        // console.log('resss', response);
-        const response2 = response?.Segments;
-        setResponseData(response2);
-      })
-      .catch(error => console.log(error));
-  }, []);
+    fetchData();
+  }, [ResultIndex]);
 
   return (
     <View
@@ -97,6 +88,7 @@ const SelectedFlightDetails = ({navigation, route}) => {
             </TouchableOpacity>
             {responseData?.map(data1 => {
               return data1?.map(data2 => {
+                console.log(data2?.Origin?.Airport?.AirportCode);
                 return (
                   <View>
                     <Text

@@ -83,28 +83,34 @@ const OneWayFlight = ({route, navigation}) => {
       Sources: null,
     };
     try {
-      await axios({
+      const res = await axios({
         method: 'post',
         url: 'https://api.travvolt.com/travvolt/flight/search/oneway',
         data: payload,
-        confif: {
+        config: {
           headers: {
             'Content-Type': 'application/json',
           },
         },
-      }).then(res => {
-        setVisible(false);
-        const response1 = res?.data;
-        // console.log(res);
-        const response2 = response1?.data?.Response;
-        console.log('TraceId', JSON.stringify(response2?.TraceId));
-        const response3 = response2?.Results;
-        console.log('data===', response3);
-        ToastAndroid.show('Results', ToastAndroid.SHORT);
-        navigation.navigate('SearchFlights', {
-          data: response3,
-        });
       });
+
+      const response1 = res?.data;
+      const response2 = response1?.data?.Response;
+      const response3 = response2?.Results;
+      const TraceId = response2?.TraceId;
+      console.log(TraceId);
+      // console.log('TraceId', JSON.stringify(response2?.TraceId));
+
+      //  console.log('data===', response3);
+      try {
+        await AsyncStorage.setItem('trace', TraceId);
+        const getTrace = await AsyncStorage.getItem('trace');
+        console.log('trace : ', getTrace);
+        ToastAndroid.show('Results', ToastAndroid.SHORT);
+        navigation.navigate('SearchFlights', {data: response3});
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       setVisible(false);
       ToastAndroid.show(
