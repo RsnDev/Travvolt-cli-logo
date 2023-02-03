@@ -67,7 +67,9 @@ const SearchHotel = ({navigation, route}) => {
             data.HotelResults &&
             data.HotelResults.map((val, index) => {
               return (
-                <TouchableOpacity key={index}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('SelectedHotelDetails')}
+                  key={index}>
                   <View
                     elevation={8}
                     style={{
