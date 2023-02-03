@@ -37,6 +37,7 @@ const SearchFlights = ({navigation, route}) => {
           }>
           <View
             //  key={itemNo}
+            elevation={7}
             style={{
               height: 95,
               // width: 351,
@@ -57,19 +58,21 @@ const SearchFlights = ({navigation, route}) => {
               {index?.Segments.map(airline => {
                 return airline.map((name, id) => {
                   {
-                    const imagePath = `${RNFS.MainBundlePath}/assets/FlightImages/${name.Airline.AirlineCode}.png`;
+                    {
+                      /* const imagePath = `${RNFS.MainBundlePath}/assets/FlightImages/${name.Airline.AirlineCode}.png`; */
+                    }
                     // console.log(`${name.Airline.AirlineCode}.png`);
                     return (
                       <View key={id} style={{flexDirection: 'row'}}>
-                        <Image
-                          source={{uri: imagePath}}
+                        {/* <Image
+                          // source={{uri: imagePath}}
                           style={{
                             width: 15,
                             height: 15,
                             marginLeft: 15,
                             // marginTop: 10,
                           }}
-                        />
+                        /> */}
                         <Text
                           style={{
                             marginLeft: 5,
