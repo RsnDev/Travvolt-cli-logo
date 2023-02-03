@@ -27,6 +27,7 @@ const {width, height} = Dimensions.get('window');
 const Hotels = ({navigation, route}) => {
   const data = route.params;
   const TokenIdd = data?.data;
+  console.log('TokenIdd');
   console.log(TokenIdd);
   const [visible, setVisible] = useState(false);
 
@@ -71,7 +72,7 @@ const Hotels = ({navigation, route}) => {
         method: 'post',
         url: 'https://api.travvolt.com/travvolt/hotel/search',
         data: payload,
-        confif: {
+        config: {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -79,6 +80,7 @@ const Hotels = ({navigation, route}) => {
       }).then(res => {
         setVisible(false);
         const response1 = res?.data;
+        console.log(res.data.HotelResults);
         // console.log('result===', response1);
 
         const response2 = response1?.data?.HotelSearchResult;

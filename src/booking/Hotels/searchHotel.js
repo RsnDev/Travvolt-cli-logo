@@ -11,10 +11,14 @@ import {
   ToastAndroid,
   ScrollView,
 } from 'react-native';
+import CoverPic from '../../../assets/image/sld3.png';
 const {width, height} = Dimensions.get('window');
 
 const SearchHotel = ({navigation, route}) => {
-  const data = route?.params?.data;
+  const data = route.params && route.params.data ? route.params.data : [];
+  console.log('OnScreen');
+
+  console.log(data);
   //const data2 = data.data;
 
   // console.log('=============', data2);
@@ -59,136 +63,165 @@ const SearchHotel = ({navigation, route}) => {
 
           {/* Hotel details */}
 
-          <TouchableOpacity>
-            <View
-              elevation={8}
-              style={{
-                backgroundColor: '#fff',
-                borderRadius: 10,
-                height: 315,
-                //width: "100%",
-                margin: 12,
-                flexDirection: 'column',
-              }}>
-              <Image
-                source={require('../../../assets/image/sld3.png')}
-                style={{
-                  width: '95%',
-                  height: 142,
-                  margin: 8,
-                  borderRadius: 10,
-                }}
-              />
+          {data &&
+            data.HotelResults &&
+            data.HotelResults.map((val, index) => {
+              return (
+                <TouchableOpacity style={{backgroundColor: 'red'}} key={index}>
+                  <View
+                    elevation={8}
+                    style={{
+                      backgroundColor: '#fff',
+                      borderRadius: 10,
+                      height: 315,
+                      //width: "100%",
+                      margin: 12,
+                      flexDirection: 'column',
+                    }}>
+                    <Image
+                      source={{
+                        uri: val.HotelPicture ? val.HotelPicture : CoverPic,
+                      }}
+                      style={{
+                        width: '95%',
+                        height: 142,
+                        margin: 8,
+                        borderRadius: 10,
+                      }}
+                    />
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  // justifyContent: 'space-around',
-                }}>
-                {/* column 1 for name address rating */}
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    marginLeft: 13,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 'bold',
-                      color: 'black',
-                    }}>
-                    The Taj Hotel
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: '600',
-                      color: 'black',
-                    }}>
-                    SuperTech Ecociti,Sector:75,{'\n'}Noida Uttar Pradesh
-                  </Text>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image
-                      source={require('../../../assets/logo/rate.png')}
+                    <View
                       style={{
-                        width: 15,
-                        height: 15,
-                        borderRadius: 50,
-                        marginTop: 5,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: 11,
-                        fontWeight: '600',
-                        color: '#006FFF',
-                        marginLeft: 7,
-                        marginTop: 5,
+                        flexDirection: 'row',
+                        // justifyContent: 'space-around',
                       }}>
-                      4.5/5
-                    </Text>
+                      {/* column 1 for name address rating */}
+                      <View
+                        style={{
+                          flexDirection: 'column',
+                          marginLeft: 13,
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            fontWeight: 'bold',
+                            color: 'black',
+                          }}>
+                          {val.HotelName ? val.HotelName : 'HotelName'}
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: '600',
+                            color: 'black',
+                          }}>
+                          {val.HotelAddress ? val.HotelAddress : 'HotelAddress'}
+                        </Text>
+                        <View style={{flexDirection: 'row'}}>
+                          <Image
+                            source={require('../../../assets/logo/rate.png')}
+                            style={{
+                              width: 15,
+                              height: 15,
+                              borderRadius: 50,
+                              marginTop: 5,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              fontSize: 11,
+                              fontWeight: '600',
+                              color: '#006FFF',
+                              marginLeft: 7,
+                              marginTop: 5,
+                            }}>
+                            {val.StarRating ? val.StarRating : 0}/5
+                          </Text>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                          <Image
+                            source={require('../../../assets/logo/fre.png')}
+                            style={{
+                              width: 15,
+                              height: 15,
+                              borderRadius: 50,
+                              marginTop: 5,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: '600',
+                              color: '#FF8900',
+                              marginLeft: 7,
+                              marginTop: 3,
+                            }}>
+                            Free Cancellation Included
+                          </Text>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                          <Image
+                            source={require('../../../assets/logo/brkfst.png')}
+                            style={{
+                              width: 15,
+                              height: 15,
+                              borderRadius: 50,
+                              marginTop: 5,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: '600',
+                              color: '#FF8900',
+                              marginLeft: 7,
+                              marginTop: 3,
+                            }}>
+                            Free Breakfast Included
+                          </Text>
+                        </View>
+                      </View>
+                      {/* column 2 for discount tax & price */}
+                      <View
+                        style={{
+                          flexDirection: 'column',
+                          alignItems: 'flex-end',
+                        }}>
+                        <Text>
+                          {val.Price && val.Price.Discount
+                            ? val.Price.Discount
+                            : '0'}
+                          % OFF
+                        </Text>
+                        <Text>
+                          ₹{' '}
+                          {val.Price && val.Price.PublishedPriceRoundedOff
+                            ? val.Price.PublishedPriceRoundedOff
+                            : null}
+                        </Text>
+                        <Text>
+                          ₹
+                          {val.Price && val.Price.RoomPrice
+                            ? val.Price.RoomPrice
+                            : 'room price'}
+                        </Text>
+                        <Text>
+                          + ₹
+                          {val.Price &&
+                          val.Price.GST &&
+                          val.Price.GST.TaxableAmount
+                            ? val.Price.GST.TaxableAmount
+                            : null}
+                          Taxes & Fees
+                          {'\n'}
+                          Per Night
+                        </Text>
+                      </View>
+                    </View>
                   </View>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image
-                      source={require('../../../assets/logo/fre.png')}
-                      style={{
-                        width: 15,
-                        height: 15,
-                        borderRadius: 50,
-                        marginTop: 5,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        fontWeight: '600',
-                        color: '#FF8900',
-                        marginLeft: 7,
-                        marginTop: 3,
-                      }}>
-                      Free Cancellation Included
-                    </Text>
-                  </View>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image
-                      source={require('../../../assets/logo/brkfst.png')}
-                      style={{
-                        width: 15,
-                        height: 15,
-                        borderRadius: 50,
-                        marginTop: 5,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        fontWeight: '600',
-                        color: '#FF8900',
-                        marginLeft: 7,
-                        marginTop: 3,
-                      }}>
-                      Free Breakfast Included
-                    </Text>
-                  </View>
-                </View>
-                {/* column 2 for discount tax & price */}
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                  }}>
-                  <Text>50% OFF</Text>
-                  <Text>₹ 6200</Text>
-                  <Text>₹ 3100</Text>
-                  <Text>
-                    + ₹433 Taxes & Fees
-                    {'\n'}
-                    Per Night
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
+                </TouchableOpacity>
+              );
+            })}
         </ScrollView>
       </ImageBackground>
     </View>

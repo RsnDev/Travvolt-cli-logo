@@ -32,7 +32,9 @@ const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer ref={createRef()}>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        // initialRouteName="SearchHotel"
+        screenOptions={{headerShown: false}}>
         <Stack.Screen name="Onboarding" component={Onboarding} />
 
         <Stack.Screen name="Holder" component={Holder} />
