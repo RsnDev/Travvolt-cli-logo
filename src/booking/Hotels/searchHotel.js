@@ -67,11 +67,12 @@ const SearchHotel = ({navigation, route}) => {
             data.HotelResults &&
             data.HotelResults.map((val, index) => {
               return (
-                <TouchableOpacity style={{backgroundColor: 'red'}} key={index}>
+                <TouchableOpacity key={index}>
                   <View
                     elevation={8}
                     style={{
                       backgroundColor: '#fff',
+                      borderWidth: 1,
                       borderRadius: 10,
                       height: 315,
                       //width: "100%",
@@ -102,7 +103,10 @@ const SearchHotel = ({navigation, route}) => {
                           marginLeft: 13,
                         }}>
                         <Text
+                          numberOfLines={1}
                           style={{
+                            width: '50%',
+                            borderWidth: 1,
                             fontSize: 15,
                             fontWeight: 'bold',
                             color: 'black',
@@ -110,14 +114,22 @@ const SearchHotel = ({navigation, route}) => {
                           {val.HotelName ? val.HotelName : 'HotelName'}
                         </Text>
                         <Text
+                          numberOfLines={1}
                           style={{
+                            width: '50%',
+                            borderWidth: 1,
                             fontSize: 13,
                             fontWeight: '600',
                             color: 'black',
                           }}>
                           {val.HotelAddress ? val.HotelAddress : 'HotelAddress'}
                         </Text>
-                        <View style={{flexDirection: 'row'}}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            width: '50%',
+                            borderWidth: 1,
+                          }}>
                           <Image
                             source={require('../../../assets/logo/rate.png')}
                             style={{
@@ -184,6 +196,8 @@ const SearchHotel = ({navigation, route}) => {
                       {/* column 2 for discount tax & price */}
                       <View
                         style={{
+                          borderWidth: 1,
+                          width: '50%',
                           flexDirection: 'column',
                           alignItems: 'flex-end',
                         }}>
