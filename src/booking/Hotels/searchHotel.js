@@ -11,233 +11,365 @@ import {
   ToastAndroid,
   ScrollView,
 } from 'react-native';
-import CoverPic from '../../../assets/image/sld3.png';
+import axios from 'axios';
+
+import publicIP from 'react-native-public-ip';
+
 const {width, height} = Dimensions.get('window');
+// source={require('../../../assets/image/sld3.png')}
+
+let HotelCard = function (props) {
+  return (
+    <View elevation={8} style={styles.card}>
+      <TouchableOpacity onPress={() => props.moveDataToDetailPage()}>
+        <View style={styles.cardImageBox}>
+          <Image style={styles.image} source={{uri: props.imageCover}} />
+        </View>
+        <View
+          style={{
+            padding: 6,
+            flexDirection: 'row',
+            width: '100%',
+            justifyContent: 'space-between',
+          }}>
+          <View style={{width: '50%'}}>
+            <Text style={styles.cardText} numberOfLines={1}>
+              {props.hotelName}
+            </Text>
+            <Text style={styles.cardText} numberOfLines={1}>
+              {props.hotelAddress}
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                // justifyContent: 'center',
+              }}>
+              <View style={styles.cardIconBox}>
+                <Image
+                  style={styles.cardIcon}
+                  source={require('../../../assets/logo/rate.png')}
+                />
+              </View>
+              <Text style={styles.cardText} numberOfLines={1}>
+                {props.StarRating}/5
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                // justifyContent: 'center',
+              }}>
+              <View style={styles.cardIconBox}>
+                <Image
+                  style={styles.cardIcon}
+                  source={require('../../../assets/logo/fre.png')}
+                />
+              </View>
+              <Text style={styles.cardText} numberOfLines={1}>
+                Free Cancellation Included
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                // justifyContent: 'center',
+              }}>
+              <View style={styles.cardIconBox}>
+                <Image
+                  style={styles.cardIcon}
+                  source={require('../../../assets/logo/brkfst.png')}
+                />
+              </View>
+              <Text style={styles.cardText} numberOfLines={1}>
+                Free Breakfast Included
+              </Text>
+            </View>
+          </View>
+          <View style={{width: '40%', alignItems: 'flex-end'}}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 'bold',
+                color: 'red',
+              }}
+              numberOfLines={1}>
+              {props.discount}%OFF
+            </Text>
+            <Text style={styles.cardText} numberOfLines={1}>
+              ₹{props.publishedPriceRoundedOff}
+            </Text>
+            <Text
+              style={{fontSize: 20, fontWeight: 'bold', color: '#e5de00'}}
+              numberOfLines={2}>
+              ₹{props.roomPrice}
+            </Text>
+            <Text style={styles.cardText} numberOfLines={2}>
+              ₹{props.taxableAmount} Taxes & Fees Per Night
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const SearchHotel = ({navigation, route}) => {
+  const [ip, setIp] = useState('');
   const data = route.params && route.params.data ? route.params.data : [];
-  console.log('OnScreen');
+  // console.log(TraceId)
+  // let data = {
+  //   ResponseStatus: 1,
+  //   Error: {
+  //     ErrorCode: 0,
+  //     ErrorMessage: '',
+  //   },
+  //   TraceId: '5a75531f-375a-4ae1-bdb7-2fe050fd9819',
+  //   CityId: '130205',
+  //   Remarks: 'india - land of mystries "//" "  /// "  ',
+  //   CheckInDate: '2023-02-15',
+  //   CheckOutDate: '2023-02-16',
+  //   PreferredCurrency: 'INR',
+  //   NoOfRooms: 1,
+  //   RoomGuests: [
+  //     {
+  //       NoOfAdults: 1,
+  //       NoOfChild: 0,
+  //       ChildAge: null,
+  //     },
+  //   ],
+  //   HotelResults: [
+  //     {
+  //       IsHotDeal: false,
+  //       ResultIndex: 1,
+  //       HotelCode: '1500369',
+  //       HotelName: 'OYO Rooms Noida Sector 50 Block C',
+  //       HotelCategory: '',
+  //       StarRating: 3,
+  //       HotelDescription:
+  //         'Property Location With a stay at OYO Rooms Noida Sector 50 Block C in Noida, you&apos;ll be close to Nodia Golf Course and Great India Place.  This hotel is within the vicinity of Jamia Millia Islamia and Indraprashtha Apollo Hospital.Rooms Make yourself at home in one of the 15 air-conditioned rooms featuring flat-screen televisions. Complimentary wireless Internet access keeps you connected, and cable programming is available for your entertainment. Bathrooms have bathtubs or showers and complimentary toiletries. Conveniences include safes and desks, and housekeeping is provided daily.Dining Take advantage of the hotel&apos;s 24-hour room service.Business, Other Amenities Featured amenities include complimentary newspapers in the lobby, dry cleaning/laundry services, and a 24-hour front desk. Free self parking is available onsite. ',
+  //       HotelPromotion: '',
+  //       HotelPolicy: '',
+  //       Price: {
+  //         CurrencyCode: 'INR',
+  //         RoomPrice: 1006.18,
+  //         Tax: 0,
+  //         ExtraGuestCharge: 0,
+  //         ChildCharge: 0,
+  //         OtherCharges: 200.92,
+  //         Discount: 0,
+  //         PublishedPrice: 1542.23,
+  //         PublishedPriceRoundedOff: 1542,
+  //         OfferedPrice: 1207.1,
+  //         OfferedPriceRoundedOff: 1207,
+  //         AgentCommission: 335.13,
+  //         AgentMarkUp: 0,
+  //         ServiceTax: 56.38,
+  //         TCS: 0,
+  //         TDS: 0,
+  //         ServiceCharge: 0,
+  //         TotalGSTAmount: 56.38,
+  //         GST: {
+  //           CGSTAmount: 0,
+  //           CGSTRate: 0,
+  //           CessAmount: 19.85,
+  //           CessRate: 10,
+  //           IGSTAmount: 36.53,
+  //           IGSTRate: 18,
+  //           SGSTAmount: 0,
+  //           SGSTRate: 0,
+  //           TaxableAmount: 200.92,
+  //         },
+  //       },
+  //       HotelPicture:
+  //         'https://api.tbotechnology.in/imageresource.aspx?img=k6DH+39xpEWJ6sshsBgEUY9oKBj/b6OqzQcmXbJdJ1Fw5DB1G7cMZ9usTTS1gIIQaHXwXSJrMFLqvtDx04cytMzBHqYPiPb2vCelv6T8EbCT4/+Txex0yg==',
+  //       HotelAddress: 'C 74 Sector 50 Noida 201301, ',
+  //       HotelContactNo: '',
+  //       HotelMap: null,
+  //       Latitude: '',
+  //       Longitude: '',
+  //       HotelLocation: null,
+  //       SupplierPrice: null,
+  //       RoomDetails: [],
+  //     },
+  //     {
+  //       IsHotDeal: false,
+  //       ResultIndex: 45,
+  //       HotelCode: '1500369',
+  //       HotelName: 'OYO Rooms Noida Sector 50 Block C',
+  //       HotelCategory: '',
+  //       StarRating: 3,
+  //       HotelDescription:
+  //         'Property Location With a stay at OYO Rooms Noida Sector 50 Block C in Noida, you&apos;ll be close to Nodia Golf Course and Great India Place.  This hotel is within the vicinity of Jamia Millia Islamia and Indraprashtha Apollo Hospital.Rooms Make yourself at home in one of the 15 air-conditioned rooms featuring flat-screen televisions. Complimentary wireless Internet access keeps you connected, and cable programming is available for your entertainment. Bathrooms have bathtubs or showers and complimentary toiletries. Conveniences include safes and desks, and housekeeping is provided daily.Dining Take advantage of the hotel&apos;s 24-hour room service.Business, Other Amenities Featured amenities include complimentary newspapers in the lobby, dry cleaning/laundry services, and a 24-hour front desk. Free self parking is available onsite. ',
+  //       HotelPromotion: '',
+  //       HotelPolicy: '',
+  //       Price: {
+  //         CurrencyCode: 'INR',
+  //         RoomPrice: 1341.31,
+  //         Tax: 0,
+  //         ExtraGuestCharge: 0,
+  //         ChildCharge: 0,
+  //         OtherCharges: 200.92,
+  //         Discount: 0,
+  //         PublishedPrice: 1542.23,
+  //         PublishedPriceRoundedOff: 1542,
+  //         OfferedPrice: 1542.23,
+  //         OfferedPriceRoundedOff: 1542,
+  //         AgentCommission: 0,
+  //         AgentMarkUp: 0,
+  //         ServiceTax: 56.38,
+  //         TCS: 0,
+  //         TDS: 0,
+  //         ServiceCharge: 0,
+  //         TotalGSTAmount: 56.38,
+  //         GST: {
+  //           CGSTAmount: 0,
+  //           CGSTRate: 0,
+  //           CessAmount: 19.85,
+  //           CessRate: 10,
+  //           IGSTAmount: 36.53,
+  //           IGSTRate: 18,
+  //           SGSTAmount: 0,
+  //           SGSTRate: 0,
+  //           TaxableAmount: 200.92,
+  //         },
+  //       },
+  //       HotelPicture:
+  //         'https://api.tbotechnology.in/imageresource.aspx?img=k6DH+39xpEWJ6sshsBgEUY9oKBj/b6OqzQcmXbJdJ1Fw5DB1G7cMZ9usTTS1gIIQaHXwXSJrMFLqvtDx04cytMzBHqYPiPb2vCelv6T8EbCT4/+Txex0yg==',
+  //       HotelAddress: 'C 74 Sector 50 Noida 201301, ',
+  //       HotelContactNo: '',
+  //       HotelMap: null,
+  //       Latitude: '',
+  //       Longitude: '',
+  //       HotelLocation: null,
+  //       SupplierPrice: null,
+  //       RoomDetails: [],
+  //     },
+  //   ],
+  // };
+  const token =
+    route.params && route.params.tokenId ? route.params.tokenId : null;
 
-  console.log(data);
-  //const data2 = data.data;
+  const moveDataToDetailPage = function () {
+    return navigation.navigate('SelectedHotelDetails', {
+      token: token,
+    });
+  };
 
-  // console.log('=============', data2);
+  // useEffect(() => {
+  //   publicIP()
+  //     .then(ip => {
+  //       //     console.log(ip);
+  //       setIp(ip);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
+  useEffect(() => {});
 
   return (
     <View
       style={{
         height: height,
         width: width,
+        justifyContent: 'center',
       }}>
       <ImageBackground
         source={require('../../../assets/image/bg.jpg')}
-        style={{height: height, width: width}}>
+        style={{
+          height: height,
+          width: width,
+        }}>
         <ScrollView>
-          <View
-            style={{
-              flexDirection: 'row',
-            }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Image
-                source={require('../../../assets/logo/back.png')}
+          {/* "Header" */}
+          <View style={{borderColor: 'red', borderWidth: 1}}>
+            <View>
+              <View
                 style={{
-                  width: 19,
-                  height: 19,
-                  marginTop: 38,
-                  marginLeft: 14,
-                }}
-              />
-            </TouchableOpacity>
-
-            <Text
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 8,
+                }}>
+                <View style={{width: 25, height: 25}}>
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                      source={require('../../../assets/logo/back.png')}
+                      style={{
+                        width: 25,
+                        height: 25,
+                        marginHorizontal: 6,
+                        paddingHorizontal: 6,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      color: '#fff',
+                      margin: 6,
+                      padding: 6,
+                      marginLeft: 10,
+                      fontSize: 20,
+                      fontWeight: '700',
+                    }}>
+                    Destination
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
               style={{
-                color: '#fff',
-                marginTop: 35,
-                marginLeft: 16,
-                fontSize: 17,
-                fontWeight: '500',
+                width: width,
+                alignItems: 'center',
               }}>
-              Destination
-            </Text>
+              {data &&
+                data.HotelResults &&
+                data.HotelResults.map((val, index) => {
+                  return (
+                    <HotelCard
+                      moveDataToDetailPage={() => moveDataToDetailPage}
+                      imageCover={
+                        val.HotelPicture
+                          ? val.HotelPicture
+                          : 'https://unsplash.com/photos/n_IKQDCyrG0='
+                      }
+                      hotelName={val.HotelName ? val.HotelName : 'HotelName'}
+                      hotelAddress={
+                        val.HotelAddress ? val.HotelAddress : 'HotelAddress'
+                      }
+                      StarRating={val.StarRating ? val.StarRating : 0}
+                      discount={
+                        val.Price && val.Price.Discount ? val.Price.Discount : 0
+                      }
+                      publishedPriceRoundedOff={
+                        val.Price && val.Price.PublishedPriceRoundedOff
+                          ? val.Price.PublishedPriceRoundedOff
+                          : null
+                      }
+                      roomPrice={
+                        val.Price && val.Price.RoomPrice
+                          ? val.Price.RoomPrice
+                          : 'room price'
+                      }
+                      taxableAmount={
+                        val.Price &&
+                        val.Price.GST &&
+                        val.Price.GST.TaxableAmount
+                          ? val.Price.GST.TaxableAmount
+                          : null
+                      }
+                    />
+                  );
+                })}
+            </View>
           </View>
 
           {/* Hotel details */}
-
-          {data &&
-            data.HotelResults &&
-            data.HotelResults.map((val, index) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('SelectedHotelDetails')}
-                  key={index}>
-                  <View
-                    elevation={8}
-                    style={{
-                      backgroundColor: '#fff',
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      height: 315,
-                      //width: "100%",
-                      margin: 12,
-                      flexDirection: 'column',
-                    }}>
-                    <Image
-                      source={{
-                        uri: val.HotelPicture ? val.HotelPicture : CoverPic,
-                      }}
-                      style={{
-                        width: '95%',
-                        height: 142,
-                        margin: 8,
-                        borderRadius: 10,
-                      }}
-                    />
-
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        // justifyContent: 'space-around',
-                      }}>
-                      {/* column 1 for name address rating */}
-                      <View
-                        style={{
-                          flexDirection: 'column',
-                          marginLeft: 13,
-                        }}>
-                        <Text
-                          numberOfLines={1}
-                          style={{
-                            width: '50%',
-                            borderWidth: 1,
-                            fontSize: 15,
-                            fontWeight: 'bold',
-                            color: 'black',
-                          }}>
-                          {val.HotelName ? val.HotelName : 'HotelName'}
-                        </Text>
-                        <Text
-                          numberOfLines={1}
-                          style={{
-                            width: '50%',
-                            borderWidth: 1,
-                            fontSize: 13,
-                            fontWeight: '600',
-                            color: 'black',
-                          }}>
-                          {val.HotelAddress ? val.HotelAddress : 'HotelAddress'}
-                        </Text>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            width: '50%',
-                            borderWidth: 1,
-                          }}>
-                          <Image
-                            source={require('../../../assets/logo/rate.png')}
-                            style={{
-                              width: 15,
-                              height: 15,
-                              borderRadius: 50,
-                              marginTop: 5,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontSize: 11,
-                              fontWeight: '600',
-                              color: '#006FFF',
-                              marginLeft: 7,
-                              marginTop: 5,
-                            }}>
-                            {val.StarRating ? val.StarRating : 0}/5
-                          </Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                          <Image
-                            source={require('../../../assets/logo/fre.png')}
-                            style={{
-                              width: 15,
-                              height: 15,
-                              borderRadius: 50,
-                              marginTop: 5,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: '600',
-                              color: '#FF8900',
-                              marginLeft: 7,
-                              marginTop: 3,
-                            }}>
-                            Free Cancellation Included
-                          </Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                          <Image
-                            source={require('../../../assets/logo/brkfst.png')}
-                            style={{
-                              width: 15,
-                              height: 15,
-                              borderRadius: 50,
-                              marginTop: 5,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              fontWeight: '600',
-                              color: '#FF8900',
-                              marginLeft: 7,
-                              marginTop: 3,
-                            }}>
-                            Free Breakfast Included
-                          </Text>
-                        </View>
-                      </View>
-                      {/* column 2 for discount tax & price */}
-                      <View
-                        style={{
-                          borderWidth: 1,
-                          width: '50%',
-                          flexDirection: 'column',
-                          alignItems: 'flex-end',
-                        }}>
-                        <Text>
-                          {val.Price && val.Price.Discount
-                            ? val.Price.Discount
-                            : '0'}
-                          % OFF
-                        </Text>
-                        <Text>
-                          ₹{' '}
-                          {val.Price && val.Price.PublishedPriceRoundedOff
-                            ? val.Price.PublishedPriceRoundedOff
-                            : null}
-                        </Text>
-                        <Text>
-                          ₹
-                          {val.Price && val.Price.RoomPrice
-                            ? val.Price.RoomPrice
-                            : 'room price'}
-                        </Text>
-                        <Text>
-                          + ₹
-                          {val.Price &&
-                          val.Price.GST &&
-                          val.Price.GST.TaxableAmount
-                            ? val.Price.GST.TaxableAmount
-                            : null}
-                          Taxes & Fees
-                          {'\n'}
-                          Per Night
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
         </ScrollView>
       </ImageBackground>
     </View>
@@ -246,6 +378,34 @@ const SearchHotel = ({navigation, route}) => {
 
 export default SearchHotel;
 
-const style = StyleSheet.create({
-  container: {},
+const styles = StyleSheet.create({
+  card: {
+    margin: 8,
+    width: '90%',
+    padding: 6,
+    borderRadius: 8,
+    backgroundColor: '#ffff',
+  },
+  cardImageBox: {
+    width: '100%',
+    height: 142,
+    borderRadius: 8,
+  },
+  image: {width: '100%', height: '100%', borderRadius: 8},
+  cardIconBox: {
+    width: 15,
+    margin: 4,
+    marginRight: 6,
+    height: 15,
+    marginLeft: 0,
+  },
+  cardIcon: {
+    width: '100%',
+    height: '100%',
+  },
+  cardText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
 });

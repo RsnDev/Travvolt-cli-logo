@@ -67,6 +67,7 @@ const Hotels = ({navigation, route}) => {
       TokenId: TokenIdd,
     };
 
+    
     try {
       await axios({
         method: 'post',
@@ -84,11 +85,20 @@ const Hotels = ({navigation, route}) => {
         // console.log('result===', response1);
 
         const response2 = response1?.data?.HotelSearchResult;
-        console.log('Tra===', response2);
+        console.log('HotelSearchResult');
+        console.log(response2);
+
+        const traceId = response1?.data?.TraceId;
+        console.log('traceId');
+        console.log(traceId);
 
         // const response3 = response2?.Results;
         ToastAndroid.show('Results', ToastAndroid.SHORT);
-        navigation.navigate('SearchHotel', {data: response2});
+        navigation.navigate('SearchHotel', {
+          data: response2,
+          tokenId: TokenIdd,
+        });
+        // navigation.navigate('SearchHotel', {tokenId: TokenIdd});
       });
     } catch (error) {
       setVisible(false);

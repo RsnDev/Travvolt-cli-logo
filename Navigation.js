@@ -37,12 +37,8 @@ const Navigation = () => {
       <Stack.Navigator
         // initialRouteName="SelectedHotelDetails"
         screenOptions={{headerShown: false}}>
-        <Stack.Screen
-          name="SelectedHotelDetails"
-          component={SelectedHotelDetails}
-        />
+        {/* <Stack.Screen name="SearchHotel" component={SearchHotel} /> */}
         <Stack.Screen name="Onboarding" component={Onboarding} />
-
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
@@ -72,6 +68,10 @@ const Navigation = () => {
           component={PassengerFlightDetails}
         />
         <Stack.Screen name="SearchHotel" component={SearchHotel} />
+        <Stack.Screen
+          name="SelectedHotelDetails"
+          component={SelectedHotelDetails}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

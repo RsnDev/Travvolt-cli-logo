@@ -16,6 +16,25 @@ import axios from 'axios';
 import HTML from 'react-native-render-html';
 const {width, height} = Dimensions.get('window');
 
+const InfoBox = function (props) {
+  return (
+    <View style={styles.infoBox}>
+      <View
+        style={{
+          width: 20,
+          height: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Image style={{width: 20, height: 20}} source={props.image} />
+      </View>
+      <Text style={{fontSize: 17, fontWeight: '600', padding: 4}}>
+        {props.label} : {props.value}
+      </Text>
+    </View>
+  );
+};
+
 const SelectedHotelDetails = ({navigation, route}) => {
   const source = {
     html: `
@@ -36,6 +55,11 @@ const SelectedHotelDetails = ({navigation, route}) => {
         </li>
     </ul>`,
   };
+  React.useEffect(() => {
+    const data = route.params && route.params.data ? route.params.data : [];
+    console.log('Hotel Detail Page');
+    console.log(data);
+  }, []);
   return (
     <View
       style={{
@@ -82,22 +106,30 @@ const SelectedHotelDetails = ({navigation, route}) => {
                 </Text>
               </View>
 
-              <View style={styles.info}>
+              <View elevation={5} style={styles.info}>
                 <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
                   Contacts
                 </Text>
-                <Text style={{fontSize: 17, fontWeight: '900', padding: 4}}>
-                  Country : India
-                </Text>
-                <Text style={{fontSize: 17, fontWeight: '900', padding: 4}}>
-                  Address : Near Noida sector 90
-                </Text>
-                <Text style={{fontSize: 17, fontWeight: '900', padding: 4}}>
-                  Hotel Contact : 8786513323
-                </Text>
-                <Text style={{fontSize: 17, fontWeight: '900', padding: 4}}>
-                  Fax Number : 8786513323
-                </Text>
+                <InfoBox
+                  image={require('../../../assets/icon/country.png')}
+                  label={'Country'}
+                  value={'India'}
+                />
+                <InfoBox
+                  image={require('../../../assets/icon/location.png')}
+                  label={'Address'}
+                  value={'India'}
+                />
+                <InfoBox
+                  image={require('../../../assets/icon/location.png')}
+                  label={'Hotel Contact'}
+                  value={'123456789'}
+                />
+                <InfoBox
+                  image={require('../../../assets/icon/fax.png')}
+                  label={'Fax Number'}
+                  value={'123456789'}
+                />
               </View>
               <View style={styles.info}>
                 <Text style={{fontSize: 17, fontWeight: '900', padding: 4}}>
@@ -154,10 +186,15 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   info: {
-    margin: 4,
-    // borderWidth: 1,
+    margin: 5,
+    borderWidth: 1,
+    borderColor: '#DEDEDE',
     borderRadius: 6,
     backgroundColor: 'white',
     padding: 8,
+  },
+  infoBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
