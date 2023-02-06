@@ -602,8 +602,7 @@ const MHome = ({navigation}) => {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
                 {/* coupon */}
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('SelectedFlightDetails')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Dummy')}>
                   <View
                     elevation={10}
                     style={{
