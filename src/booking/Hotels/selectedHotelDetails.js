@@ -13,43 +13,53 @@ import {
   Button,
 } from 'react-native';
 import axios from 'axios';
+import HTML from 'react-native-render-html';
 const {width, height} = Dimensions.get('window');
 
-const SelectedHotelDetails = ({navigation, route}) => {
-  const [data, setData] = useState(null);
-  const ResultIndex = route?.params?.ResultIndex;
-  console.log(ResultIndex);
-  // const result = setData.data.Response.Results;
-  // console.log("res", result);
-  // useEffect(() => {
-  //   const getTraceId = async () => {
-  //     try {
-  //       // Retrieve the traceId from AsyncStorage
-  //       const storedTraceId = await AsyncStorage.getItem('TraceId');
-  //       console.log('TraceIdSFD: ', storedTraceId);
-  //       // Use traceId here
-  //     } catch (error) {
-  //       console.log('Error getting TraceId: ', error);
-  //     }
-  //   };
-  //   getTraceId();
-  // }, []);
-  useEffect(() => {
-    const requestBody = {
-      EndUserIp: '103.154.247.218',
-      TokenId: '2220cef8-ba81-4b36-b48f-8b82036baad4',
-      TraceId: 'fe822e34-99e1-40ec-b36c-ad71796f5b47',
-      ResultIndex: 'OB1',
-    };
-    axios
-      .post('https://api.travvolt.com/travvolt/flight/farequote', requestBody)
-      .then(response => {
-        console.log(response.data.data.Response.Results);
-        setData(response.data);
-      })
-      .catch(error => console.log(error));
-  }, []);
+const InfoBox = function (props) {
+  return (
+    <View style={styles.infoBox}>
+      <View
+        style={{
+          width: 20,
+          height: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Image style={{width: 20, height: 20}} source={props.image} />
+      </View>
+      <Text style={{fontSize: 17, fontWeight: '600', padding: 4}}>
+        {props.label} : {props.value}
+      </Text>
+    </View>
+  );
+};
 
+const SelectedHotelDetails = ({navigation, route}) => {
+  const source = {
+    html: `
+    <ul>
+        <li onclick="showDetails(this)" id="gitanjali"
+                data-book-author="Rabindra Nath Tagore">
+            Gitanjali
+        </li>
+         
+        <li onclick="showDetails(this)" id="conquest_of_self"
+                data-book-author="Mahatma Gandhi">
+            Conquest of Self
+        </li>
+        
+        <li onclick="showDetails(this)" id="broken_wings"
+                data-book-author="Sarojini Naidu">
+            Broken Wings
+        </li>
+    </ul>`,
+  };
+  React.useEffect(() => {
+    const data = route.params && route.params.data ? route.params.data : [];
+    console.log('Hotel Detail Page');
+    console.log(data);
+  }, []);
   return (
     <View
       style={{
@@ -61,447 +71,91 @@ const SelectedHotelDetails = ({navigation, route}) => {
         style={{height: height, width: width}}>
         <ScrollView>
           {/* header */}
-          <View
-            style={{
-              flexDirection: 'row',
-            }}>
+          <View>
             <TouchableOpacity
-              // onPress={() => navigation.navigate("OneWayFlight")}
-              //onPress={() => navigation.navigate("SearchFlights")}
+              style={{
+                padding: 4,
+                width: '100%',
+                justifyContent: 'center',
+              }}
               onPress={() => navigation.goBack()}>
               <Image
                 source={require('../../../assets/logo/back.png')}
                 style={{
-                  width: 19,
-                  height: 19,
-                  marginTop: 38,
+                  width: 25,
+                  height: 25,
                   marginLeft: 14,
                 }}
               />
             </TouchableOpacity>
-
-            <Text
-              style={{
-                color: '#fff',
-                marginTop: 35,
-                marginLeft: 16,
-                fontSize: 17,
-                fontWeight: '500',
-              }}>
-              From => TO
-            </Text>
           </View>
-
-          {/* details */}
-          <View
-            style={{
-              marginTop: 20,
-              flex: 1,
-              height: height,
-              width: width,
-              backgroundColor: '#EFF5FF',
-              borderTopLeftRadius: 40,
-              borderTopRightRadius: 40,
-            }}>
-            {/* title */}
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 18,
-              }}>
-              <Text
-                style={{
-                  fontWeight: '500',
-                  fontSize: 16,
-                }}>
-                Flight details
-              </Text>
-            </View>
-            {/* ori - desti */}
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'row',
-                marginTop: 24,
-              }}>
-              <Text
-                style={{
-                  color: '#005CFF',
-                  fontSize: 16,
-                  fontWeight: '500',
-                  marginRight: 20,
-                }}>
-                {/* {data?.Segments.map((data) => {
-                  console.log("Data", data);
-                  //  return data.name;
-                })} */}
-              </Text>
-              <Image
-                source={require('../../../assets/logo/airplane.png')}
-                style={{
-                  width: 35,
-                  height: 25,
-                }}
-              />
-              <Text
-                style={{
-                  color: '#005CFF',
-                  fontSize: 16,
-                  fontWeight: '500',
-                  marginLeft: 20,
-                }}>
-                DES
-              </Text>
-            </View>
-
-            {/* N-S / DURATION / CLASS */}
-
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'row',
-                marginTop: 5,
-              }}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: '500',
-                  marginRight: 5,
-                }}>
-                N-S |
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: '500',
-                  marginRight: 5,
-                }}>
-                DURATION
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: '500',
-                }}>
-                | CLASS
-              </Text>
-            </View>
-
-            {/* DTAILS */}
-            <View
-              style={{
-                justifyContent: 'space-around',
-                flexDirection: 'row',
-                marginTop: 22,
-              }}>
-              {/* origin details */}
-              <View
-                style={{
-                  flexDirection: 'column',
-                  marginLeft: 1,
-                }}>
-                <Text>ORI-CODE</Text>
-                <Text
-                  style={{fontSize: 18, color: '#005CFF', fontWeight: '500'}}>
-                  TIME
-                </Text>
-                <Text>DAY/YYYY</Text>
-                <Text>ORI</Text>
-                <Text>AIRPORT-NAME</Text>
-                <Text>TERMINAL</Text>
-              </View>
-
-              {/* duration details */}
-              <View
-                style={{
-                  justifyContent: 'flex-start',
-                  flexDirection: 'column',
-                }}>
-                <Text>duration</Text>
-                <Text> n-s</Text>
-              </View>
-
-              {/* destination Details */}
-              <View
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                  marginRight: 4,
-                }}>
-                <Text>DES-CODE</Text>
-                <Text
-                  style={{fontSize: 18, color: '#005CFF', fontWeight: '500'}}>
-                  TIME
-                </Text>
-                <Text>DAY/YYYY</Text>
-                <Text>DEST-NAME</Text>
-                <Text>AIRPORT-NAME</Text>
-                <Text>TERMINAL</Text>
-              </View>
-            </View>
-
-            {/* container */}
-
-            <View
-              elevation={10}
-              style={{
-                height: 273,
-                // width:327,
-                marginLeft: 20,
-                marginRight: 20,
-                marginTop: 18,
-                backgroundColor: '#fff',
-                borderRadius: 20,
-              }}>
-              {/* categories heading */}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  marginTop: 14,
-                }}>
+          <View>
+            <View>
+              <View style={styles.coverPicBox}>
                 <Image
-                  source={require('../../../assets/logo/airplane.png')}
-                  style={{
-                    width: 18,
-                    height: 18,
-                  }}
+                  style={styles.coverPic}
+                  source={require('../../../assets/image/sld3.png')}
                 />
-                <Text style={{fontWeight: '500', fontSize: 16}}>
-                  Flexi plus
+              </View>
+              <View style={styles.textBox}>
+                <Text style={{fontSize: 23, fontWeight: '900'}}>
+                  Hotel Name
                 </Text>
-                <Text
-                  style={{color: '#FF951A', fontWeight: '500', fontSize: 16}}>
-                  ₹ price
+                <Text style={{fontSize: 17, fontWeight: '900', color: 'red'}}>
+                  50% OFF{/* Discount */}
                 </Text>
               </View>
-              {/* cabin bag */}
-              <View
-                style={{
-                  flexDirection: 'row',
-                }}>
-                <View
-                  elevation={5}
-                  style={{
-                    flexDirection: 'row',
-                    height: 26,
-                    width: 140,
-                    backgroundColor: '#DAF2FC',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    borderRadius: 20,
-                    margin: 10,
-                  }}>
-                  <Image
-                    source={require('../../../assets/logo/airplane.png')}
-                    style={{
-                      width: 16,
-                      height: 11,
-                      marginLeft: 5,
-                    }}
+
+              <View elevation={5} style={styles.info}>
+                <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
+                  Contacts
+                </Text>
+                <InfoBox
+                  image={require('../../../assets/icon/country.png')}
+                  label={'Country'}
+                  value={'India'}
+                />
+                <InfoBox
+                  image={require('../../../assets/icon/location.png')}
+                  label={'Address'}
+                  value={'India'}
+                />
+                <InfoBox
+                  image={require('../../../assets/icon/location.png')}
+                  label={'Hotel Contact'}
+                  value={'123456789'}
+                />
+                <InfoBox
+                  image={require('../../../assets/icon/fax.png')}
+                  label={'Fax Number'}
+                  value={'123456789'}
+                />
+              </View>
+              <View style={styles.info}>
+                <Text style={{fontSize: 17, fontWeight: '900', padding: 4}}>
+                  Rating : 4/5
+                </Text>
+                <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
+                  Location
+                </Text>
+                <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
+                  Facilities
+                </Text>
+                <Text style={{fontSize: 15, fontWeight: '900', padding: 4}}>
+                  <HTML
+                    source={source}
+                    imagesMaxWidth={Dimensions.get('window').width}
                   />
-                  <Text style={{fontSize: 11, fontWeight: '500'}}>
-                    Cabin Bags
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 11,
-                      fontWeight: '500',
-                      color: '#005CFF',
-                    }}>
-                    ?kg
-                  </Text>
-                </View>
-                <View
-                  elevation={5}
-                  style={{
-                    flexDirection: 'row',
-                    height: 26,
-                    width: 139,
-                    backgroundColor: '#DAF2FC',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    borderRadius: 20,
-                    margin: 10,
-                  }}>
-                  <Image
-                    source={require('../../../assets/logo/airplane.png')}
-                    style={{
-                      width: 16,
-                      height: 11,
-                    }}
+                </Text>
+                <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
+                  Description
+                </Text>
+                <Text style={{fontSize: 15, fontWeight: '900', padding: 4}}>
+                  <HTML
+                    source={source}
+                    imagesMaxWidth={Dimensions.get('window').width}
                   />
-                  <Text style={{fontSize: 11, fontWeight: '500'}}>
-                    Check-In Bags
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 11,
-                      fontWeight: '500',
-                      color: '#005CFF',
-                    }}>
-                    ?kg
-                  </Text>
-                </View>
-              </View>
-              {/* cancellation */}
-              <View
-                elevation={5}
-                style={{
-                  flexDirection: 'row',
-                  height: 26,
-                  width: 280,
-                  backgroundColor: '#DAF2FC',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  borderRadius: 20,
-                  marginLeft: 10,
-                }}>
-                <Image
-                  source={require('../../../assets/logo/airplane.png')}
-                  style={{
-                    width: 16,
-                    height: 11,
-                    marginLeft: 5,
-                  }}
-                />
-                <Text style={{fontSize: 11, fontWeight: '500'}}>
-                  Cancellation
                 </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: '500',
-                    color: '#005CFF',
-                    marginRight: 5,
-                  }}>
-                  Cancellation Fee Starting $300
-                </Text>
-              </View>
-              {/* date change */}
-              <View
-                elevation={5}
-                style={{
-                  flexDirection: 'row',
-                  height: 26,
-                  width: 288,
-                  backgroundColor: '#DAF2FC',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  borderRadius: 20,
-                  marginLeft: 10,
-                  marginTop: 10,
-                }}>
-                <Image
-                  source={require('../../../assets/logo/airplane.png')}
-                  style={{
-                    width: 16,
-                    height: 11,
-                    marginLeft: 5,
-                  }}
-                />
-                <Text style={{fontSize: 11, fontWeight: '500'}}>
-                  Date Change
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: '500',
-                    color: '#005CFF',
-                    marginRight: 5,
-                  }}>
-                  Cancellation Fee Starting $250
-                </Text>
-              </View>
-              {/* seat */}
-              <View
-                elevation={5}
-                style={{
-                  flexDirection: 'row',
-                  height: 26,
-                  width: 188,
-                  backgroundColor: '#DAF2FC',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  borderRadius: 20,
-                  marginLeft: 10,
-                  marginTop: 10,
-                }}>
-                <Image
-                  source={require('../../../assets/logo/airplane.png')}
-                  style={{
-                    width: 16,
-                    height: 11,
-                    marginLeft: 5,
-                  }}
-                />
-                <Text style={{fontSize: 11, fontWeight: '500'}}>Seat</Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: '500',
-                    color: '#005CFF',
-                    marginRight: 5,
-                  }}>
-                  Free Seat Available
-                </Text>
-              </View>
-              {/* meal */}
-              <View
-                elevation={5}
-                style={{
-                  flexDirection: 'row',
-                  height: 26,
-                  width: 216,
-                  backgroundColor: '#DAF2FC',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  borderRadius: 20,
-                  marginLeft: 10,
-                  marginTop: 10,
-                }}>
-                <Image
-                  source={require('../../../assets/logo/airplane.png')}
-                  style={{
-                    width: 16,
-                    height: 11,
-                    marginLeft: 5,
-                  }}
-                />
-                <Text style={{fontSize: 11, fontWeight: '500'}}>Meal</Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: '500',
-                    color: '#005CFF',
-                    marginRight: 5,
-                  }}>
-                  Get Complimentary Meals
-                </Text>
-              </View>
-
-              {/* button */}
-              <View style={{alignItems: 'center', marginTop: 15}}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('PassengerFlightDetails')}>
-                  <View
-                    style={{
-                      width: 140,
-                      height: 24,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#006FFF',
-                      borderRadius: 30,
-                    }}>
-                    <Text
-                      style={{fontSize: 11, color: '#fff', fontWeight: '500'}}>
-                      Book Now
-                    </Text>
-                  </View>
-                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -513,4 +167,34 @@ const SelectedHotelDetails = ({navigation, route}) => {
 
 export default SelectedHotelDetails;
 
-const style = StyleSheet.create({});
+const styles = StyleSheet.create({
+  coverPicBox: {
+    width: '100%',
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 6,
+    marginTop: 4,
+  },
+  coverPic: {width: '100%', height: '100%'},
+  textBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // justifyContent: 'center',
+    padding: 8,
+  },
+  info: {
+    margin: 5,
+    borderWidth: 1,
+    borderColor: '#DEDEDE',
+    borderRadius: 6,
+    backgroundColor: 'white',
+    padding: 8,
+  },
+  infoBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});

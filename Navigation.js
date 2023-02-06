@@ -26,15 +26,19 @@ import SearchFlights from './src/booking/Flights/searchFlight';
 import SelectedFlightDetails from './src/booking/Flights/selectedFlightDetails';
 import PassengerFlightDetails from './src/booking/Flights/PassengerFlightDetails';
 import SearchHotel from './src/booking/Hotels/searchHotel';
+import SelectedHotelDetails from './src/booking/Hotels/selectedHotelDetails';
+
 import MHome from './src/screens/Main_Home_Screens/home';
 import Dummy from './src/screens/Main_Home_Screens/Dummy';
 const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer ref={createRef()}>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        // initialRouteName="SelectedHotelDetails"
+        screenOptions={{headerShown: false}}>
+        {/* <Stack.Screen name="SearchHotel" component={SearchHotel} /> */}
         <Stack.Screen name="Onboarding" component={Onboarding} />
-
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
@@ -64,7 +68,14 @@ const Navigation = () => {
           component={PassengerFlightDetails}
         />
         <Stack.Screen name="SearchHotel" component={SearchHotel} />
+<<<<<<< HEAD
         <Stack.Screen name="Dummy" component={Dummy} />
+=======
+        <Stack.Screen
+          name="SelectedHotelDetails"
+          component={SelectedHotelDetails}
+        />
+>>>>>>> refs/remotes/origin/master
       </Stack.Navigator>
     </NavigationContainer>
   );

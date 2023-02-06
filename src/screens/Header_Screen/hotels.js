@@ -27,6 +27,7 @@ const {width, height} = Dimensions.get('window');
 const Hotels = ({navigation, route}) => {
   const data = route.params;
   const TokenIdd = data?.data;
+  console.log('TokenIdd');
   console.log(TokenIdd);
   const [visible, setVisible] = useState(false);
 
@@ -66,12 +67,13 @@ const Hotels = ({navigation, route}) => {
       TokenId: TokenIdd,
     };
 
+    
     try {
       await axios({
         method: 'post',
         url: 'https://api.travvolt.com/travvolt/hotel/search',
         data: payload,
-        confif: {
+        config: {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -79,14 +81,24 @@ const Hotels = ({navigation, route}) => {
       }).then(res => {
         setVisible(false);
         const response1 = res?.data;
+        console.log(res.data.HotelResults);
         // console.log('result===', response1);
 
         const response2 = response1?.data?.HotelSearchResult;
-        console.log('Tra===', response2);
+        console.log('HotelSearchResult');
+        console.log(response2);
+
+        const traceId = response1?.data?.TraceId;
+        console.log('traceId');
+        console.log(traceId);
 
         // const response3 = response2?.Results;
         ToastAndroid.show('Results', ToastAndroid.SHORT);
-        navigation.navigate('SearchHotel', {data: response2});
+        navigation.navigate('SearchHotel', {
+          data: response2,
+          tokenId: TokenIdd,
+        });
+        // navigation.navigate('SearchHotel', {tokenId: TokenIdd});
       });
     } catch (error) {
       setVisible(false);

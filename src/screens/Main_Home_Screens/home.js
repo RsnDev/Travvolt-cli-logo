@@ -986,7 +986,7 @@ const MHome = ({navigation}) => {
                     marginLeft: 170,
                     marginTop: 5,
                   }}>
-                  View All>>
+                  View All
                 </Text>
               </TouchableOpacity>
             </View>
