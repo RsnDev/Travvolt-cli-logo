@@ -163,7 +163,7 @@ const MHome = ({navigation}) => {
         const response = response1.data.TokenId;
 
         ToastAndroid.show('HotelSearch', ToastAndroid.SHORT);
-        navigation.navigate('Hotels', {data: response});
+        navigation.navigate('Hotels', {data: response, ip: ip});
       });
     } catch (error) {
       setVisible(false);

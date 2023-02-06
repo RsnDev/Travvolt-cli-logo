@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import HTML from 'react-native-render-html';
+import Footer from '../../component/hotelfooter';
 const {width, height} = Dimensions.get('window');
 
 const InfoBox = function (props) {
@@ -36,6 +37,14 @@ const InfoBox = function (props) {
 };
 
 const SelectedHotelDetails = ({navigation, route}) => {
+  // const data = route.params && route.params.data ? route.params.data : [];
+  // let [printData.setPrintData]=React.useState({})
+  const PayLoad = route.params.payLoad;
+  const hotelPriceDetail = route.params.hotelPriceDetail;
+  let [printData, setPrintData] = React.useState(hotelPriceDetail);
+
+  console.log(hotelPriceDetail);
+  console.log('hotelPriceDetail');
   const source = {
     html: `
     <ul>
@@ -55,10 +64,59 @@ const SelectedHotelDetails = ({navigation, route}) => {
         </li>
     </ul>`,
   };
+
   React.useEffect(() => {
-    const data = route.params && route.params.data ? route.params.data : [];
-    console.log('Hotel Detail Page');
-    console.log(data);
+    const getData = async function () {
+      try {
+        axios({
+          method: 'post',
+          url: 'https://api.travvolt.com/travvolt/hotel/searchinfo',
+          data: PayLoad,
+          config: {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        }).then(res => {
+          const response1 = res?.data;
+          const response2 = response1?.data?.HotelInfoResult?.HotelDetails;
+          // hotelFullDetails = response2;
+          console.log('HotelSearchResult');
+          console.log(response2);
+          //representData
+          const cloneDec = response2.Description;
+          const updateDec = cloneDec.replace(/<[^>]+>/g, '');
+          console.log(updateDec);
+          console.log('Description');
+          const representData = {
+            Image: response2.Images,
+            HotelName: response2.HotelName,
+            CountryName: response2.CountryName,
+            Address: response2.Address,
+            HotelContactNo: response2.HotelContactNo,
+            FaxNumber: response2.FaxNumber,
+            StarRating: response2.StarRating,
+            HotelFacilities: response2.HotelFacilities,
+            Description: updateDec,
+            location: {
+              Latitude: response2.Latitude,
+              Longitude: response2.Longitude,
+            },
+          };
+          console.log(representData);
+          console.log('representData');
+          const cloneObject = {...printData, ...representData};
+          console.log(cloneObject);
+          console.log('cloneObject');
+
+          setPrintData(cloneObject);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+    // const data = && route.params.data ? route.params.data : [];
   }, []);
   return (
     <View
@@ -69,7 +127,7 @@ const SelectedHotelDetails = ({navigation, route}) => {
       <ImageBackground
         source={require('../../../assets/image/bg.jpg')}
         style={{height: height, width: width}}>
-        <ScrollView>
+        <ScrollView style={{flex: 1, borderWidth: 1, borderColor: 'red'}}>
           {/* header */}
           <View>
             <TouchableOpacity
@@ -99,41 +157,60 @@ const SelectedHotelDetails = ({navigation, route}) => {
               </View>
               <View style={styles.textBox}>
                 <Text style={{fontSize: 23, fontWeight: '900'}}>
-                  Hotel Name
+                  {printData && printData.HotelName
+                    ? printData.HotelName
+                    : 'Hotel Data'}
                 </Text>
                 <Text style={{fontSize: 17, fontWeight: '900', color: 'red'}}>
-                  50% OFF{/* Discount */}
+                  {printData && printData.Discount ? printData.Discount : 0}%
+                  OFF{/* Discount */}
                 </Text>
               </View>
 
               <View elevation={5} style={styles.info}>
                 <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
-                  Contacts
+                  Contact
                 </Text>
                 <InfoBox
                   image={require('../../../assets/icon/country.png')}
                   label={'Country'}
-                  value={'India'}
+                  value={
+                    printData && printData.CountryName
+                      ? printData.CountryName
+                      : null
+                  }
                 />
                 <InfoBox
                   image={require('../../../assets/icon/location.png')}
                   label={'Address'}
-                  value={'India'}
+                  value={
+                    printData && printData.Address ? printData.Address : null
+                  }
                 />
                 <InfoBox
                   image={require('../../../assets/icon/location.png')}
                   label={'Hotel Contact'}
-                  value={'123456789'}
+                  value={
+                    printData && printData.HotelContactNo
+                      ? printData.HotelContactNo
+                      : null
+                  }
                 />
                 <InfoBox
                   image={require('../../../assets/icon/fax.png')}
                   label={'Fax Number'}
-                  value={'123456789'}
+                  value={
+                    printData && printData.FaxNumber
+                      ? printData.FaxNumber
+                      : null
+                  }
                 />
               </View>
               <View style={styles.info}>
                 <Text style={{fontSize: 17, fontWeight: '900', padding: 4}}>
-                  Rating : 4/5
+                  Rating :{' '}
+                  {printData && printData.StarRating ? printData.StarRating : 0}
+                  /5
                 </Text>
                 <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
                   Location
@@ -141,24 +218,31 @@ const SelectedHotelDetails = ({navigation, route}) => {
                 <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
                   Facilities
                 </Text>
-                <Text style={{fontSize: 15, fontWeight: '900', padding: 4}}>
-                  <HTML
-                    source={source}
-                    imagesMaxWidth={Dimensions.get('window').width}
-                  />
-                </Text>
+                {/* <Text style={{fontSize: 15, fontWeight: '900', padding: 4}}> */}
+                {printData && printData.HotelFacilities ? (
+                  printData.HotelFacilities.map((val, index) => {
+                    return (
+                      <Text
+                        style={{fontSize: 15, fontWeight: '900', padding: 4}}>
+                        {`\u25CF ${val}`}
+                      </Text>
+                    );
+                  })
+                ) : (
+                  <Text>Data is Loading</Text>
+                )}
                 <Text style={{fontSize: 20, fontWeight: '900', padding: 4}}>
                   Description
                 </Text>
                 <Text style={{fontSize: 15, fontWeight: '900', padding: 4}}>
-                  <HTML
-                    source={source}
-                    imagesMaxWidth={Dimensions.get('window').width}
-                  />
+                  {printData && printData.Description
+                    ? printData.Description
+                    : 'Description is loding'}
                 </Text>
               </View>
             </View>
           </View>
+          {/* <Footer /> */}
         </ScrollView>
       </ImageBackground>
     </View>

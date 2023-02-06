@@ -27,6 +27,7 @@ import SelectedFlightDetails from './src/booking/Flights/selectedFlightDetails';
 import PassengerFlightDetails from './src/booking/Flights/PassengerFlightDetails';
 import SearchHotel from './src/booking/Hotels/searchHotel';
 import SelectedHotelDetails from './src/booking/Hotels/selectedHotelDetails';
+import SelectRoom from './src/booking/Hotels/selectRoom';
 
 import MHome from './src/screens/Main_Home_Screens/home';
 
@@ -37,8 +38,10 @@ const Navigation = () => {
       <Stack.Navigator
         // initialRouteName="SelectedHotelDetails"
         screenOptions={{headerShown: false}}>
+        <Stack.Screen name="SelectRoom" component={SelectRoom} />
+
         {/* <Stack.Screen name="SearchHotel" component={SearchHotel} /> */}
-        <Stack.Screen name="Onboarding" component={Onboarding} />
+        {/* <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
@@ -66,12 +69,13 @@ const Navigation = () => {
         <Stack.Screen
           name="PassengerFlightDetails"
           component={PassengerFlightDetails}
-        />
-        <Stack.Screen name="SearchHotel" component={SearchHotel} />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen name="SearchHotel" component={SearchHotel} /> */}
+        {/* <Stack.Screen
           name="SelectedHotelDetails"
           component={SelectedHotelDetails}
-        />
+        /> */}
+        {/* <Stack.Screen name="SelectRoom" component={SelectRoom} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

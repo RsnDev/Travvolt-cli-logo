@@ -103,7 +103,8 @@ let HotelCard = function (props) {
             </Text>
             <Text
               style={{fontSize: 20, fontWeight: 'bold', color: '#e5de00'}}
-              numberOfLines={2}>
+              // numberOfLines={2}
+            >
               ₹{props.roomPrice}
             </Text>
             <Text style={styles.cardText} numberOfLines={2}>
@@ -118,143 +119,189 @@ let HotelCard = function (props) {
 
 const SearchHotel = ({navigation, route}) => {
   const [ip, setIp] = useState('');
-  const data = route.params && route.params.data ? route.params.data : [];
-  // console.log(TraceId)
-  // let data = {
-  //   ResponseStatus: 1,
-  //   Error: {
-  //     ErrorCode: 0,
-  //     ErrorMessage: '',
+  // const paramsData = route.params;
+  // const data = paramsData.data ? paramsData.data : [];
+  // const representData = data.HotelResults;
+  // const hotelPriceData = representData.Price;
+  // const hotelPriceDetailPass = {
+  //   CurrencyCode: hotelPriceData.CurrencyCode,
+  //   RoomPrice: hotelPriceData.RoomPrice,
+  //   Discount: hotelPriceData.Discount,
+  //   PublishedPriceRoundedOff: hotelPriceData.PublishedPriceRoundedOff,
+  //   GST: {
+  //     TaxableAmount: hotelPriceData.GST.TaxableAmount,
   //   },
-  //   TraceId: '5a75531f-375a-4ae1-bdb7-2fe050fd9819',
-  //   CityId: '130205',
-  //   Remarks: 'india - land of mystries "//" "  /// "  ',
-  //   CheckInDate: '2023-02-15',
-  //   CheckOutDate: '2023-02-16',
-  //   PreferredCurrency: 'INR',
-  //   NoOfRooms: 1,
-  //   RoomGuests: [
-  //     {
-  //       NoOfAdults: 1,
-  //       NoOfChild: 0,
-  //       ChildAge: null,
-  //     },
-  //   ],
-  //   HotelResults: [
-  //     {
-  //       IsHotDeal: false,
-  //       ResultIndex: 1,
-  //       HotelCode: '1500369',
-  //       HotelName: 'OYO Rooms Noida Sector 50 Block C',
-  //       HotelCategory: '',
-  //       StarRating: 3,
-  //       HotelDescription:
-  //         'Property Location With a stay at OYO Rooms Noida Sector 50 Block C in Noida, you&apos;ll be close to Nodia Golf Course and Great India Place.  This hotel is within the vicinity of Jamia Millia Islamia and Indraprashtha Apollo Hospital.Rooms Make yourself at home in one of the 15 air-conditioned rooms featuring flat-screen televisions. Complimentary wireless Internet access keeps you connected, and cable programming is available for your entertainment. Bathrooms have bathtubs or showers and complimentary toiletries. Conveniences include safes and desks, and housekeeping is provided daily.Dining Take advantage of the hotel&apos;s 24-hour room service.Business, Other Amenities Featured amenities include complimentary newspapers in the lobby, dry cleaning/laundry services, and a 24-hour front desk. Free self parking is available onsite. ',
-  //       HotelPromotion: '',
-  //       HotelPolicy: '',
-  //       Price: {
-  //         CurrencyCode: 'INR',
-  //         RoomPrice: 1006.18,
-  //         Tax: 0,
-  //         ExtraGuestCharge: 0,
-  //         ChildCharge: 0,
-  //         OtherCharges: 200.92,
-  //         Discount: 0,
-  //         PublishedPrice: 1542.23,
-  //         PublishedPriceRoundedOff: 1542,
-  //         OfferedPrice: 1207.1,
-  //         OfferedPriceRoundedOff: 1207,
-  //         AgentCommission: 335.13,
-  //         AgentMarkUp: 0,
-  //         ServiceTax: 56.38,
-  //         TCS: 0,
-  //         TDS: 0,
-  //         ServiceCharge: 0,
-  //         TotalGSTAmount: 56.38,
-  //         GST: {
-  //           CGSTAmount: 0,
-  //           CGSTRate: 0,
-  //           CessAmount: 19.85,
-  //           CessRate: 10,
-  //           IGSTAmount: 36.53,
-  //           IGSTRate: 18,
-  //           SGSTAmount: 0,
-  //           SGSTRate: 0,
-  //           TaxableAmount: 200.92,
-  //         },
-  //       },
-  //       HotelPicture:
-  //         'https://api.tbotechnology.in/imageresource.aspx?img=k6DH+39xpEWJ6sshsBgEUY9oKBj/b6OqzQcmXbJdJ1Fw5DB1G7cMZ9usTTS1gIIQaHXwXSJrMFLqvtDx04cytMzBHqYPiPb2vCelv6T8EbCT4/+Txex0yg==',
-  //       HotelAddress: 'C 74 Sector 50 Noida 201301, ',
-  //       HotelContactNo: '',
-  //       HotelMap: null,
-  //       Latitude: '',
-  //       Longitude: '',
-  //       HotelLocation: null,
-  //       SupplierPrice: null,
-  //       RoomDetails: [],
-  //     },
-  //     {
-  //       IsHotDeal: false,
-  //       ResultIndex: 45,
-  //       HotelCode: '1500369',
-  //       HotelName: 'OYO Rooms Noida Sector 50 Block C',
-  //       HotelCategory: '',
-  //       StarRating: 3,
-  //       HotelDescription:
-  //         'Property Location With a stay at OYO Rooms Noida Sector 50 Block C in Noida, you&apos;ll be close to Nodia Golf Course and Great India Place.  This hotel is within the vicinity of Jamia Millia Islamia and Indraprashtha Apollo Hospital.Rooms Make yourself at home in one of the 15 air-conditioned rooms featuring flat-screen televisions. Complimentary wireless Internet access keeps you connected, and cable programming is available for your entertainment. Bathrooms have bathtubs or showers and complimentary toiletries. Conveniences include safes and desks, and housekeeping is provided daily.Dining Take advantage of the hotel&apos;s 24-hour room service.Business, Other Amenities Featured amenities include complimentary newspapers in the lobby, dry cleaning/laundry services, and a 24-hour front desk. Free self parking is available onsite. ',
-  //       HotelPromotion: '',
-  //       HotelPolicy: '',
-  //       Price: {
-  //         CurrencyCode: 'INR',
-  //         RoomPrice: 1341.31,
-  //         Tax: 0,
-  //         ExtraGuestCharge: 0,
-  //         ChildCharge: 0,
-  //         OtherCharges: 200.92,
-  //         Discount: 0,
-  //         PublishedPrice: 1542.23,
-  //         PublishedPriceRoundedOff: 1542,
-  //         OfferedPrice: 1542.23,
-  //         OfferedPriceRoundedOff: 1542,
-  //         AgentCommission: 0,
-  //         AgentMarkUp: 0,
-  //         ServiceTax: 56.38,
-  //         TCS: 0,
-  //         TDS: 0,
-  //         ServiceCharge: 0,
-  //         TotalGSTAmount: 56.38,
-  //         GST: {
-  //           CGSTAmount: 0,
-  //           CGSTRate: 0,
-  //           CessAmount: 19.85,
-  //           CessRate: 10,
-  //           IGSTAmount: 36.53,
-  //           IGSTRate: 18,
-  //           SGSTAmount: 0,
-  //           SGSTRate: 0,
-  //           TaxableAmount: 200.92,
-  //         },
-  //       },
-  //       HotelPicture:
-  //         'https://api.tbotechnology.in/imageresource.aspx?img=k6DH+39xpEWJ6sshsBgEUY9oKBj/b6OqzQcmXbJdJ1Fw5DB1G7cMZ9usTTS1gIIQaHXwXSJrMFLqvtDx04cytMzBHqYPiPb2vCelv6T8EbCT4/+Txex0yg==',
-  //       HotelAddress: 'C 74 Sector 50 Noida 201301, ',
-  //       HotelContactNo: '',
-  //       HotelMap: null,
-  //       Latitude: '',
-  //       Longitude: '',
-  //       HotelLocation: null,
-  //       SupplierPrice: null,
-  //       RoomDetails: [],
-  //     },
-  //   ],
   // };
-  const token =
-    route.params && route.params.tokenId ? route.params.tokenId : null;
+  const hotelPriceDetail = {
+    CurrencyCode: 'INR',
+    RoomPrice: 1006.18,
+    Discount: 0,
+    PublishedPriceRoundedOff: 1542,
+    GST: {
+      TaxableAmount: 200.92,
+    },
+  };
+  // console.log(data);
+  console.log('Result Data');
+  // const traceId = data.TraceId;
+  // console.log(traceId);
+  console.log('traceId');
 
-  const moveDataToDetailPage = function () {
+  // const UserIp = paramsData.userIp;
+  // console.log(UserIp + ' UserIp');
+  // const tokenId = paramsData.tokenId ? paramsData.tokenId : null;
+  // console.log(tokenId);
+  console.log('tokenId');
+  console.log('SEARCH HOTEL');
+  let data = {
+    ResponseStatus: 1,
+    Error: {
+      ErrorCode: 0,
+      ErrorMessage: '',
+    },
+    TraceId: '2b3c0405-9f7e-4305-a798-e263cc1184f3',
+    CityId: '130205',
+    Remarks: 'india - land of mystries "//" "  /// "  ',
+    CheckInDate: '2023-02-15',
+    CheckOutDate: '2023-02-16',
+    PreferredCurrency: 'INR',
+    NoOfRooms: 1,
+    RoomGuests: [
+      {
+        NoOfAdults: 1,
+        NoOfChild: 0,
+        ChildAge: null,
+      },
+    ],
+    HotelResults: [
+      {
+        IsHotDeal: false,
+        ResultIndex: 1,
+        HotelCode: '1500369',
+        HotelName: 'OYO Rooms Noida Sector 50 Block C',
+        HotelCategory: '',
+        StarRating: 3,
+        HotelDescription:
+          'Property Location With a stay at OYO Rooms Noida Sector 50 Block C in Noida, you&apos;ll be close to Nodia Golf Course and Great India Place.  This hotel is within the vicinity of Jamia Millia Islamia and Indraprashtha Apollo Hospital.Rooms Make yourself at home in one of the 15 air-conditioned rooms featuring flat-screen televisions. Complimentary wireless Internet access keeps you connected, and cable programming is available for your entertainment. Bathrooms have bathtubs or showers and complimentary toiletries. Conveniences include safes and desks, and housekeeping is provided daily.Dining Take advantage of the hotel&apos;s 24-hour room service.Business, Other Amenities Featured amenities include complimentary newspapers in the lobby, dry cleaning/laundry services, and a 24-hour front desk. Free self parking is available onsite. ',
+        HotelPromotion: '',
+        HotelPolicy: '',
+        Price: {
+          CurrencyCode: 'INR',
+          RoomPrice: 1006.18,
+          Tax: 0,
+          ExtraGuestCharge: 0,
+          ChildCharge: 0,
+          OtherCharges: 200.92,
+          Discount: 0,
+          PublishedPrice: 1542.23,
+          PublishedPriceRoundedOff: 1542,
+          OfferedPrice: 1207.1,
+          OfferedPriceRoundedOff: 1207,
+          AgentCommission: 335.13,
+          AgentMarkUp: 0,
+          ServiceTax: 56.38,
+          TCS: 0,
+          TDS: 0,
+          ServiceCharge: 0,
+          TotalGSTAmount: 56.38,
+          GST: {
+            CGSTAmount: 0,
+            CGSTRate: 0,
+            CessAmount: 19.85,
+            CessRate: 10,
+            IGSTAmount: 36.53,
+            IGSTRate: 18,
+            SGSTAmount: 0,
+            SGSTRate: 0,
+            TaxableAmount: 200.92,
+          },
+        },
+        HotelPicture:
+          'https://api.tbotechnology.in/imageresource.aspx?img=k6DH+39xpEWJ6sshsBgEUY9oKBj/b6OqzQcmXbJdJ1Fw5DB1G7cMZ9usTTS1gIIQaHXwXSJrMFLqvtDx04cytMzBHqYPiPb2vCelv6T8EbCT4/+Txex0yg==',
+        HotelAddress: 'C 74 Sector 50 Noida 201301, ',
+        HotelContactNo: '',
+        HotelMap: null,
+        Latitude: '',
+        Longitude: '',
+        HotelLocation: null,
+        SupplierPrice: null,
+        RoomDetails: [],
+      },
+      {
+        IsHotDeal: false,
+        ResultIndex: 45,
+        HotelCode: '1500369',
+        HotelName: 'OYO Rooms Noida Sector 50 Block C',
+        HotelCategory: '',
+        StarRating: 3,
+        HotelDescription:
+          'Property Location With a stay at OYO Rooms Noida Sector 50 Block C in Noida, you&apos;ll be close to Nodia Golf Course and Great India Place.  This hotel is within the vicinity of Jamia Millia Islamia and Indraprashtha Apollo Hospital.Rooms Make yourself at home in one of the 15 air-conditioned rooms featuring flat-screen televisions. Complimentary wireless Internet access keeps you connected, and cable programming is available for your entertainment. Bathrooms have bathtubs or showers and complimentary toiletries. Conveniences include safes and desks, and housekeeping is provided daily.Dining Take advantage of the hotel&apos;s 24-hour room service.Business, Other Amenities Featured amenities include complimentary newspapers in the lobby, dry cleaning/laundry services, and a 24-hour front desk. Free self parking is available onsite. ',
+        HotelPromotion: '',
+        HotelPolicy: '',
+        Price: {
+          CurrencyCode: 'INR',
+          RoomPrice: 1341.31,
+          Tax: 0,
+          ExtraGuestCharge: 0,
+          ChildCharge: 0,
+          OtherCharges: 200.92,
+          Discount: 0,
+          PublishedPrice: 1542.23,
+          PublishedPriceRoundedOff: 1542,
+          OfferedPrice: 1542.23,
+          OfferedPriceRoundedOff: 1542,
+          AgentCommission: 0,
+          AgentMarkUp: 0,
+          ServiceTax: 56.38,
+          TCS: 0,
+          TDS: 0,
+          ServiceCharge: 0,
+          TotalGSTAmount: 56.38,
+          GST: {
+            CGSTAmount: 0,
+            CGSTRate: 0,
+            CessAmount: 19.85,
+            CessRate: 10,
+            IGSTAmount: 36.53,
+            IGSTRate: 18,
+            SGSTAmount: 0,
+            SGSTRate: 0,
+            TaxableAmount: 200.92,
+          },
+        },
+        HotelPicture:
+          'https://api.tbotechnology.in/imageresource.aspx?img=k6DH+39xpEWJ6sshsBgEUY9oKBj/b6OqzQcmXbJdJ1Fw5DB1G7cMZ9usTTS1gIIQaHXwXSJrMFLqvtDx04cytMzBHqYPiPb2vCelv6T8EbCT4/+Txex0yg==',
+        HotelAddress: 'C 74 Sector 50 Noida 201301, ',
+        HotelContactNo: '',
+        HotelMap: null,
+        Latitude: '',
+        Longitude: '',
+        HotelLocation: null,
+        SupplierPrice: null,
+        RoomDetails: [],
+      },
+    ],
+  };
+
+  const moveDataToDetailPage = function (resultIndex, hotelCode) {
+    // const payLoad = {
+    //   ResultIndex: resultIndex,
+    //   HotelCode: hotelCode,
+    //   EndUserId: UserIp,
+    //   TokenId: tokenId,
+    //   TraceId: traceId,
+    // };
+    const payLoad = {
+      ResultIndex: '1',
+      HotelCode: '1500369',
+      EndUserIp: '103.154.247.253',
+      TokenId: '102a9fff-e8db-412d-b77a-110d6a91ad39',
+      TraceId: '83f3fc06-68ac-4243-940c-373d4a9174f3',
+    };
     return navigation.navigate('SelectedHotelDetails', {
-      token: token,
+      payLoad: payLoad,
+      // hotelPriceDetail:hotelPriceDetailPass
+      hotelPriceDetail: hotelPriceDetail,
     });
   };
 
@@ -268,8 +315,6 @@ const SearchHotel = ({navigation, route}) => {
   //       console.log(error);
   //     });
   // }, []);
-
-  useEffect(() => {});
 
   return (
     <View
@@ -332,7 +377,10 @@ const SearchHotel = ({navigation, route}) => {
                 data.HotelResults.map((val, index) => {
                   return (
                     <HotelCard
-                      moveDataToDetailPage={() => moveDataToDetailPage}
+                      key={index}
+                      moveDataToDetailPage={() =>
+                        moveDataToDetailPage(val.ResultIndex, val.HotelCode)
+                      }
                       imageCover={
                         val.HotelPicture
                           ? val.HotelPicture
