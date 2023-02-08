@@ -641,42 +641,45 @@ const MHome = ({navigation}) => {
                   </View>
                 </TouchableOpacity>
                 {/* offers */}
-                <View
-                  elevation={10}
-                  style={{
-                    flexDirection: 'row',
-                    height: 24,
-                    backgroundColor: '#fff',
-                    marginTop: 4,
-                    marginLeft: 12,
-                    borderRadius: 5,
-                    shadowColor: '#000000',
-                    shadowOpacity: 0.8,
-                    shadowRadius: 2,
-                    shadowOffset: {
-                      height: 1,
-                      width: 1,
-                    },
-                  }}>
-                  <Image
-                    source={require('../../../assets/logo/offers.png')}
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('PassengerFlightDetails')}>
+                  <View
+                    elevation={10}
                     style={{
-                      height: 17,
-                      width: 20,
-                      marginTop: 2,
-                      marginLeft: 8,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: '600',
-                      margin: 3,
-                      marginRight: 8,
+                      flexDirection: 'row',
+                      height: 24,
+                      backgroundColor: '#fff',
+                      marginTop: 4,
+                      marginLeft: 12,
+                      borderRadius: 5,
+                      shadowColor: '#000000',
+                      shadowOpacity: 0.8,
+                      shadowRadius: 2,
+                      shadowOffset: {
+                        height: 1,
+                        width: 1,
+                      },
                     }}>
-                    Offers
-                  </Text>
-                </View>
+                    <Image
+                      source={require('../../../assets/logo/offers.png')}
+                      style={{
+                        height: 17,
+                        width: 20,
+                        marginTop: 2,
+                        marginLeft: 8,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        fontWeight: '600',
+                        margin: 3,
+                        marginRight: 8,
+                      }}>
+                      Offers
+                    </Text>
+                  </View>
+                </TouchableOpacity>
                 {/* reffer earn */}
                 <View
                   elevation={10}

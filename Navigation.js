@@ -68,14 +68,11 @@ const Navigation = () => {
           component={PassengerFlightDetails}
         />
         <Stack.Screen name="SearchHotel" component={SearchHotel} />
-<<<<<<< HEAD
         <Stack.Screen name="Dummy" component={Dummy} />
-=======
         <Stack.Screen
           name="SelectedHotelDetails"
           component={SelectedHotelDetails}
         />
->>>>>>> refs/remotes/origin/master
       </Stack.Navigator>
     </NavigationContainer>
   );

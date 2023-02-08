@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,35 +11,32 @@ import {
   ToastAndroid,
   ScrollView,
   Button,
-} from "react-native";
-const { width, height } = Dimensions.get("window");
+  TextInput,
+} from 'react-native';
+const {width, height} = Dimensions.get('window');
 
-const PassengerFlightDetails = ({ navigation }) => {
+const PassengerFlightDetails = ({navigation}) => {
   return (
     <View
       style={{
         height: height,
         width: width,
-      }}
-    >
+      }}>
       <ImageBackground
-        source={require("../../../assets/image/bg.jpg")}
-        style={{ height: height, width: width }}
-      >
+        source={require('../../../assets/image/bg.jpg')}
+        style={{height: height, width: width}}>
         <ScrollView>
           {/* header */}
           <View
             style={{
-              flexDirection: "row",
-            }}
-          >
+              flexDirection: 'row',
+            }}>
             <TouchableOpacity
               // onPress={() => navigation.navigate("OneWayFlight")}
               //onPress={() => navigation.navigate("SearchFlights")}
-              onPress={() => navigation.goBack()}
-            >
+              onPress={() => navigation.goBack()}>
               <Image
-                source={require("../../../assets/logo/back.png")}
+                source={require('../../../assets/logo/back.png')}
                 style={{
                   width: 19,
                   height: 19,
@@ -51,13 +48,12 @@ const PassengerFlightDetails = ({ navigation }) => {
 
             <Text
               style={{
-                color: "#fff",
+                color: '#fff',
                 marginTop: 35,
                 marginLeft: 16,
                 fontSize: 17,
-                fontWeight: "500",
-              }}
-            >
+                fontWeight: '500',
+              }}>
               From => TO
             </Text>
           </View>
@@ -69,49 +65,44 @@ const PassengerFlightDetails = ({ navigation }) => {
               flex: 1,
               height: height,
               width: width,
-              backgroundColor: "#EFF5FF",
+              backgroundColor: '#EFF5FF',
               borderTopLeftRadius: 40,
               borderTopRightRadius: 40,
-            }}
-          >
+            }}>
             {/* title */}
             <View
               style={{
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: 'center',
+                alignItems: 'center',
                 marginTop: 18,
-              }}
-            >
+              }}>
               <Text
                 style={{
-                  fontWeight: "500",
+                  fontWeight: '500',
                   fontSize: 16,
-                }}
-              >
+                }}>
                 Flight details
               </Text>
             </View>
             {/* ori - desti */}
             <View
               style={{
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row",
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
                 marginTop: 24,
-              }}
-            >
+              }}>
               <Text
                 style={{
-                  color: "#005CFF",
+                  color: '#005CFF',
                   fontSize: 16,
-                  fontWeight: "500",
+                  fontWeight: '500',
                   marginRight: 20,
-                }}
-              >
+                }}>
                 ORI
               </Text>
               <Image
-                source={require("../../../assets/logo/airplane.png")}
+                source={require('../../../assets/logo/airplane.png')}
                 style={{
                   width: 35,
                   height: 25,
@@ -119,12 +110,11 @@ const PassengerFlightDetails = ({ navigation }) => {
               />
               <Text
                 style={{
-                  color: "#005CFF",
+                  color: '#005CFF',
                   fontSize: 16,
-                  fontWeight: "500",
+                  fontWeight: '500',
                   marginLeft: 20,
-                }}
-              >
+                }}>
                 DES
               </Text>
             </View>
@@ -133,36 +123,32 @@ const PassengerFlightDetails = ({ navigation }) => {
 
             <View
               style={{
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row",
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
                 marginTop: 5,
-              }}
-            >
+              }}>
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: "500",
+                  fontWeight: '500',
                   marginRight: 5,
-                }}
-              >
+                }}>
                 N-S |
               </Text>
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: "500",
+                  fontWeight: '500',
                   marginRight: 5,
-                }}
-              >
+                }}>
                 DURATION
               </Text>
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: "500",
-                }}
-              >
+                  fontWeight: '500',
+                }}>
                 | CLASS
               </Text>
             </View>
@@ -170,22 +156,19 @@ const PassengerFlightDetails = ({ navigation }) => {
             {/* DTAILS */}
             <View
               style={{
-                justifyContent: "space-around",
-                flexDirection: "row",
+                justifyContent: 'space-around',
+                flexDirection: 'row',
                 marginTop: 22,
-              }}
-            >
+              }}>
               {/* origin details */}
               <View
                 style={{
-                  flexDirection: "column",
+                  flexDirection: 'column',
                   marginLeft: 1,
-                }}
-              >
+                }}>
                 <Text>ORI-CODE</Text>
                 <Text
-                  style={{ fontSize: 18, color: "#005CFF", fontWeight: "500" }}
-                >
+                  style={{fontSize: 18, color: '#005CFF', fontWeight: '500'}}>
                   TIME
                 </Text>
                 <Text>DAY/YYYY</Text>
@@ -197,10 +180,9 @@ const PassengerFlightDetails = ({ navigation }) => {
               {/* duration details */}
               <View
                 style={{
-                  justifyContent: "flex-start",
-                  flexDirection: "column",
-                }}
-              >
+                  justifyContent: 'flex-start',
+                  flexDirection: 'column',
+                }}>
                 <Text>duration</Text>
                 <Text> n-s</Text>
               </View>
@@ -208,15 +190,13 @@ const PassengerFlightDetails = ({ navigation }) => {
               {/* destination Details */}
               <View
                 style={{
-                  flexDirection: "column",
-                  alignItems: "flex-end",
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
                   marginRight: 4,
-                }}
-              >
+                }}>
                 <Text>DES-CODE</Text>
                 <Text
-                  style={{ fontSize: 18, color: "#005CFF", fontWeight: "500" }}
-                >
+                  style={{fontSize: 18, color: '#005CFF', fontWeight: '500'}}>
                   TIME
                 </Text>
                 <Text>DAY/YYYY</Text>
@@ -231,51 +211,53 @@ const PassengerFlightDetails = ({ navigation }) => {
             <View
               elevation={10}
               style={{
-                height: 91,
+                // height: 91,
                 marginLeft: 20,
                 marginRight: 20,
                 marginTop: 18,
-                backgroundColor: "#fff",
+                backgroundColor: '#fff',
                 borderRadius: 20,
-              }}
-            >
+              }}>
               {/*  details check-in bags */}
               <View
                 //elevation={5}
                 style={{
-                  flexDirection: "row",
-                  //height: 26,
+                  flexDirection: 'row',
+                  // height: 91,
                   width: 280,
-                  backgroundColor: "#fff",
+                  backgroundColor: '#fff',
                   //    justifyContent: "space-around",
-                  alignItems: "center",
+                  alignItems: 'center',
                   borderRadius: 20,
                   marginLeft: 10,
                   marginTop: 13,
-                }}
-              >
+                }}>
                 <Image
-                  source={require("../../../assets/logo/airplane.png")}
+                  source={require('../../../assets/logo/cabinbag.png')}
                   style={{
                     width: 16,
-                    height: 11,
+                    height: 20,
+                    width: 20,
                     marginLeft: 5,
                   }}
                 />
                 <Text
-                  style={{ fontSize: 12, fontWeight: "500", marginLeft: 10 }}
-                >
+                  style={{
+                    fontSize: 12,
+                    fontWeight: '500',
+                    marginLeft: 10,
+                    color: 'black',
+                  }}>
                   Cabin Bag
                 </Text>
                 <Text
                   style={{
                     fontSize: 12,
-                    fontWeight: "500",
-                    color: "#005CFF",
+                    fontWeight: '500',
+                    color: '#005CFF',
                     marginRight: 5,
                     marginLeft: 42,
-                  }}
-                >
+                  }}>
                   7 Kg
                 </Text>
               </View>
@@ -283,39 +265,42 @@ const PassengerFlightDetails = ({ navigation }) => {
               <View
                 //elevation={5}
                 style={{
-                  flexDirection: "row",
+                  flexDirection: 'row',
                   //  height: 26,
                   width: 280,
-                  backgroundColor: "#fff",
+                  backgroundColor: '#fff',
                   //    justifyContent: "space-around",
-                  alignItems: "center",
+                  alignItems: 'center',
                   borderRadius: 20,
                   marginLeft: 10,
                   marginTop: 10,
-                }}
-              >
+                }}>
                 <Image
-                  source={require("../../../assets/logo/airplane.png")}
+                  source={require('../../../assets/logo/checkinbag.png')}
                   style={{
                     width: 16,
-                    height: 11,
+                    height: 20,
+                    width: 20,
                     marginLeft: 5,
                   }}
                 />
                 <Text
-                  style={{ fontSize: 12, fontWeight: "500", marginLeft: 10 }}
-                >
+                  style={{
+                    fontSize: 12,
+                    color: 'black',
+                    fontWeight: '500',
+                    marginLeft: 10,
+                  }}>
                   Check-In Bags
                 </Text>
                 <Text
                   style={{
                     fontSize: 12,
-                    fontWeight: "500",
-                    color: "#005CFF",
+                    fontWeight: '500',
+                    color: '#005CFF',
                     marginRight: 5,
                     marginLeft: 42,
-                  }}
-                >
+                  }}>
                   15 Kg
                 </Text>
               </View>
@@ -323,12 +308,12 @@ const PassengerFlightDetails = ({ navigation }) => {
               <Text
                 style={{
                   fontSize: 12,
-                  fontWeight: "500",
-                  color: "#005CFF",
+                  fontWeight: '500',
+                  color: '#005CFF',
                   marginTop: 10,
                   marginLeft: 15,
-                }}
-              >
+                  marginBottom: 8,
+                }}>
                 Baggage & Cancellation Policy
               </Text>
             </View>
@@ -338,15 +323,101 @@ const PassengerFlightDetails = ({ navigation }) => {
             <View
               elevation={10}
               style={{
-                height: 91,
+                // height: 91,
                 marginLeft: 20,
                 marginRight: 20,
                 marginTop: 18,
-                backgroundColor: "#fff",
+                backgroundColor: '#fff',
                 borderRadius: 20,
-              }}
-            >
-              <View style={{ flexDirection: "row" }}></View>
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: 280,
+                  backgroundColor: '#fff',
+                  alignItems: 'center',
+                  borderRadius: 20,
+                  marginLeft: 10,
+                  marginTop: 10,
+                }}>
+                <Image
+                  source={require('../../../assets/logo/offerpromo.png')}
+                  style={{
+                    width: 16,
+                    height: 26,
+                    width: 26,
+                    marginLeft: 5,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '500',
+                    marginLeft: 10,
+                    color: 'black',
+                  }}>
+                  Offers & Promo Codes{'\n'}
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: '500',
+                      marginLeft: 10,
+                      color: 'black',
+                    }}>
+                    To Help you save more
+                  </Text>
+                </Text>
+              </View>
+              {/* promocode */}
+              <View
+                elevation={5}
+                style={{
+                  flexDirection: 'row',
+                  width: 320,
+                  height: 36,
+                  marginTop: 3,
+                  marginLeft: 16,
+                  marginRight: 16,
+                  backgroundColor: '#fff',
+                  marginBottom: 11,
+                  borderRadius: 11,
+                }}>
+                <TextInput
+                  style={{
+                    height: 36,
+                    backgroundColor: '#fff',
+                    fontSize: 14,
+                    borderRadius: 10,
+                    marginLeft: 6,
+                    width: '50%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  placeholder="Enter promo code..."
+                />
+                <TouchableOpacity>
+                  <View
+                    style={{
+                      height: 27,
+                      margin: 4.8,
+                      width: 100,
+                      borderRadius: 20,
+                      backgroundColor: '#fff',
+                      justifyContent: 'center',
+                      alignItems: 'flex-end',
+                    }}>
+                    <Text
+                      style={{
+                        color: '#026BDE',
+                        fontWeight: '500',
+                        // marginTop: -5,
+                        fontSize: 15,
+                      }}>
+                      Apply
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </ScrollView>

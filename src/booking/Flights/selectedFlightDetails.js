@@ -22,7 +22,7 @@ const SelectedFlightDetails = ({navigation, route}) => {
   const [response, setResponse] = useState(null);
   const [token, setToken] = useState(null);
   const [traceId, setTraceId] = useState(null);
-  console.log(ResultIndex);
+  // console.log(ResultIndex);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,7 +60,7 @@ const SelectedFlightDetails = ({navigation, route}) => {
   }, []);
 
   return (
-     <View
+    <View
       style={{
         height: height,
         width: width,
@@ -218,13 +218,27 @@ const SelectedFlightDetails = ({navigation, route}) => {
             {responseData?.map(data1 => {
               return data1?.map(data2 => {
                 const depTime = new Date(data2?.Origin?.DepTime);
-            const formattedDepTime = depTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-            const formatedDepTime = depTime.toLocaleDateString('default', {day: '2-digit', month: '2-digit', year: 'numeric'});   
-            const arrTime = new Date(data2?.Destination?.ArrTime);
-            const formattedArrTime = arrTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-            const formatedArrTime = arrTime.toLocaleDateString('default', {day: '2-digit', month: '2-digit', year: 'numeric'});              
-            
-            return (
+                const formattedDepTime = depTime.toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                });
+                const formatedDepTime = depTime.toLocaleDateString('default', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                });
+                const arrTime = new Date(data2?.Destination?.ArrTime);
+                const formattedArrTime = arrTime.toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                });
+                const formatedArrTime = arrTime.toLocaleDateString('default', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                });
+
+                return (
                   <View
                     style={{
                       justifyContent: 'space-around',
