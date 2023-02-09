@@ -31,7 +31,7 @@ import SelectRoom from './src/booking/Hotels/selectRoom';
 import ReviewBooking from './src/booking/Hotels/reviewBooking';
 
 import MHome from './src/screens/Main_Home_Screens/home';
-
+import Dummy from './src/screens/Main_Home_Screens/Dummy';
 const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
@@ -68,6 +68,7 @@ const Navigation = () => {
           component={PassengerFlightDetails}
         />
         <Stack.Screen name="SearchHotel" component={SearchHotel} />
+        <Stack.Screen name="Dummy" component={Dummy} />
         <Stack.Screen
           name="SelectedHotelDetails"
           component={SelectedHotelDetails}
