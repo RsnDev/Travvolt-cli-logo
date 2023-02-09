@@ -10,11 +10,12 @@ let Header = function (props) {
         alignItems: 'center',
       }}>
       <View style={{width: 25, height: 25}}>
-        <TouchableOpacity onPress={() => props.navigation.goBack()}>
+        <TouchableOpacity onPress={props.onPress}>
           <Image
-            source={require('../../assets/logo/back.png')}
+            source={require('../../assets/logo/back-black.png')}
             style={{
               width: 25,
+              tintColor: '#00000',
               height: 25,
               marginHorizontal: 6,
               paddingHorizontal: 6,
@@ -33,9 +34,9 @@ let Header = function (props) {
         }}>
         <Text
           style={{
-            color: '#fff',
-            fontSize: 20,
-            fontWeight: '800',
+            color: '#000000',
+            fontSize: 23,
+            fontWeight: '700',
           }}>
           {props.headerLabel}
         </Text>

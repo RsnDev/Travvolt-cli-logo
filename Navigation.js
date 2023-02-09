@@ -8,7 +8,7 @@ import {createRef} from 'react';
 import 'react-native-gesture-handler';
 import Onboarding from './src/screens/Main_Home_Screens/onboarding';
 import Holder from './src/Navigation/holder';
-//import {Home} from './src/screens/main_home_Screen/home';
+// import {Home} from './src/screens/main_home_Screen/home';
 import OneWayFlight from './src/screens/Header_Screen/onewayFlight';
 import RoundTripFlight from './src/screens/Header_Screen/roundTripFlight';
 import MultiCityFlight from './src/screens/Header_Screen/multiCityFlight';
@@ -28,6 +28,7 @@ import PassengerFlightDetails from './src/booking/Flights/PassengerFlightDetails
 import SearchHotel from './src/booking/Hotels/searchHotel';
 import SelectedHotelDetails from './src/booking/Hotels/selectedHotelDetails';
 import SelectRoom from './src/booking/Hotels/selectRoom';
+import ReviewBooking from './src/booking/Hotels/reviewBooking';
 
 import MHome from './src/screens/Main_Home_Screens/home';
 
@@ -35,19 +36,15 @@ const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer ref={createRef()}>
-      <Stack.Navigator
-        // initialRouteName="SelectedHotelDetails"
-        screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="SelectRoom" component={SelectRoom} />
 
-        {/* <Stack.Screen name="SearchHotel" component={SearchHotel} /> */}
         {/* <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
         <Stack.Screen name="RoundTripFlight" component={RoundTripFlight} />
         <Stack.Screen name="MultiCityFlight" component={MultiCityFlight} />
-
         <Stack.Screen name="Hotels" component={Hotels} />
         <Stack.Screen
           name="HotelInternational"
@@ -69,13 +66,14 @@ const Navigation = () => {
         <Stack.Screen
           name="PassengerFlightDetails"
           component={PassengerFlightDetails}
-        /> */}
-        {/* <Stack.Screen name="SearchHotel" component={SearchHotel} /> */}
-        {/* <Stack.Screen
+        />
+        <Stack.Screen name="SearchHotel" component={SearchHotel} />
+        <Stack.Screen
           name="SelectedHotelDetails"
           component={SelectedHotelDetails}
-        /> */}
-        {/* <Stack.Screen name="SelectRoom" component={SelectRoom} /> */}
+        />
+        <Stack.Screen name="SelectRoom" component={SelectRoom} />
+        <Stack.Screen name="ReviewBooking" component={ReviewBooking} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

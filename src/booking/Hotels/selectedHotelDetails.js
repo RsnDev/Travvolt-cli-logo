@@ -15,6 +15,7 @@ import {
 import axios from 'axios';
 import HTML from 'react-native-render-html';
 import Footer from '../../component/hotelfooter';
+import Header from '../../component/header';
 const {width, height} = Dimensions.get('window');
 
 const InfoBox = function (props) {
@@ -37,87 +38,68 @@ const InfoBox = function (props) {
 };
 
 const SelectedHotelDetails = ({navigation, route}) => {
-  // const data = route.params && route.params.data ? route.params.data : [];
-  // let [printData.setPrintData]=React.useState({})
   const PayLoad = route.params.payLoad;
+  console.log(PayLoad);
+  console.log('SelectHotel Detail Page Payload');
+  const {ResultIndex, HotelCode, TokenId, TraceId, EndUserId} = PayLoad;
   const hotelPriceDetail = route.params.hotelPriceDetail;
-  let [printData, setPrintData] = React.useState(hotelPriceDetail);
+  const [printData, setPrintData] = React.useState(hotelPriceDetail);
 
-  console.log(hotelPriceDetail);
-  console.log('hotelPriceDetail');
-  const source = {
-    html: `
-    <ul>
-        <li onclick="showDetails(this)" id="gitanjali"
-                data-book-author="Rabindra Nath Tagore">
-            Gitanjali
-        </li>
-         
-        <li onclick="showDetails(this)" id="conquest_of_self"
-                data-book-author="Mahatma Gandhi">
-            Conquest of Self
-        </li>
-        
-        <li onclick="showDetails(this)" id="broken_wings"
-                data-book-author="Sarojini Naidu">
-            Broken Wings
-        </li>
-    </ul>`,
-  };
-
-  React.useEffect(() => {
-    const getData = async function () {
+  useEffect(() => {
+    const getData = async () => {
       try {
-        axios({
+        const response = await axios({
           method: 'post',
           url: 'https://api.travvolt.com/travvolt/hotel/searchinfo',
-          data: PayLoad,
+          data: {
+            ResultIndex,
+            HotelCode,
+            EndUserIp: EndUserId,
+            TokenId,
+            TraceId,
+          },
           config: {
             headers: {
               'Content-Type': 'application/json',
             },
           },
-        }).then(res => {
-          const response1 = res?.data;
-          const response2 = response1?.data?.HotelInfoResult?.HotelDetails;
-          // hotelFullDetails = response2;
-          console.log('HotelSearchResult');
-          console.log(response2);
-          //representData
-          const cloneDec = response2.Description;
-          const updateDec = cloneDec.replace(/<[^>]+>/g, '');
-          console.log(updateDec);
-          console.log('Description');
-          const representData = {
-            Image: response2.Images,
-            HotelName: response2.HotelName,
-            CountryName: response2.CountryName,
-            Address: response2.Address,
-            HotelContactNo: response2.HotelContactNo,
-            FaxNumber: response2.FaxNumber,
-            StarRating: response2.StarRating,
-            HotelFacilities: response2.HotelFacilities,
-            Description: updateDec,
-            location: {
-              Latitude: response2.Latitude,
-              Longitude: response2.Longitude,
-            },
-          };
-          console.log(representData);
-          console.log('representData');
-          const cloneObject = {...printData, ...representData};
-          console.log(cloneObject);
-          console.log('cloneObject');
-
-          setPrintData(cloneObject);
         });
+        console.log(response.data.data.HotelInfoResult.HotelDetails);
+        console.log('SelectHotel Detail Page Response');
+        // console.log(response.data.HotelInfoResult.TraceId);
+        // console.log('SelectHotel Detail Page TraceId');
+        // console.log(response.data.HotelInfoResult.HotelDetails.HotelName);
+        // console.log('SelectHotel Detail Page HotelName');
+
+        const responseData = response.data.data.HotelInfoResult.HotelDetails;
+        const description =
+          response.data.data.HotelInfoResult.HotelDetails.Description;
+
+        var convertDescription = description.replace(/<[^>]+>/g, '');
+        const representData = {
+          Image: responseData.Images,
+          HotelName: responseData.HotelName,
+          Description: convertDescription,
+          CountryName: responseData.CountryName,
+          Address: responseData.Address,
+          HotelContactNo: responseData.HotelContactNo,
+          FaxNumber: responseData.FaxNumber,
+          StarRating: responseData.StarRating,
+          HotelFacilities: responseData.HotelFacilities,
+          location: {
+            Latitude: responseData.Latitude,
+            Longitude: responseData.Longitude,
+          },
+        };
+
+        const updatedData = {...printData, ...representData};
+        setPrintData(updatedData);
       } catch (error) {
         console.log(error);
       }
     };
     getData();
-    // const data = && route.params.data ? route.params.data : [];
-  }, []);
+  }, [ResultIndex, HotelCode, TokenId, TraceId, EndUserId, printData]);
   return (
     <View
       style={{
@@ -127,27 +109,16 @@ const SelectedHotelDetails = ({navigation, route}) => {
       <ImageBackground
         source={require('../../../assets/image/bg.jpg')}
         style={{height: height, width: width}}>
-        <ScrollView style={{flex: 1, borderWidth: 1, borderColor: 'red'}}>
-          {/* header */}
-          <View>
-            <TouchableOpacity
-              style={{
-                padding: 4,
-                width: '100%',
-                justifyContent: 'center',
-              }}
-              onPress={() => navigation.goBack()}>
-              <Image
-                source={require('../../../assets/logo/back.png')}
-                style={{
-                  width: 25,
-                  height: 25,
-                  marginLeft: 14,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-          <View>
+        <Header
+          onPress={() => navigation.goBack()}
+          headerLabel={'Hotel Detail Page'}
+        />
+        <View style={{height: '88%', width: width}}>
+          <ScrollView
+            style={{
+              height: '100%',
+              flex: 1,
+            }}>
             <View>
               <View style={styles.coverPicBox}>
                 <Image
@@ -162,8 +133,10 @@ const SelectedHotelDetails = ({navigation, route}) => {
                     : 'Hotel Data'}
                 </Text>
                 <Text style={{fontSize: 17, fontWeight: '900', color: 'red'}}>
-                  {printData && printData.Discount ? printData.Discount : 0}%
-                  OFF{/* Discount */}
+                  {hotelPriceDetail && hotelPriceDetail.Discount
+                    ? hotelPriceDetail.Discount
+                    : 0}
+                  % OFF{/* Discount */}
                 </Text>
               </View>
 
@@ -208,7 +181,7 @@ const SelectedHotelDetails = ({navigation, route}) => {
               </View>
               <View style={styles.info}>
                 <Text style={{fontSize: 17, fontWeight: '900', padding: 4}}>
-                  Rating :{' '}
+                  Rating :
                   {printData && printData.StarRating ? printData.StarRating : 0}
                   /5
                 </Text>
@@ -241,9 +214,85 @@ const SelectedHotelDetails = ({navigation, route}) => {
                 </Text>
               </View>
             </View>
+            {/* <Footer /> */}
+          </ScrollView>
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            height: 50,
+            backgroundColor: '#fffff',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: 6,
+          }}>
+          <View style={{padding: 4, paddingTop: 2}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View>
+                <Text style={{fontSize: 26, color: '#ff8900', fontWeight: 900}}>
+                  ₹
+                  {hotelPriceDetail.RoomPrice
+                    ? hotelPriceDetail.RoomPrice
+                    : 'wait..'}
+                </Text>
+              </View>
+              <View style={{marginLeft: 4, flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    textDecorationLine: 'line-through',
+                    color: '#666666',
+                    fontWeight: 500,
+                  }}>
+                  ₹{hotelPriceDetail.PublishedPriceRoundedOff}
+                </Text>
+                <Text
+                  style={{
+                    marginLeft: 2,
+                    fontSize: 15,
+                    color: '#666666',
+                    fontWeight: 500,
+                  }}>
+                  Per Night
+                </Text>
+              </View>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: '#666666',
+                  fontWeight: 500,
+                }}>
+                +{hotelPriceDetail.GST.TaxableAmount} Taxes & Fees
+              </Text>
+            </View>
           </View>
-          {/* <Footer /> */}
-        </ScrollView>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 8,
+              margin: 4,
+              backgroundColor: '#006fff',
+              height: 42,
+              borderRadius: 18,
+            }}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('SelectRoom', {
+                  payLoad: PayLoad,
+                })
+              }>
+              <Text style={{fontSize: 20, fontWeight: '500', color: '#ffff'}}>
+                Select Room
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ImageBackground>
     </View>
   );

@@ -90,6 +90,7 @@ const Hotels = ({navigation, route}) => {
         ToastAndroid.show('Results', ToastAndroid.SHORT);
         navigation.navigate('SearchHotel', {
           data: response2,
+          price: response2.Price,
           tokenId: TokenIdd,
           userIp: userIp,
         });
