@@ -1,22 +1,18 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   StyleSheet,
   Text,
-  StatusBar,
   View,
   TextInput,
   Dimensions,
   TouchableOpacity,
   Image,
-  ImageBackground,
-  ToastAndroid,
   ScrollView,
-  Button,
 } from 'react-native';
 
 import Header from '../../component/header';
 import RazorpayCheckout from 'react-native-razorpay';
-import Footer from '../../component/hotelfooter';
 const {width, height} = Dimensions.get('window');
 
 const ReviewBooking = function ({navigation}) {
@@ -29,10 +25,6 @@ const ReviewBooking = function ({navigation}) {
   const [secondName, setSecondName] = React.useState('Second Name');
   const [email, setEmail] = React.useState('Enter Your Email');
   const [phoneNumber, setPhoneNumber] = React.useState(9999999999);
-
-  let selectRoomHandler = function () {
-    console.log('select Room');
-  };
 
   return (
     <View

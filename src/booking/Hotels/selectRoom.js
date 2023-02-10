@@ -1,20 +1,84 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   StyleSheet,
   Text,
-  StatusBar,
   View,
   Dimensions,
   TouchableOpacity,
   Image,
-  ImageBackground,
-  ToastAndroid,
   ScrollView,
-  Button,
 } from 'react-native';
 import axios from 'axios';
 import Header from '../../component/header';
 const {width, height} = Dimensions.get('window');
+
+let Cancellationinfo = function (props) {
+  return (
+    <View
+      // elevation={7}
+      style={{
+        borderRadius: 8,
+        margin: 10,
+        borderWidth: 1,
+        borderColor: '666666',
+        padding: 6,
+        backgroundColor: '#fffff',
+      }}>
+      <View
+        style={{
+          padding: 6,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: '700',
+            color: '#000000',
+          }}>
+          Cancellation Policy
+        </Text>
+      </View>
+      <View>
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: '600',
+            color: '#000000',
+          }}>{`\u25CF ${`Charge : ${
+          props.CancellationPolicyCharge
+            ? props.CancellationPolicyCharge
+            : 'Charge'
+        }`}`}</Text>
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: '600',
+            color: '#000000',
+          }}>{`\u25CF ${`FromDate : ${
+          props.CancellationPolicyFromDate
+            ? props.CancellationPolicyFromDate
+            : 'Null'
+        }`}`}</Text>
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: '600',
+            color: '#000000',
+          }}>{`\u25CF ${`ToDate : ${
+          props.CancellationPolicyToDate
+            ? props.CancellationPolicyToDate
+            : 'Null'
+        }`}`}</Text>
+      </View>
+    </View>
+  );
+};
+
+function getDate(inputString) {
+  return inputString.split('T')[0];
+}
 
 let DetailCard = function (props) {
   return (
@@ -44,7 +108,7 @@ let DetailCard = function (props) {
               fontWeight: '500',
               color: '#000000',
             }}>
-            Standard Room
+            {props.RoomTypeName ? props.RoomTypeName : 'RoomTypeName'}
           </Text>
         </View>
       </View>
@@ -63,27 +127,45 @@ let DetailCard = function (props) {
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '400',
-              color: '#000000',
-            }}>{`\u25CF ${'mkalskdamlksdmlaksmd'}`}</Text>
+              fontWeight: '700',
+              color: 'red',
+            }}>{`\u25CF ${
+            props.RoomPromotion ? props.RoomPromotion : 'Amount'
+          }`}</Text>
           <Text
             style={{
               fontSize: 16,
               fontWeight: '400',
               color: '#000000',
-            }}>{`\u25CF ${'mkalskdamlksdmlaksmd'}`}</Text>
+            }}>{`\u25CF ${`Smoking : ${
+            props.SmokingPreference ? props.SmokingPreference : 'No'
+          }`}`}</Text>
           <Text
             style={{
               fontSize: 16,
               fontWeight: '400',
               color: '#000000',
-            }}>{`\u25CF ${'mkalskdamlksdmlaksmd'}`}</Text>
+            }}>{`\u25CF ${`Last Cancellation Date : ${
+            props.LastCancellationDate ? props.LastCancellationDate : 'null'
+          }`}`}</Text>
           <Text
             style={{
               fontSize: 16,
               fontWeight: '400',
               color: '#000000',
-            }}>{`\u25CF ${'mkalskdamlksdmlaksmd'}`}</Text>
+            }}>{`\u25CF ${`LastVoucherDate : ${
+            props.LastVoucherDate ? props.LastVoucherDate : 'Null'
+          }`}`}</Text>
+          {props.CancellationPolicies.map((val, key) => {
+            return (
+              <Cancellationinfo
+                key={key}
+                CancellationPolicyCharge={val.Charge}
+                CancellationPolicyFromDate={getDate(val.FromDate)}
+                CancellationPolicyToDate={getDate(val.ToDate)}
+              />
+            );
+          })}
         </View>
         <View
           style={{
@@ -96,7 +178,10 @@ let DetailCard = function (props) {
               color: '#666666',
               textDecorationLine: 'line-through',
             }}>
-            ₹1240
+            ₹
+            {props.PublishedPriceRoundedOff
+              ? props.PublishedPriceRoundedOff
+              : 'RoomPrice'}
           </Text>
           <Text
             style={{
@@ -104,7 +189,7 @@ let DetailCard = function (props) {
               color: '#006fff',
               fontWeight: '700',
             }}>
-            ₹5,237
+            ₹{props.RoomPrice ? props.RoomPrice : 'RoomPrice'}
           </Text>
           <Text
             style={{
@@ -113,7 +198,8 @@ let DetailCard = function (props) {
               fontWeight: '700',
             }}
             numberOfLines={2}>
-            +1132 Taxes & serVice fees Per Night
+            +{props.TaxableAmount ? props.TaxableAmount : 'TaxableAmount'} Taxes
+            & serVice fees Per Night
           </Text>
         </View>
       </View>
@@ -123,18 +209,25 @@ let DetailCard = function (props) {
 
 const SelectRoom = function ({navigation, route}) {
   const PayLoad = {
-    ResultIndex: '12',
-    HotelCode: '901764',
+    ResultIndex: '1',
+    HotelCode: '1706031',
     EndUserIp: '103.154.247.253',
-    TokenId: 'c3957b8a-0030-41f0-b7ab-d2b4107ae8ca',
-    TraceId: '2e455223-456d-4a30-9460-11299a7bf69e',
+    TokenId: 'ced3e92b-ede6-49c8-9db6-aba9ba82daf7',
+    TraceId: '962212d3-9c34-459a-9f69-fc1adc6f40bb',
   };
+  function replaceSymbols(inputString, replacementChar) {
+    const symbols = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
+    for (const symbol of symbols) {
+      inputString = inputString.split(symbol).join(replacementChar);
+    }
+    return inputString;
+  }
+
   // const PayLoad = route.params.payLoad;
   console.log(PayLoad);
   console.log('Select Room PayLoad');
   const {ResultIndex, HotelCode, TokenId, TraceId, EndUserIp} = PayLoad;
-
-  const [printData, setPrintData] = React.useState();
+  const [roomList, setRoomList] = React.useState([]);
   console.log(PayLoad);
   React.useEffect(() => {
     const getData = async () => {
@@ -155,42 +248,16 @@ const SelectRoom = function ({navigation, route}) {
             },
           },
         });
-        console.log(response.data.data.GetHotelRoomResult);
+
+        console.log(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
         console.log('HotelRoomsDetails Response');
-        // // console.log(response.data.HotelInfoResult.TraceId);
-        // // console.log('SelectHotel Detail Page TraceId');
-        // // console.log(response.data.HotelInfoResult.HotelDetails.HotelName);
-        // // console.log('SelectHotel Detail Page HotelName');
-
-        // const responseData = response.data.data.HotelInfoResult.HotelDetails;
-        // const description =
-        //   response.data.data.HotelInfoResult.HotelDetails.Description;
-
-        // var convertDescription = description.replace(/<[^>]+>/g, '');
-        // const representData = {
-        //   Image: responseData.Images,
-        //   HotelName: responseData.HotelName,
-        //   Description: convertDescription,
-        //   CountryName: responseData.CountryName,
-        //   Address: responseData.Address,
-        //   HotelContactNo: responseData.HotelContactNo,
-        //   FaxNumber: responseData.FaxNumber,
-        //   StarRating: responseData.StarRating,
-        //   HotelFacilities: responseData.HotelFacilities,
-        //   location: {
-        //     Latitude: responseData.Latitude,
-        //     Longitude: responseData.Longitude,
-        //   },
-        // };
-
-        // const updatedData = {...printData, ...representData};
-        // setPrintData(updatedData);
+        setRoomList(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
       } catch (error) {
         console.log(error);
       }
     };
     getData();
-  }, [EndUserIp, HotelCode, ResultIndex, TokenId, TraceId, printData]);
+  }, [EndUserIp, HotelCode, ResultIndex, TokenId, TraceId]);
   return (
     <View
       style={{
@@ -248,10 +315,26 @@ const SelectRoom = function ({navigation, route}) {
               </Text>
             </View>
             <View>
-              <DetailCard />
-              <DetailCard />
-              <DetailCard />
-              <DetailCard />
+              {roomList.length > 0
+                ? roomList.map((val, key) => {
+                    return (
+                      <DetailCard
+                        key={key}
+                        RoomTypeName={val.RoomTypeName}
+                        RoomPromotion={replaceSymbols(val.RoomPromotion, ' ')}
+                        SmokingPreference={val.SmokingPreference}
+                        LastCancellationDate={getDate(val.LastCancellationDate)}
+                        LastVoucherDate={getDate(val.LastVoucherDate)}
+                        CancellationPolicies={val.CancellationPolicies}
+                        PublishedPriceRoundedOff={
+                          val.Price.PublishedPriceRoundedOff
+                        }
+                        RoomPrice={val.Price.RoomPrice}
+                        TaxableAmount={val.Price.GST.TaxableAmount}
+                      />
+                    );
+                  })
+                : null}
             </View>
           </View>
         </ScrollView>
