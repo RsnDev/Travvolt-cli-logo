@@ -240,13 +240,23 @@ const SelectRoom = function ({navigation, route}) {
     TraceId: 'ace4e31b-590a-45ff-a92d-56f41a3de312',
   };
   const [secondPayload, setSecondPayload] = React.useState({});
-  const PayLoad = {
-    ResultIndex: '101',
-    HotelCode: '1706031',
-    EndUserIp: '123.1.1.1',
-    TokenId: 'abb18dbf-096b-40a1-b90d-d105ab3328f7',
-    TraceId: 'c04eb625-9c93-413c-b419-ac742e6f4e04',
-  };
+  const PayLoad = route.params.payLoad;
+  // const PayLoad = {
+  //   ResultIndex: '101',
+  //   HotelCode: '1706031',
+  //   EndUserIp: '123.1.1.1',
+  //   TokenId: '450ac5ad-2a80-4f44-8ac9-10c9a1458fb4',
+  //   TraceId: '8fb1da5b-4a75-419a-91a4-f572c034d8c6',
+  // };
+
+  // const PayLoad = {
+  //   ResultIndex: getPayLoad.ResultIndex,
+  //   HotelCode: getPayLoad.HotelCode,
+  //   EndUserIp: getPayLoad.EndUserIp,
+  //   TokenId: getPayLoad.TokenId,
+  //   TraceId: getPayLoad.TraceId,
+  // };
+
   function replaceSymbols(inputString, replacementChar) {
     const symbols = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
     for (const symbol of symbols) {
@@ -255,11 +265,15 @@ const SelectRoom = function ({navigation, route}) {
     return inputString;
   }
 
-  // const PayLoad = route.params.payLoad;
-  const HotelName = 'New Hotel Diamond Blue';
-  // console.log(PayLoad);
-  // console.log('Select Room PayLoad');
-  const {ResultIndex, HotelCode, TokenId, TraceId, EndUserIp} = PayLoad;
+  console.log(PayLoad);
+  console.log('Select Room PayLoad');
+
+  // const HotelName = 'New Hotel Diamond Blue';
+  const HotelName = route.params.HotelName;
+  console.log(HotelName);
+  console.log('Select Room HotelName');
+
+  const {ResultIndex, HotelCode, TokenId, TraceId, EndUserId} = PayLoad;
   const [roomList, setRoomList] = React.useState([]);
   //Footer State
   const [footerRoomPrice, setFooterRoomPrice] = React.useState('');
@@ -312,7 +326,7 @@ const SelectRoom = function ({navigation, route}) {
           },
         },
       ],
-      EndUserIp: EndUserIp,
+      EndUserIp: EndUserId,
       TokenId: TokenId,
       TraceId: TraceId,
     };
@@ -335,7 +349,7 @@ const SelectRoom = function ({navigation, route}) {
           data: {
             ResultIndex,
             HotelCode,
-            EndUserIp,
+            EndUserIp: EndUserId,
             TokenId,
             TraceId,
           },
@@ -345,16 +359,18 @@ const SelectRoom = function ({navigation, route}) {
             },
           },
         });
+        console.log(response);
+        console.log('Selectroom enter Function');
 
-        // console.log(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
-        // console.log('HotelRoomsDetails Response');
+        console.log(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
+        console.log('HotelRoomsDetails Response');
         setRoomList(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
       } catch (error) {
         console.log(error);
       }
     };
     getData();
-  }, [EndUserIp, HotelCode, ResultIndex, TokenId, TraceId]);
+  }, [EndUserId, HotelCode, ResultIndex, TokenId, TraceId]);
   return (
     <View
       style={{
@@ -379,7 +395,7 @@ const SelectRoom = function ({navigation, route}) {
             </View>
             <View style={styles.textBox}>
               <Text style={{fontSize: 24, fontWeight: '800', color: '#000000'}}>
-                Hotel Data
+                {HotelName}
               </Text>
               <Text style={{fontSize: 17, fontWeight: '900', color: '#006fff'}}>
                 Details
@@ -412,7 +428,7 @@ const SelectRoom = function ({navigation, route}) {
               </Text>
             </View>
             <View>
-              {roomList.length > 0
+              {roomList
                 ? roomList.map((val, key) => {
                     return (
                       <DetailCard

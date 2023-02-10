@@ -123,6 +123,12 @@ let HotelCard = function (props) {
 const SearchHotel = ({navigation, route}) => {
   const paramsData = route.params;
   const data = paramsData.data ? paramsData.data : [];
+  const rawData = {
+    CheckInDate: paramsData.CheckInDate,
+    CheckOutDate: paramsData.CheckOutDate,
+  };
+  console.log(rawData);
+  console.log('Raw Data -search screens');
 
   // const representData = data.HotelResults;
   // const hotelPriceData = data.Price;

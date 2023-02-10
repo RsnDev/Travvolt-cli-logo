@@ -93,6 +93,8 @@ const Hotels = ({navigation, route}) => {
           price: response2.Price,
           tokenId: TokenIdd,
           userIp: userIp,
+          CheckInDate: response2.CheckInDate,
+          CheckOutDate: response2.CheckOutDate,
         });
       });
     } catch (error) {

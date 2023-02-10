@@ -37,9 +37,9 @@ const Navigation = () => {
   return (
     <NavigationContainer ref={createRef()}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="SelectRoom" component={SelectRoom} />
+        {/* <Stack.Screen name="SelectRoom" component={SelectRoom} /> */}
 
-        {/* <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
@@ -73,7 +73,7 @@ const Navigation = () => {
           name="SelectedHotelDetails"
           component={SelectedHotelDetails}
         />
-        <Stack.Screen name="SelectRoom" component={SelectRoom} />*/}
+        <Stack.Screen name="SelectRoom" component={SelectRoom} />
         <Stack.Screen name="ReviewBooking" component={ReviewBooking} />
       </Stack.Navigator>
     </NavigationContainer>
