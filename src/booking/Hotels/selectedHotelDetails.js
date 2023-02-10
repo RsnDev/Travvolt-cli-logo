@@ -286,6 +286,9 @@ const SelectedHotelDetails = ({navigation, route}) => {
                 navigation.navigate('SelectRoom', {
                   payLoad: PayLoad,
                   HotelName: printData.HotelName,
+                  Address: printData.Address,
+                  StarRating: printData.StarRating,
+                  HotelFacilities: printData.HotelFacilities,
                 })
               }>
               <Text style={{fontSize: 20, fontWeight: '500', color: '#ffff'}}>

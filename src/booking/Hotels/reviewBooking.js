@@ -18,6 +18,10 @@ const {width, height} = Dimensions.get('window');
 
 const ReviewBooking = function ({navigation, route}) {
   const payLoad = route.params.payLoad;
+  const HotelName = route.params.HotelName;
+  const Address = route.params.Address;
+  const StarRating = route.params.StarRating;
+  const HotelFacilities = route.params.HotelFacilities;
   const [donate, setDonate] = React.useState(false);
   const [genderOptions, setGenderOptions] = React.useState(false);
   const [dotRadio, setDotRadio] = React.useState(false);
@@ -81,16 +85,16 @@ const ReviewBooking = function ({navigation, route}) {
             </View>
             <View style={styles.textBox}>
               <Text style={{fontSize: 24, fontWeight: '800', color: '#000000'}}>
-                Hotel Data
+                {HotelName ? HotelName : 'HotelNam...'}
               </Text>
               <Text style={{fontSize: 18, fontWeight: '600', color: '#000000'}}>
-                Rating 4/5
+                Rating {StarRating ? StarRating : '3'}/5
               </Text>
               <View style={{width: '60%'}}>
                 <Text
                   numberOfLines={2}
                   style={{fontSize: 18, fontWeight: '600', color: '#000000'}}>
-                  HotelAddress
+                  {Address}
                 </Text>
               </View>
             </View>
@@ -188,36 +192,34 @@ const ReviewBooking = function ({navigation, route}) {
                   style={{fontSize: 17, fontWeight: '600', color: '#252525'}}>
                   Executive Room free wifi- Welcome Drink
                 </Text>
+                <Text
+                  style={{
+                    marginTop: 10,
+                    fontSize: 20,
+                    fontWeight: '600',
+                    color: '#252525',
+                  }}>
+                  HotelFacilities
+                </Text>
                 <View
                   style={{marginLeft: 10, marginTop: 0, margin: 8, padding: 6}}>
-                  <Text
-                    style={{
-                      fontSize: 17,
-                      fontWeight: '600',
-                      color: '#666666',
-                    }}>{`\u25CF ${'Room Only'}`}</Text>
-                  <Text
-                    style={{
-                      fontSize: 17,
-                      fontWeight: '600',
-                      color: '#666666',
-                    }}>{`\u25CF ${'Room Only'}`}</Text>
-                  <Text
-                    style={{
-                      fontSize: 17,
-                      fontWeight: '600',
-                      color: '#666666',
-                    }}>{`\u25CF ${'Room Only'}`}</Text>
-                  <Text
-                    style={{
-                      fontSize: 17,
-                      fontWeight: '600',
-                      color: '#666666',
-                    }}>{`\u25CF ${'Room Only'}`}</Text>
+                  {HotelFacilities ? (
+                    HotelFacilities.map((val, index) => {
+                      return (
+                        <Text
+                          key={index}
+                          style={{fontSize: 15, fontWeight: '900', padding: 4}}>
+                          {`\u25CF ${val}`}
+                        </Text>
+                      );
+                    })
+                  ) : (
+                    <Text>Data is Loading</Text>
+                  )}
                 </View>
               </View>
             </View>
-            <View>
+            {/* <View>
               <View
                 elevation={7}
                 style={{
@@ -263,7 +265,7 @@ const ReviewBooking = function ({navigation, route}) {
                     }}>{`\u25CF ${'Room Only'}`}</Text>
                 </View>
               </View>
-            </View>
+            </View> */}
             <View>
               <View
                 elevation={7}
@@ -457,7 +459,7 @@ const ReviewBooking = function ({navigation, route}) {
                 </View>
               </View>
             </View>
-            <View>
+            {/* <View>
               <View
                 elevation={7}
                 style={{
@@ -596,7 +598,7 @@ const ReviewBooking = function ({navigation, route}) {
                   </Text>
                 </View>
               </View>
-            </View>
+            </View> */}
             <View>
               <View
                 elevation={7}
@@ -1213,6 +1215,14 @@ const ReviewBooking = function ({navigation, route}) {
                   }}>
                   <TouchableOpacity
                     onPress={() => {
+                      if (
+                        !email.length < 0 &&
+                        !firstName.length < 0 &&
+                        !secondName.length < 0 &&
+                        !phoneNumber.length < 0
+                      ) {
+                        return alert('Please Enter Valid Credentials');
+                      }
                       var options = {
                         description: 'Credits towards consultation',
                         image: 'https://i.imgur.com/3g7nmJC.jpg',
@@ -1222,9 +1232,9 @@ const ReviewBooking = function ({navigation, route}) {
                         name: 'Acme Corp',
                         order_id: 'order_DslnoIgkIDL8Zt', //Replace this with an order_id created using Orders API.
                         prefill: {
-                          email: 'mohit878421@gmail.com',
-                          contact: '8847355729',
-                          name: 'Mohit Kumar',
+                          email: email,
+                          contact: phoneNumber,
+                          name: `${firstName}${secondName}`,
                         },
                         theme: {color: '#53a20e'},
                       };

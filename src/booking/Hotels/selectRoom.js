@@ -241,21 +241,6 @@ const SelectRoom = function ({navigation, route}) {
   };
   const [secondPayload, setSecondPayload] = React.useState({});
   const PayLoad = route.params.payLoad;
-  // const PayLoad = {
-  //   ResultIndex: '101',
-  //   HotelCode: '1706031',
-  //   EndUserIp: '123.1.1.1',
-  //   TokenId: '450ac5ad-2a80-4f44-8ac9-10c9a1458fb4',
-  //   TraceId: '8fb1da5b-4a75-419a-91a4-f572c034d8c6',
-  // };
-
-  // const PayLoad = {
-  //   ResultIndex: getPayLoad.ResultIndex,
-  //   HotelCode: getPayLoad.HotelCode,
-  //   EndUserIp: getPayLoad.EndUserIp,
-  //   TokenId: getPayLoad.TokenId,
-  //   TraceId: getPayLoad.TraceId,
-  // };
 
   function replaceSymbols(inputString, replacementChar) {
     const symbols = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
@@ -270,6 +255,10 @@ const SelectRoom = function ({navigation, route}) {
 
   // const HotelName = 'New Hotel Diamond Blue';
   const HotelName = route.params.HotelName;
+  const Address = route.params.Address;
+  const StarRating = route.params.StarRating;
+  const HotelFacilities = route.params.HotelFacilities;
+
   console.log(HotelName);
   console.log('Select Room HotelName');
 
@@ -533,6 +522,10 @@ const SelectRoom = function ({navigation, route}) {
               onPress={() =>
                 navigation.navigate('ReviewBooking', {
                   payLoad: secondPayload,
+                  HotelName: HotelName,
+                  Address: Address,
+                  StarRating: StarRating,
+                  HotelFacilities: HotelFacilities,
                 })
               }>
               <Text style={{fontSize: 20, fontWeight: '500', color: '#ffff'}}>
