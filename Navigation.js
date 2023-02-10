@@ -73,8 +73,8 @@ const Navigation = () => {
           name="SelectedHotelDetails"
           component={SelectedHotelDetails}
         />
-        <Stack.Screen name="SelectRoom" component={SelectRoom} />
-        <Stack.Screen name="ReviewBooking" component={ReviewBooking} /> */}
+        <Stack.Screen name="SelectRoom" component={SelectRoom} />*/}
+        <Stack.Screen name="ReviewBooking" component={ReviewBooking} />
       </Stack.Navigator>
     </NavigationContainer>
   );

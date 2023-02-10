@@ -10,12 +10,14 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+import axios from 'axios';
 
 import Header from '../../component/header';
 import RazorpayCheckout from 'react-native-razorpay';
 const {width, height} = Dimensions.get('window');
 
-const ReviewBooking = function ({navigation}) {
+const ReviewBooking = function ({navigation, route}) {
+  const payLoad = route.params.payLoad;
   const [donate, setDonate] = React.useState(false);
   const [genderOptions, setGenderOptions] = React.useState(false);
   const [dotRadio, setDotRadio] = React.useState(false);
@@ -25,6 +27,32 @@ const ReviewBooking = function ({navigation}) {
   const [secondName, setSecondName] = React.useState('Second Name');
   const [email, setEmail] = React.useState('Enter Your Email');
   const [phoneNumber, setPhoneNumber] = React.useState(9999999999);
+
+  React.useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios({
+          method: 'post',
+          url: 'https://api.travvolt.com/travvolt/hotel/blockroom',
+          data: payLoad,
+          config: {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        });
+
+        console.log(response.data);
+        console.log('reviewBooking Response');
+        // setRoomList(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+    console.log(payLoad);
+    console.log('reviewBooking');
+  }, [payLoad]);
 
   return (
     <View

@@ -285,6 +285,7 @@ const SelectedHotelDetails = ({navigation, route}) => {
               onPress={() =>
                 navigation.navigate('SelectRoom', {
                   payLoad: PayLoad,
+                  HotelName: printData.HotelName,
                 })
               }>
               <Text style={{fontSize: 20, fontWeight: '500', color: '#ffff'}}>

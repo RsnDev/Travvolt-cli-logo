@@ -16,7 +16,6 @@ const {width, height} = Dimensions.get('window');
 let Cancellationinfo = function (props) {
   return (
     <View
-      // elevation={7}
       style={{
         borderRadius: 8,
         margin: 10,
@@ -90,130 +89,163 @@ let DetailCard = function (props) {
         borderRadius: 8,
         padding: 6,
       }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <View style={{width: 25, height: 25, margin: 4}}>
-          <Image
-            style={{width: '100%', height: '100%'}}
-            source={require('../../../assets/logo/dot.png')}
-          />
-        </View>
-        <View style={{margin: 4}}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: '500',
-              color: '#000000',
-            }}>
-            {props.RoomTypeName ? props.RoomTypeName : 'RoomTypeName'}
-          </Text>
-        </View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-          justifyContent: 'space-between',
-        }}>
-        <View
-          style={{
-            width: '50%',
-            marginLeft: 10,
-            padding: 4,
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '700',
-              color: 'red',
-            }}>{`\u25CF ${
-            props.RoomPromotion ? props.RoomPromotion : 'Amount'
-          }`}</Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '400',
-              color: '#000000',
-            }}>{`\u25CF ${`Smoking : ${
-            props.SmokingPreference ? props.SmokingPreference : 'No'
-          }`}`}</Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '400',
-              color: '#000000',
-            }}>{`\u25CF ${`Last Cancellation Date : ${
-            props.LastCancellationDate ? props.LastCancellationDate : 'null'
-          }`}`}</Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '400',
-              color: '#000000',
-            }}>{`\u25CF ${`LastVoucherDate : ${
-            props.LastVoucherDate ? props.LastVoucherDate : 'Null'
-          }`}`}</Text>
-          {props.CancellationPolicies.map((val, key) => {
-            return (
-              <Cancellationinfo
-                key={key}
-                CancellationPolicyCharge={val.Charge}
-                CancellationPolicyFromDate={getDate(val.FromDate)}
-                CancellationPolicyToDate={getDate(val.ToDate)}
-              />
-            );
-          })}
+      <TouchableOpacity onPress={props.onPress}>
+        <View>
+          <View style={{margin: 4}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: '500',
+                color: '#000000',
+              }}>
+              {props.RoomTypeName ? props.RoomTypeName : 'RoomTypeName'}
+            </Text>
+          </View>
         </View>
         <View
           style={{
-            width: '40%',
+            flexDirection: 'row',
             alignItems: 'flex-end',
+            justifyContent: 'space-between',
           }}>
-          <Text
+          <View
             style={{
-              fontSize: 15,
-              color: '#666666',
-              textDecorationLine: 'line-through',
+              width: '65%',
+              marginLeft: 10,
+              padding: 4,
             }}>
-            ₹
-            {props.PublishedPriceRoundedOff
-              ? props.PublishedPriceRoundedOff
-              : 'RoomPrice'}
-          </Text>
-          <Text
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '700',
+                color: 'red',
+              }}>{`\u25CF ${
+              props.RoomPromotion ? props.RoomPromotion : 'Amount'
+            }`}</Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '400',
+                color: '#000000',
+              }}>{`\u25CF ${`Smoking : ${
+              props.SmokingPreference ? props.SmokingPreference : 'No'
+            }`}`}</Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '400',
+                color: '#000000',
+              }}>{`\u25CF ${`Last Cancellation Date : ${
+              props.LastCancellationDate ? props.LastCancellationDate : 'null'
+            }`}`}</Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '400',
+                color: '#000000',
+              }}>{`\u25CF ${`LastVoucherDate : ${
+              props.LastVoucherDate ? props.LastVoucherDate : 'Null'
+            }`}`}</Text>
+            {props.CancellationPolicies.map((val, key) => {
+              return (
+                <Cancellationinfo
+                  key={key}
+                  CancellationPolicyCharge={val.Charge}
+                  CancellationPolicyFromDate={getDate(val.FromDate)}
+                  CancellationPolicyToDate={getDate(val.ToDate)}
+                />
+              );
+            })}
+          </View>
+          <View
             style={{
-              fontSize: 20,
-              color: '#006fff',
-              fontWeight: '700',
+              marginRight: 4,
+              width: '30%',
+              alignItems: 'flex-end',
             }}>
-            ₹{props.RoomPrice ? props.RoomPrice : 'RoomPrice'}
-          </Text>
-          <Text
-            style={{
-              fontSize: 15,
-              color: '#666666',
-              fontWeight: '700',
-            }}
-            numberOfLines={2}>
-            +{props.TaxableAmount ? props.TaxableAmount : 'TaxableAmount'} Taxes
-            & serVice fees Per Night
-          </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                color: '#666666',
+                textDecorationLine: 'line-through',
+              }}>
+              ₹
+              {props.PublishedPriceRoundedOff
+                ? props.PublishedPriceRoundedOff
+                : 'RoomPrice'}
+            </Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: '#006fff',
+                fontWeight: '700',
+              }}>
+              ₹{props.RoomPrice ? props.RoomPrice : 'RoomPrice'}
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                color: '#666666',
+                fontWeight: '700',
+              }}
+              numberOfLines={2}>
+              +{props.TaxableAmount ? props.TaxableAmount : 'TaxableAmount'}{' '}
+              Taxes & serVice fees Per Night
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const SelectRoom = function ({navigation, route}) {
-  const PayLoad = {
-    ResultIndex: '1',
-    HotelCode: '1706031',
+  const passPayLoad = {
+    // ResultIndex: '2', // Payload
+    // HotelCode: '901764', // From Hotel Detail page
+    // HotelName: 'Tulip Inn Amsterdam Riverside', // From Hotel Detail page
+    // GuestNationality: 'IN', // default
+    // NoOfRooms: '1', // default
+    // ClientReferenceNo: '0',
+    // IsVoucherBooking: 'true',
+    HotelRoomsDetails: [
+      {
+        // RoomIndex: '1', //// from GetHotelRoom Data
+        // RoomTypeCode: 'SB|0|0|1', //// from GetHotelRoom Data
+        // RoomTypeName: 'Standard Single', //// from GetHotelRoom Data
+        // RatePlanCode: '001:TUL5:18178:S17929:24963:98679|1', //// from GetHotelRoom Data
+        // BedTypeCode: null,
+        // SmokingPreference: 0, //// from GetHotelRoom Data
+        // Supplements: null,
+        Price: {
+          CurrencyCode: 'INR',
+          RoomPrice: '4620.0',
+          Tax: '0.0',
+          ExtraGuestCharge: '0.0',
+          ChildCharge: '0.0',
+          OtherCharges: '0.0',
+          Discount: '0.0',
+          PublishedPrice: '4620.0',
+          PublishedPriceRoundedOff: '4620',
+          OfferedPrice: '4620.0',
+          OfferedPriceRoundedOff: '4620',
+          AgentCommission: '0.0',
+          AgentMarkUp: '0.0',
+          TDS: '0.0',
+        },
+      },
+    ],
     EndUserIp: '103.154.247.253',
-    TokenId: 'ced3e92b-ede6-49c8-9db6-aba9ba82daf7',
-    TraceId: '962212d3-9c34-459a-9f69-fc1adc6f40bb',
+    TokenId: '17e880a0-2d00-474b-be5b-d26054f19421',
+    TraceId: 'ace4e31b-590a-45ff-a92d-56f41a3de312',
+  };
+  const [secondPayload, setSecondPayload] = React.useState({});
+  const PayLoad = {
+    ResultIndex: '101',
+    HotelCode: '1706031',
+    EndUserIp: '123.1.1.1',
+    TokenId: 'abb18dbf-096b-40a1-b90d-d105ab3328f7',
+    TraceId: 'c04eb625-9c93-413c-b419-ac742e6f4e04',
   };
   function replaceSymbols(inputString, replacementChar) {
     const symbols = '!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~';
@@ -224,11 +256,76 @@ const SelectRoom = function ({navigation, route}) {
   }
 
   // const PayLoad = route.params.payLoad;
-  console.log(PayLoad);
-  console.log('Select Room PayLoad');
+  const HotelName = 'New Hotel Diamond Blue';
+  // console.log(PayLoad);
+  // console.log('Select Room PayLoad');
   const {ResultIndex, HotelCode, TokenId, TraceId, EndUserIp} = PayLoad;
   const [roomList, setRoomList] = React.useState([]);
-  console.log(PayLoad);
+  //Footer State
+  const [footerRoomPrice, setFooterRoomPrice] = React.useState('');
+  const [footerPriceRoundedOff, setFooterPriceRoundedOff] = React.useState('');
+  const [footerTaxableAmount, setFooterTaxableAmount] = React.useState('');
+
+  const setFooterState = function (
+    roomPrice,
+    roundOffPrice,
+    taxableAmount,
+    RoomIndex,
+    RoomTypeCode,
+    RoomTypeName,
+    RatePlanCode,
+    SmokingPreference,
+    Price,
+  ) {
+    const secondPayloadObject = {
+      ResultIndex: ResultIndex,
+      HotelCode: HotelCode,
+      HotelName: HotelName,
+      GuestNationality: 'IN',
+      NoOfRooms: '1',
+      ClientReferenceNo: '0',
+      IsVoucherBooking: 'true',
+      HotelRoomsDetails: [
+        {
+          RoomIndex: RoomIndex,
+          RoomTypeCode: RoomTypeCode,
+          RoomTypeName: RoomTypeName,
+          RatePlanCode: RatePlanCode,
+          BedTypeCode: null,
+          SmokingPreference: 0,
+          Supplements: null,
+          Price: {
+            CurrencyCode: Price.CurrencyCode,
+            RoomPrice: Price.RoomPrice,
+            Tax: Price.Tax,
+            ExtraGuestCharge: Price.ExtraGuestCharge,
+            ChildCharge: Price.ChildCharge,
+            OtherCharges: Price.OtherCharges,
+            Discount: Price.Discount,
+            PublishedPrice: Price.PublishedPrice,
+            PublishedPriceRoundedOff: Price.PublishedPriceRoundedOff,
+            OfferedPrice: Price.OfferedPrice,
+            OfferedPriceRoundedOff: Price.OfferedPriceRoundedOff,
+            AgentCommission: Price.AgentCommission,
+            AgentMarkUp: Price.AgentMarkUp,
+            TDS: Price.TDS,
+          },
+        },
+      ],
+      EndUserIp: EndUserIp,
+      TokenId: TokenId,
+      TraceId: TraceId,
+    };
+    // console.log(secondPayloadObject);
+    console.log(secondPayloadObject);
+    console.log('secondPayloadObject');
+
+    setSecondPayload(secondPayloadObject);
+    setFooterRoomPrice(roomPrice);
+    setFooterPriceRoundedOff(roundOffPrice);
+    setFooterTaxableAmount(taxableAmount);
+  };
+  // console.log(PayLoad);
   React.useEffect(() => {
     const getData = async () => {
       try {
@@ -249,8 +346,8 @@ const SelectRoom = function ({navigation, route}) {
           },
         });
 
-        console.log(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
-        console.log('HotelRoomsDetails Response');
+        // console.log(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
+        // console.log('HotelRoomsDetails Response');
         setRoomList(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
       } catch (error) {
         console.log(error);
@@ -320,6 +417,20 @@ const SelectRoom = function ({navigation, route}) {
                     return (
                       <DetailCard
                         key={key}
+                        onPress={() =>
+                          setFooterState(
+                            val.Price.RoomPrice,
+                            val.Price.PublishedPriceRoundedOff,
+                            val.Price.GST.TaxableAmount,
+                            // Second PayLoad Data
+                            val.RoomIndex,
+                            val.RoomTypeCode,
+                            val.RoomTypeName,
+                            val.RatePlanCode,
+                            val.SmokingPreference,
+                            val.Price,
+                          )
+                        }
                         RoomTypeName={val.RoomTypeName}
                         RoomPromotion={replaceSymbols(val.RoomPromotion, ' ')}
                         SmokingPreference={val.SmokingPreference}
@@ -339,75 +450,82 @@ const SelectRoom = function ({navigation, route}) {
           </View>
         </ScrollView>
       </View>
-      <View
-        style={{
-          position: 'relative',
-          bottom: -6,
-          width: '100%',
-          height: 50,
-          backgroundColor: '#fffff',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: 6,
-        }}>
-        <View style={{padding: 4, paddingTop: 2}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View>
-              <Text style={{fontSize: 26, color: '#ff8900', fontWeight: 900}}>
-                ₹2343
-              </Text>
-            </View>
-            <View style={{marginLeft: 4, flexDirection: 'row'}}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  textDecorationLine: 'line-through',
-                  color: '#666666',
-                  fontWeight: 500,
-                }}>
-                ₹4543
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 2,
-                  fontSize: 20,
-                  color: '#666666',
-                  fontWeight: 500,
-                }}>
-                Per Night
-              </Text>
-            </View>
-          </View>
-          <View>
-            <Text
-              style={{
-                fontSize: 15,
-                color: '#666666',
-                fontWeight: 500,
-              }}>
-              +565 Taxes & Fees
-            </Text>
-          </View>
-        </View>
+      {footerRoomPrice ? (
         <View
           style={{
+            position: 'relative',
+            bottom: -6,
+            width: '100%',
+            height: 50,
+            backgroundColor: '#fffff',
+            flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'center',
-            padding: 8,
-            margin: 4,
-            backgroundColor: '#006fff',
-            height: 42,
-            borderRadius: 18,
+            justifyContent: 'space-between',
+            padding: 6,
           }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ReviewBooking')}>
-            <Text style={{fontSize: 20, fontWeight: '500', color: '#ffff'}}>
-              Select Room
-            </Text>
-          </TouchableOpacity>
+          <View style={{padding: 4, paddingTop: 2}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View>
+                <Text style={{fontSize: 26, color: '#ff8900', fontWeight: 900}}>
+                  ₹{footerRoomPrice ? footerRoomPrice : 'loding...'}
+                </Text>
+              </View>
+              <View style={{marginLeft: 4, flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    textDecorationLine: 'line-through',
+                    color: '#666666',
+                    fontWeight: 500,
+                  }}>
+                  ₹{footerPriceRoundedOff ? footerPriceRoundedOff : 'loding...'}
+                </Text>
+                <Text
+                  style={{
+                    marginLeft: 2,
+                    fontSize: 20,
+                    color: '#666666',
+                    fontWeight: 500,
+                  }}>
+                  Per Night
+                </Text>
+              </View>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: '#666666',
+                  fontWeight: 500,
+                }}>
+                +{footerTaxableAmount ? footerTaxableAmount : 'loding...'} Taxes
+                & Fees
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 8,
+              margin: 4,
+              backgroundColor: '#006fff',
+              height: 42,
+              borderRadius: 18,
+            }}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ReviewBooking', {
+                  payLoad: secondPayload,
+                })
+              }>
+              <Text style={{fontSize: 20, fontWeight: '500', color: '#ffff'}}>
+                Select Room
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      ) : null}
     </View>
   );
 };
