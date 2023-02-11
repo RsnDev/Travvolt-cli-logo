@@ -27,7 +27,7 @@ const ReviewBooking = function ({navigation, route}) {
   const [dotRadio, setDotRadio] = React.useState(false);
 
   const [selectGender, setSelectGender] = React.useState('Mr');
-  const [firstName, setFirstName] = React.useState('First Name');
+  const [firstName, setFirstName] = React.useState('');
   const [secondName, setSecondName] = React.useState('Second Name');
   const [email, setEmail] = React.useState('Enter Your Email');
   const [phoneNumber, setPhoneNumber] = React.useState(9999999999);
@@ -45,17 +45,11 @@ const ReviewBooking = function ({navigation, route}) {
             },
           },
         });
-
-        console.log(response.data);
-        console.log('reviewBooking Response');
-        // setRoomList(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
       } catch (error) {
         console.log(error);
       }
     };
     getData();
-    console.log(payLoad);
-    console.log('reviewBooking');
   }, [payLoad]);
 
   return (
@@ -1215,14 +1209,6 @@ const ReviewBooking = function ({navigation, route}) {
                   }}>
                   <TouchableOpacity
                     onPress={() => {
-                      if (
-                        !email.length < 0 &&
-                        !firstName.length < 0 &&
-                        !secondName.length < 0 &&
-                        !phoneNumber.length < 0
-                      ) {
-                        return alert('Please Enter Valid Credentials');
-                      }
                       var options = {
                         description: 'Credits towards consultation',
                         image: 'https://i.imgur.com/3g7nmJC.jpg',

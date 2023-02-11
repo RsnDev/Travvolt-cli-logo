@@ -200,45 +200,6 @@ let DetailCard = function (props) {
 };
 
 const SelectRoom = function ({navigation, route}) {
-  const passPayLoad = {
-    // ResultIndex: '2', // Payload
-    // HotelCode: '901764', // From Hotel Detail page
-    // HotelName: 'Tulip Inn Amsterdam Riverside', // From Hotel Detail page
-    // GuestNationality: 'IN', // default
-    // NoOfRooms: '1', // default
-    // ClientReferenceNo: '0',
-    // IsVoucherBooking: 'true',
-    HotelRoomsDetails: [
-      {
-        // RoomIndex: '1', //// from GetHotelRoom Data
-        // RoomTypeCode: 'SB|0|0|1', //// from GetHotelRoom Data
-        // RoomTypeName: 'Standard Single', //// from GetHotelRoom Data
-        // RatePlanCode: '001:TUL5:18178:S17929:24963:98679|1', //// from GetHotelRoom Data
-        // BedTypeCode: null,
-        // SmokingPreference: 0, //// from GetHotelRoom Data
-        // Supplements: null,
-        Price: {
-          CurrencyCode: 'INR',
-          RoomPrice: '4620.0',
-          Tax: '0.0',
-          ExtraGuestCharge: '0.0',
-          ChildCharge: '0.0',
-          OtherCharges: '0.0',
-          Discount: '0.0',
-          PublishedPrice: '4620.0',
-          PublishedPriceRoundedOff: '4620',
-          OfferedPrice: '4620.0',
-          OfferedPriceRoundedOff: '4620',
-          AgentCommission: '0.0',
-          AgentMarkUp: '0.0',
-          TDS: '0.0',
-        },
-      },
-    ],
-    EndUserIp: '103.154.247.253',
-    TokenId: '17e880a0-2d00-474b-be5b-d26054f19421',
-    TraceId: 'ace4e31b-590a-45ff-a92d-56f41a3de312',
-  };
   const [secondPayload, setSecondPayload] = React.useState({});
   const PayLoad = route.params.payLoad;
 
@@ -250,17 +211,10 @@ const SelectRoom = function ({navigation, route}) {
     return inputString;
   }
 
-  console.log(PayLoad);
-  console.log('Select Room PayLoad');
-
-  // const HotelName = 'New Hotel Diamond Blue';
   const HotelName = route.params.HotelName;
   const Address = route.params.Address;
   const StarRating = route.params.StarRating;
   const HotelFacilities = route.params.HotelFacilities;
-
-  console.log(HotelName);
-  console.log('Select Room HotelName');
 
   const {ResultIndex, HotelCode, TokenId, TraceId, EndUserId} = PayLoad;
   const [roomList, setRoomList] = React.useState([]);
@@ -319,16 +273,12 @@ const SelectRoom = function ({navigation, route}) {
       TokenId: TokenId,
       TraceId: TraceId,
     };
-    // console.log(secondPayloadObject);
-    console.log(secondPayloadObject);
-    console.log('secondPayloadObject');
 
     setSecondPayload(secondPayloadObject);
     setFooterRoomPrice(roomPrice);
     setFooterPriceRoundedOff(roundOffPrice);
     setFooterTaxableAmount(taxableAmount);
   };
-  // console.log(PayLoad);
   React.useEffect(() => {
     const getData = async () => {
       try {
@@ -348,11 +298,6 @@ const SelectRoom = function ({navigation, route}) {
             },
           },
         });
-        console.log(response);
-        console.log('Selectroom enter Function');
-
-        console.log(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
-        console.log('HotelRoomsDetails Response');
         setRoomList(response.data.data.GetHotelRoomResult.HotelRoomsDetails);
       } catch (error) {
         console.log(error);

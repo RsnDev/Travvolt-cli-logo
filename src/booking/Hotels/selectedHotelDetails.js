@@ -2,19 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
-  StatusBar,
   View,
   Dimensions,
   TouchableOpacity,
   Image,
   ImageBackground,
-  ToastAndroid,
   ScrollView,
-  Button,
 } from 'react-native';
 import axios from 'axios';
-import HTML from 'react-native-render-html';
-import Footer from '../../component/hotelfooter';
 import Header from '../../component/header';
 const {width, height} = Dimensions.get('window');
 
@@ -39,8 +34,6 @@ const InfoBox = function (props) {
 
 const SelectedHotelDetails = ({navigation, route}) => {
   const PayLoad = route.params.payLoad;
-  console.log(PayLoad);
-  console.log('SelectHotel Detail Page Payload');
   const {ResultIndex, HotelCode, TokenId, TraceId, EndUserId} = PayLoad;
   const hotelPriceDetail = route.params.hotelPriceDetail;
   const [printData, setPrintData] = React.useState(hotelPriceDetail);
@@ -64,12 +57,6 @@ const SelectedHotelDetails = ({navigation, route}) => {
             },
           },
         });
-        console.log(response.data.data.HotelInfoResult.HotelDetails);
-        console.log('SelectHotel Detail Page Response');
-        // console.log(response.data.HotelInfoResult.TraceId);
-        // console.log('SelectHotel Detail Page TraceId');
-        // console.log(response.data.HotelInfoResult.HotelDetails.HotelName);
-        // console.log('SelectHotel Detail Page HotelName');
 
         const responseData = response.data.data.HotelInfoResult.HotelDetails;
         const description =
