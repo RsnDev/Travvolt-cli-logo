@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 
-const SignIn = () => {
+const SignIn = function ({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -46,6 +46,7 @@ const SignIn = () => {
       });
 
       // Navigate to the home screen
+      navigation.navigate('Onboarding');
     } catch (error) {
       console.error(error);
       setError('An error occurred while signing in');

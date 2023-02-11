@@ -7,9 +7,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import axios from 'axios';
-import {isExperimentalWebImplementationEnabled} from 'react-native-gesture-handler/lib/typescript/EnableExperimentalWebImplementation';
 
-const SignUp = () => {
+const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -62,6 +61,7 @@ const SignUp = () => {
       });
       setError('');
       // Navigate to the home screen
+      navigation.navigate('Onboarding');
     } catch (error) {
       console.error(error);
       setError('An error occurred while signing up');
