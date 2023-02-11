@@ -7,13 +7,15 @@ import {
   StyleSheet,
 } from 'react-native';
 import axios from 'axios';
+import {isExperimentalWebImplementationEnabled} from 'react-native-gesture-handler/lib/typescript/EnableExperimentalWebImplementation';
 
-const SignIn = () => {
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSignIn = async () => {
+  const handleSignUp = async () => {
     // Validate the input fields
     if (!email) {
       setError('Email is required');
@@ -23,6 +25,10 @@ const SignIn = () => {
       setError('Password is required');
       return;
     }
+    if (!confirmPassword) {
+      setError('Confirm password is required');
+      return;
+    }
     // Validate the email format
     const emailRegex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -30,7 +36,16 @@ const SignIn = () => {
       setError('Email is not valid');
       return;
     }
-    // Call API to sign in with the provided email and password
+    // Validate the password
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Password and confirm password do not match');
+      return;
+    }
+    // Call API to check if email already exists
     try {
       const response = await axios.get(
         `https://jsonplaceholder.typicode.com/users?email=${email}`,
@@ -40,15 +55,16 @@ const SignIn = () => {
         setError('Email is already taken');
         return;
       }
+      // Call the API to create the user with the provided email and password
       await axios.post(`https://jsonplaceholder.typicode.com/users`, {
         email,
         password,
       });
-
+      setError('');
       // Navigate to the home screen
     } catch (error) {
       console.error(error);
-      setError('An error occurred while signing in');
+      setError('An error occurred while signing up');
     }
   };
 
@@ -57,24 +73,31 @@ const SignIn = () => {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        onChangeText={text => setEmail(text)}
+        keyboardType="email-address"
         value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        onChangeText={text => setPassword(text)}
         value={password}
+        onChangeText={setPassword}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="confirmPassword"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
       />
       {error && <Text style={styles.error}>{error}</Text>}
-      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-        <Text style={styles.buttonText}>Sign In</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+        <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignIn;
+export default SignUp;
