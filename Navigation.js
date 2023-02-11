@@ -29,6 +29,7 @@ import SearchHotel from './src/booking/Hotels/searchHotel';
 import SelectedHotelDetails from './src/booking/Hotels/selectedHotelDetails';
 import SelectRoom from './src/booking/Hotels/selectRoom';
 import ReviewBooking from './src/booking/Hotels/reviewBooking';
+import SignIn from './src/screens/Main_Home_Screens/SignIn';
 
 import MHome from './src/screens/Main_Home_Screens/home';
 import Dummy from './src/screens/Main_Home_Screens/Dummy';
@@ -38,8 +39,9 @@ const Navigation = () => {
     <NavigationContainer ref={createRef()}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {/* <Stack.Screen name="SelectRoom" component={SelectRoom} /> */}
+        <Stack.Screen name="SignIn" component={SignIn} />
 
-        <Stack.Screen name="Onboarding" component={Onboarding} />
+        {/* <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
@@ -74,7 +76,7 @@ const Navigation = () => {
           component={SelectedHotelDetails}
         />
         <Stack.Screen name="SelectRoom" component={SelectRoom} />
-        <Stack.Screen name="ReviewBooking" component={ReviewBooking} />
+        <Stack.Screen name="ReviewBooking" component={ReviewBooking} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
