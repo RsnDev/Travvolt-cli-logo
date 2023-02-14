@@ -4,11 +4,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  AsyncStorage,
   StyleSheet,
 } from 'react-native';
 import axios from 'axios';
 
-const SignIn = function ({navigation}) {
+const SignIn = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -30,26 +31,26 @@ const SignIn = function ({navigation}) {
       setError('Email is not valid');
       return;
     }
+    // Validate the password
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
     // Call API to sign in with the provided email and password
     try {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/users?email=${email}`,
+      const response = await axios.post(
+        `https://jsonplaceholder.typicode.com/session`,
+        {email, password},
       );
       const data = response.data;
-      if (data.length > 0) {
-        setError('Email is already taken');
-        return;
-      }
-      await axios.post(`https://jsonplaceholder.typicode.com/users`, {
-        email,
-        password,
-      });
-
+      // Store the user data in AsyncStorage
+      await AsyncStorage.setItem('user', JSON.stringify(data));
+      setError('');
       // Navigate to the home screen
-      navigation.navigate('Onboarding');
+      navigation.navigate('Home');
     } catch (error) {
       console.error(error);
-      setError('An error occurred while signing in');
+      setError('Email or password is incorrect');
     }
   };
 
@@ -58,19 +59,23 @@ const SignIn = function ({navigation}) {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        onChangeText={text => setEmail(text)}
+        keyboardType="email-address"
         value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        onChangeText={text => setPassword(text)}
         value={password}
+        onChangeText={setPassword}
       />
-      {error && <Text style={styles.error}>{error}</Text>}
+      {error ? <Text style={styles.error}>{error}</Text> : null}
       <TouchableOpacity style={styles.button} onPress={handleSignIn}>
         <Text style={styles.buttonText}>Sign In</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+        <Text style={{color: 'blue'}}>I don't have an account</Text>
       </TouchableOpacity>
     </View>
   );
@@ -79,17 +84,17 @@ const SignIn = function ({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    alignItems: 'center',
   },
   input: {
+    width: '80%',
     height: 40,
-    width: '100%',
+    padding: 10,
+    margin: 10,
     borderColor: 'gray',
     borderWidth: 1,
-    marginVertical: 10,
-    paddingHorizontal: 10,
+    borderRadius: 5,
   },
   button: {
     backgroundColor: 'blue',
@@ -100,11 +105,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
   },
   error: {
     color: 'red',
-    marginTop: 10,
+    margin: 10,
   },
 });
 

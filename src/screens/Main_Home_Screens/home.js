@@ -198,16 +198,18 @@ const MHome = ({navigation}) => {
               justifyContent: 'center',
               borderRadius: 6,
             }}>
-            <Text
-              style={{
-                fontSize: 16,
-                marginLeft: 5,
-                alignContent: 'center',
-                color: 'white',
-                fontWeight: '500',
-              }}>
-              SignIN
-            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  marginLeft: 5,
+                  alignContent: 'center',
+                  color: 'white',
+                  fontWeight: '500',
+                }}>
+                SignIN
+              </Text>
+            </TouchableOpacity>
           </View>
 
           {/* for hotel & flight */}

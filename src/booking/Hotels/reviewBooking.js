@@ -7,6 +7,7 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  AsyncStorage,
   Image,
   ScrollView,
 } from 'react-native';
@@ -1208,31 +1209,39 @@ const ReviewBooking = function ({navigation, route}) {
                     borderRadius: 15,
                   }}>
                   <TouchableOpacity
-                    onPress={() => {
-                      var options = {
-                        description: 'Credits towards consultation',
-                        image: 'https://i.imgur.com/3g7nmJC.jpg',
-                        currency: 'INR',
-                        key: 'rzp_test_czVP739sBN5blU',
-                        amount: '5000',
-                        name: 'Acme Corp',
-                        order_id: 'order_DslnoIgkIDL8Zt', //Replace this with an order_id created using Orders API.
-                        prefill: {
-                          email: email,
-                          contact: phoneNumber,
-                          name: `${firstName}${secondName}`,
-                        },
-                        theme: {color: '#53a20e'},
-                      };
-                      RazorpayCheckout.open(options)
-                        .then(data => {
-                          // handle success
-                          alert(`Success: ${data.razorpay_payment_id}`);
-                        })
-                        .catch(error => {
-                          // handle failure
-                          alert(`Error: ${error.code} | ${error.description}`);
-                        });
+                    onPress={async () => {
+                      console.log('asmdlasmdlasmdlakms');
+
+                      const checkUser = await AsyncStorage.getItem('user');
+                      if (!checkUser) {
+                        console.log('asmdlasmdlasmdlakms');
+                        // navigation.navigate('SignIn');
+                      } else {
+                        var options = {
+                          description: 'Credits towards consultation',
+                          image: 'https://i.imgur.com/3g7nmJC.jpg',
+                          currency: 'INR',
+                          key: 'rzp_test_czVP739sBN5blU',
+                          amount: '5000',
+                          name: 'Acme Corp',
+                          order_id: 'order_DslnoIgkIDL8Zt',
+                          prefill: {
+                            email: email,
+                            contact: phoneNumber,
+                            name: `${firstName} ${secondName}`,
+                          },
+                          theme: {color: '#53a20e'},
+                        };
+                        RazorpayCheckout.open(options)
+                          .then(data => {
+                            alert(`Success: ${data.razorpay_payment_id}`);
+                          })
+                          .catch(error => {
+                            alert(
+                              `Error: ${error.code} | ${error.description}`,
+                            );
+                          });
+                      }
                     }}>
                     <Text
                       style={{

@@ -31,6 +31,9 @@ import SelectRoom from './src/booking/Hotels/selectRoom';
 import ReviewBooking from './src/booking/Hotels/reviewBooking';
 import SignIn from './src/screens/Main_Home_Screens/SignIn';
 import SignUp from './src/screens/Main_Home_Screens/signUp';
+import RoomGuestsModal from './src/component/rooms-guests';
+import SearchHoliday from './src/booking/holidayPackages/searchHoliday';
+import ResultHolidayPackages from './src/booking/holidayPackages/resultHolidayPackages';
 
 import MHome from './src/screens/Main_Home_Screens/home';
 import Dummy from './src/screens/Main_Home_Screens/Dummy';
@@ -40,10 +43,11 @@ const Navigation = () => {
     <NavigationContainer ref={createRef()}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {/* <Stack.Screen name="SelectRoom" component={SelectRoom} /> */}
-        {/* <Stack.Screen name="SignIn" component={SignIn} /> */}
-        <Stack.Screen name="SignUp" component={SignUp} />
+        {/* <Stack.Screen name="SearchHoliday" component={SearchHoliday} /> */}
 
         {/* <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
@@ -54,6 +58,7 @@ const Navigation = () => {
           name="HotelInternational"
           component={HotelInternational}
         />
+        <Stack.Screen name="RoomGuestsModal" component={RoomGuestsModal} />
         <Stack.Screen name="TnB" component={TnB} />
         <Stack.Screen name="BookTrain" component={BookTrain} />
         <Stack.Screen name="BookBus" component={BookBus} />
@@ -79,6 +84,13 @@ const Navigation = () => {
         />
         <Stack.Screen name="SelectRoom" component={SelectRoom} />
         <Stack.Screen name="ReviewBooking" component={ReviewBooking} /> */}
+
+        {/* holidayPackages */}
+        {/* <Stack.Screen name="SearchHoliday" component={SearchHoliday} /> */}
+        <Stack.Screen
+          name="ResultHolidayPackages"
+          component={ResultHolidayPackages}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

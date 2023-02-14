@@ -509,7 +509,7 @@ const HolidayPackages = ({navigation}) => {
                     fontSize: 13,
                     fontWeight: '600',
                     margin: 3,
-                    marginRight: 8,
+                    // marginRight: 8,
                     marginRight: 15,
                     marginLeft: 15,
                   }}>
@@ -541,7 +541,7 @@ const HolidayPackages = ({navigation}) => {
                     fontSize: 13,
                     fontWeight: '600',
                     margin: 3,
-                    marginRight: 8,
+                    // marginRight: 8,
                     marginRight: 15,
                     marginLeft: 15,
                   }}>
@@ -573,7 +573,7 @@ const HolidayPackages = ({navigation}) => {
                     fontSize: 13,
                     fontWeight: '600',
                     margin: 3,
-                    marginRight: 8,
+                    // marginRight: 8,
                     marginRight: 15,
                     marginLeft: 15,
                   }}>
