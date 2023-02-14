@@ -33,6 +33,8 @@ const SearchHoliday = ({route, navigation}) => {
   const TokenIdd = data?.data;
 
   console.log(TokenIdd);
+  console.log('TokenIdd');
+
   const [visible, setVisible] = useState(false);
 
   const [ip, setIp] = useState('');

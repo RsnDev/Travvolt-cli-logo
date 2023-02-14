@@ -153,7 +153,7 @@ const MHome = ({navigation}) => {
         method: 'post',
         url: 'https://api.travvolt.com/travvolt/token',
         data: payload,
-        confif: {
+        config: {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -164,6 +164,39 @@ const MHome = ({navigation}) => {
 
         ToastAndroid.show('HotelSearch', ToastAndroid.SHORT);
         navigation.navigate('Hotels', {data: response, ip: ip});
+      });
+    } catch (error) {
+      setVisible(false);
+      ToastAndroid.show(
+        'check your Internet connection',
+        //  error?.response?.data?.message + "!",
+        ToastAndroid.SHORT,
+      );
+    }
+  };
+
+  const navigateToModule = async function (moduleName, pageName) {
+    setVisible(true);
+
+    let payload = {
+      EndUserIp: ip,
+    };
+    try {
+      await axios({
+        method: 'post',
+        url: 'https://api.travvolt.com/travvolt/token',
+        data: payload,
+        config: {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      }).then(res => {
+        const response1 = res.data;
+        const response = response1.data.TokenId;
+
+        ToastAndroid.show(moduleName, ToastAndroid.SHORT);
+        navigation.navigate(pageName, {data: response, ip: ip});
       });
     } catch (error) {
       setVisible(false);
@@ -325,7 +358,9 @@ const MHome = ({navigation}) => {
 
               {/* Holidays And packages */}
               <TouchableOpacity
-                onPress={() => navigation.navigate('HolidayPackages')}>
+                onPress={() =>
+                  navigateToModule('HolidayPackage', 'SearchHoliday')
+                }>
                 <View
                   elevation={10}
                   style={{
