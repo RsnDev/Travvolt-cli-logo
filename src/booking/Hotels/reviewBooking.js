@@ -19,6 +19,10 @@ const {width, height} = Dimensions.get('window');
 
 const ReviewBooking = function ({navigation, route}) {
   const payLoad = route.params.payLoad;
+  const roomPrice = route.params.roomPrices;
+  console.log(roomPrice);
+  console.log('roomPrice Review Booking');
+
   const HotelName = route.params.HotelName;
   const Address = route.params.Address;
   const StarRating = route.params.StarRating;
@@ -191,7 +195,7 @@ const ReviewBooking = function ({navigation, route}) {
                   style={{
                     marginTop: 10,
                     fontSize: 20,
-                    fontWeight: '600',
+                    fontWeight: '700',
                     color: '#252525',
                   }}>
                   HotelFacilities
@@ -203,7 +207,12 @@ const ReviewBooking = function ({navigation, route}) {
                       return (
                         <Text
                           key={index}
-                          style={{fontSize: 15, fontWeight: '900', padding: 4}}>
+                          style={{
+                            fontSize: 15,
+                            fontWeight: '600',
+                            color: '#252525',
+                            padding: 4,
+                          }}>
                           {`\u25CF ${val}`}
                         </Text>
                       );
@@ -300,7 +309,7 @@ const ReviewBooking = function ({navigation, route}) {
                       fontWeight: '600',
                       color: '#404040',
                     }}>
-                    ₹12,040
+                    ₹{roomPrice.RoomPrice}
                   </Text>
                 </View>
                 <View
@@ -322,7 +331,7 @@ const ReviewBooking = function ({navigation, route}) {
                       fontWeight: '600',
                       color: '#ff8900',
                     }}>
-                    -₹6,840
+                    -₹{roomPrice.Discount}
                   </Text>
                 </View>
                 <View
@@ -344,7 +353,7 @@ const ReviewBooking = function ({navigation, route}) {
                       fontWeight: '600',
                       color: '#006fff',
                     }}>
-                    ₹5,237
+                    ₹{roomPrice.RoomPrice - roomPrice.Discount}
                   </Text>
                 </View>
                 <View
@@ -366,7 +375,10 @@ const ReviewBooking = function ({navigation, route}) {
                       fontWeight: '600',
                       color: '#000000',
                     }}>
-                    ₹1,333
+                    ₹
+                    {roomPrice.RoomPrice -
+                      roomPrice.Discount +
+                      roomPrice.GST.TaxableAmount}
                   </Text>
                 </View>
                 <View
@@ -449,7 +461,10 @@ const ReviewBooking = function ({navigation, route}) {
                       fontWeight: '600',
                       color: '#ff8900',
                     }}>
-                    ₹12,040
+                    ₹
+                    {roomPrice.RoomPrice -
+                      roomPrice.Discount +
+                      roomPrice.GST.TaxableAmount}
                   </Text>
                 </View>
               </View>
@@ -1054,7 +1069,7 @@ const ReviewBooking = function ({navigation, route}) {
                   </View>
                 </View>
               </View>
-              <View>
+              {/* <View>
                 <View
                   elevation={7}
                   style={{
@@ -1187,7 +1202,7 @@ const ReviewBooking = function ({navigation, route}) {
                     </View>
                   </View>
                 </View>
-              </View>
+              </View> */}
               <View style={{padding: 4}}>
                 <Text
                   style={{

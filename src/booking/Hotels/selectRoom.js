@@ -222,6 +222,7 @@ const SelectRoom = function ({navigation, route}) {
   const [footerRoomPrice, setFooterRoomPrice] = React.useState('');
   const [footerPriceRoundedOff, setFooterPriceRoundedOff] = React.useState('');
   const [footerTaxableAmount, setFooterTaxableAmount] = React.useState('');
+  const [selectedRoomPrice, setSelectedRoomPrice] = React.useState({});
 
   const setFooterState = function (
     roomPrice,
@@ -234,6 +235,8 @@ const SelectRoom = function ({navigation, route}) {
     SmokingPreference,
     Price,
   ) {
+    setSelectedRoomPrice(Price);
+
     const secondPayloadObject = {
       ResultIndex: ResultIndex,
       HotelCode: HotelCode,
@@ -273,7 +276,6 @@ const SelectRoom = function ({navigation, route}) {
       TokenId: TokenId,
       TraceId: TraceId,
     };
-
     setSecondPayload(secondPayloadObject);
     setFooterRoomPrice(roomPrice);
     setFooterPriceRoundedOff(roundOffPrice);
@@ -471,6 +473,7 @@ const SelectRoom = function ({navigation, route}) {
                   Address: Address,
                   StarRating: StarRating,
                   HotelFacilities: HotelFacilities,
+                  roomPrices: selectedRoomPrice,
                 })
               }>
               <Text style={{fontSize: 20, fontWeight: '500', color: '#ffff'}}>
