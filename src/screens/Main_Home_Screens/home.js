@@ -327,7 +327,7 @@ const MHome = ({navigation}) => {
               </TouchableOpacity>
 
               {/*  buses */}
-              <TouchableOpacity onPress={() => navigation.navigate('TnB')}>
+              <TouchableOpacity onPress={() => navigation.navigate('BusHome')}>
                 <View
                   elevation={10}
                   style={{
