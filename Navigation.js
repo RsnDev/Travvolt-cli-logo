@@ -35,6 +35,11 @@ import RoomGuestsModal from './src/component/rooms-guests';
 import SearchHoliday from './src/booking/holidayPackages/searchHoliday';
 import ResultHolidayPackages from './src/booking/holidayPackages/resultHolidayPackages';
 
+import Bus from './src/booking/Bus/busHomePage';
+import BusSearch from './src/booking/Bus/busSearch';
+import BusDetails from './src/booking/Bus/busDetails';
+import BusReviewBooking from './src/booking/Bus/busReviewBooking';
+
 import MHome from './src/screens/Main_Home_Screens/home';
 import Dummy from './src/screens/Main_Home_Screens/Dummy';
 const Stack = createNativeStackNavigator();
@@ -81,7 +86,11 @@ const Navigation = () => {
         />
         <Stack.Screen name="SelectRoom" component={SelectRoom} />
         <Stack.Screen name="ReviewBooking" component={ReviewBooking} />
-
+        {/* Bus */}
+        <Stack.Screen name="BusHome" component={Bus} />
+        <Stack.Screen name="BusSearch" component={BusSearch} />
+        <Stack.Screen name="BusDetails" component={BusDetails} />
+        <Stack.Screen name="BusReviewBooking" component={BusReviewBooking} />
         {/* holidayPackages */}
         <Stack.Screen name="SearchHoliday" component={SearchHoliday} />
         <Stack.Screen

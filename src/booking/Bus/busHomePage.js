@@ -28,7 +28,7 @@ import {Picker} from '@react-native-picker/picker';
 
 const {width, height} = Dimensions.get('window');
 
-const SearchHoliday = ({route, navigation}) => {
+const Bus = ({route, navigation}) => {
   const data = route.params;
   const TokenIdd = data?.data;
 
@@ -211,474 +211,48 @@ const SearchHoliday = ({route, navigation}) => {
                 fontSize: 17,
                 fontWeight: '500',
               }}>
-              Holiday Packages
+              Bus
             </Text>
           </View>
-
-          {/* flight from  */}
-          <View
-            style={{
-              width: '85%',
-              marginTop: 15,
-              marginLeft: 28,
-              marginRight: 28,
-              marginBottom: 25,
-              height: 66,
-              borderRadius: 10,
-              backgroundColor: '#fff',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../../../assets/icon/location.png')}
-              style={{
-                width: 25,
-                height: 30,
-                marginLeft: 0,
-              }}
-            />
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <View
-                style={{
-                  flexDirection: 'column',
-                }}>
-                <Text
-                  style={{
-                    marginLeft: 9,
-                    marginTop: 3,
-                    fontWeight: '500',
-                  }}>
-                  From
-                </Text>
-                <View
-                  style={{
-                    height: 40,
-                    width: 270,
-                    backgroundColor: '#fff',
-                    fontSize: 16,
-                    borderRadius: 10,
-                    marginLeft: 9,
-                    flexDirection: 'column',
-                  }}>
-                  {selectedValue && (
-                    <Text
-                      style={{
-                        fontWeight: '500',
-                        fontSize: 15,
-                        marginLeft: 5,
-                      }}>
-                      {`${selectedValue.id} - ${selectedValue.name}`}
-                    </Text>
-                  )}
-                  {selectedValue && (
-                    <Text
-                      style={{
-                        fontWeight: '500',
-                        fontSize: 13,
-                        marginLeft: 5,
-                        color: '#4A4747',
-                      }}>
-                      {`${selectedValue.code}`}
-                    </Text>
-                  )}
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          {/* flight to  */}
-          <View
-            style={{
-              width: '85%',
-              marginTop: -10,
-              marginLeft: 28,
-              marginRight: 28,
-              marginBottom: 5,
-              height: 66,
-              borderRadius: 10,
-              backgroundColor: '#fff',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../../../assets/icon/location.png')}
-              style={{
-                width: 25,
-                height: 30,
-                marginLeft: 0,
-              }}
-            />
-            <TouchableOpacity onPress={() => setModlVisible(true)}>
-              <View
-                style={{
-                  flexDirection: 'column',
-                }}>
-                <Text
-                  style={{
-                    marginLeft: 9,
-                    marginTop: 3,
-                    fontWeight: '500',
-                  }}>
-                  To
-                </Text>
-                <View
-                  style={{
-                    height: 40,
-                    width: 270,
-                    backgroundColor: '#fff',
-                    fontSize: 16,
-                    borderRadius: 10,
-                    marginLeft: 9,
-                    flexDirection: 'column',
-                  }}>
-                  {selectdValue && (
-                    <Text
-                      style={{
-                        fontWeight: '500',
-                        fontSize: 15,
-                        marginLeft: 5,
-                      }}>
-                      {`${selectdValue.id} - ${selectdValue.name}`}
-                    </Text>
-                  )}
-                  {selectdValue && (
-                    <Text
-                      style={{
-                        fontWeight: '500',
-                        fontSize: 13,
-                        marginLeft: 5,
-                        color: '#4A4747',
-                      }}>
-                      {`${selectdValue.code}`}
-                    </Text>
-                  )}
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          {/* date */}
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '85%',
-              marginLeft: 38,
-              marginRight: 28,
-              marginTop: 12,
-              //  justifyContent: "space-around",
-            }}>
+          <TouchableOpacity onPress={() => navigation.navigate('BusSearch')}>
             <View
+              elevation={5}
               style={{
-                width: 153,
-                height: 66,
-                marginLeft: -10,
-                borderRadius: 10,
-                backgroundColor: '#fff',
+                margin: 10,
+                borderRadius: 6,
+                padding: 6,
+                backgroundColor: '#ffff',
                 flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
               }}>
-              <Image
-                source={require('../../../assets/logo/clndr.png')}
-                style={{
-                  width: 25,
-                  height: 25,
-                  marginLeft: 15,
-                  marginTop: 20,
-                }}
-              />
-
-              <TouchableOpacity onPress={openDatePicker}>
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    marginLeft: 10,
-                    marginTop: 10,
-                  }}>
-                  <Text
-                    style={{
-                      marginLeft: 9,
-                      color: '#4A4747',
-                      fontWeight: '500',
-                    }}>
-                    Date
-                  </Text>
-
-                  <Text
-                    style={{
-                      marginLeft: 9,
-                      color: 'black',
-                      fontWeight: '500',
-                    }}>
-                    {selectedDat}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity
-              onPress={() => navigation.navigate('RoundTripFlight')}>
               <View
                 style={{
-                  width: 153,
-                  marginLeft: 25,
-                  height: 66,
-                  borderRadius: 10,
-                  backgroundColor: '#fff',
                   flexDirection: 'row',
-                  justifyContent: 'center',
                   alignItems: 'center',
+                  justifyContent: 'center',
                 }}>
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    marginLeft: 20,
-                  }}>
+                <View style={{margin: 6, width: 25, height: 25}}>
+                  <Image
+                    style={{width: '100%', height: '100%'}}
+                    source={require('../../../assets/logo/bus.png')}
+                  />
+                </View>
+                <View>
                   <Text
-                    style={{
-                      marginLeft: -15,
-                      color: '#2D70FF',
-                      fontWeight: '500',
-                    }}>
-                    +Add Return Date
-                  </Text>
-
-                  <Text
-                    style={{
-                      marginLeft: -15,
-                      color: '#707070',
-                      fontSize: 12,
-                      fontWeight: '500',
-                    }}>
-                    Save more on Round trip
+                    style={{fontSize: 18, color: '#252525', fontWeight: 700}}>
+                    Book Bus Tickets
                   </Text>
                 </View>
               </View>
-            </TouchableOpacity>
-          </View>
-
-          {/* travellers   */}
-          {/* <View
-            style={{
-              width: '85%',
-              marginLeft: 28,
-              marginRight: 28,
-              marginTop: 15,
-              height: 51,
-              borderRadius: 10,
-              backgroundColor: '#fff',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../../../assets/logo/guest.png')}
-              style={{
-                width: 25,
-                height: 20,
-                marginLeft: 0,
-              }}
-            />
-            <View
-              style={{
-                flexDirection: 'column',
-              }}>
-              <TouchableOpacity>
-                <Text
-                  style={{
-                    marginLeft: 9,
-                    color: '#4A4747',
-                    fontWeight: '500',
-                  }}>
-                  Adult
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View> */}
-
-          {/*  class  */}
-          {/* <View
-            style={{
-              width: '85%',
-              marginLeft: 28,
-              marginRight: 28,
-              marginTop: 15,
-              height: 51,
-              borderRadius: 10,
-              backgroundColor: '#fff',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={require('../../../assets/logo/guest.png')}
-              style={{
-                width: 25,
-                height: 20,
-                marginLeft: 0,
-              }}
-            />
-            <Picker
-              selectedValue={selectedClass}
-              style={{height: 60, width: 250}}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedClass(itemValue)
-              }>
-              <Picker.Item
-                label="All"
-                value="1"
-                style={{color: 'black', fontWeight: '900', fontSize: 16}}
-              />
-              <Picker.Item
-                label="Economy"
-                value="2"
-                style={{color: 'black', fontWeight: '900', fontSize: 16}}
-              />
-              <Picker.Item
-                label="Premium Economy"
-                value="3"
-                style={{color: 'black', fontWeight: '900', fontSize: 16}}
-              />
-              <Picker.Item
-                label="Business"
-                value="4"
-                style={{color: 'black', fontWeight: '900', fontSize: 16}}
-              />
-              <Picker.Item
-                label="Premium Business"
-                value="5"
-                style={{color: 'black', fontWeight: '900', fontSize: 16}}
-              />
-              <Picker.Item
-                label="First"
-                value="6"
-                style={{color: 'black', fontWeight: '900', fontSize: 16}}
-              />
-            </Picker>
-          </View> */}
-
-          {/* Special option */}
-          {/* <View
-            style={{
-              flexDirection: 'column',
-              height: 70,
-              marginTop: 16,
-            }}>
-            <Text
-              style={{
-                color: '#4A4747',
-                fontSize: 15,
-                fontWeight: '600',
-                marginLeft: 28,
-              }}>
-              Special option
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}>
-                <View
-                  style={{
-                    height: 32,
-                    marginTop: 10,
-                    marginLeft: 12,
-                    width: 140,
-                    backgroundColor: '#FF951A',
-                    borderRadius: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      color: '#fff',
-                      fontWeight: '500',
-                    }}>
-                    Regular Fare
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    height: 32,
-                    marginTop: 10,
-                    marginLeft: 12,
-                    width: 140,
-                    backgroundColor: '#FF951A',
-                    borderRadius: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      color: '#fff',
-                      fontWeight: '500',
-                    }}>
-                    Armed Forces Fare
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    height: 32,
-                    marginTop: 10,
-                    marginLeft: 12,
-                    width: 140,
-                    backgroundColor: '#FF951A',
-                    borderRadius: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      color: '#fff',
-                      fontWeight: '500',
-                    }}>
-                    BreakFast Includes
-                  </Text>
-                </View>
-              </ScrollView>
-            </View>
-          </View> */}
-
-          {/* button */}
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 10,
-            }}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ResultHolidayPackages')}
-              // onPress={searchflight}
-            >
-              <View
-                style={{
-                  height: 40,
-                  width: 284,
-                  backgroundColor: '#006FFF',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 30,
-                }}>
-                {/* {visible ? (
-                  <ActivityIndicator color="#fff" />
-                ) : ( */}
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontSize: 14,
-                    fontWeight: '500',
-                  }}>
-                  Search
-                </Text>
-                {/* )} */}
+              <View style={{margin: 6, width: 25, height: 25}}>
+                <Image
+                  style={{width: '100%', height: '100%'}}
+                  source={require('../../../assets/logo/frwrd.png')}
+                />
               </View>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
 
           {/* slider */}
           <View
@@ -920,4 +494,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-export default SearchHoliday;
+
+export default Bus;

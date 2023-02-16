@@ -57,7 +57,7 @@ const SelectedFlightDetails = ({navigation, route}) => {
       }
     };
     fetchData();
-  }, []);
+  }, [ResultIndex, token, traceId]);
 
   return (
     <View
@@ -600,6 +600,64 @@ const SelectedFlightDetails = ({navigation, route}) => {
             </View>
           </View>
         </ScrollView>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            height: 50,
+            backgroundColor: '#006fff',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: 6,
+          }}>
+          <View
+            style={{
+              margin: 4,
+              padding: 4,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View>
+              <Text style={{fontSize: 22, color: '#ffffff', fontWeight: 900}}>
+                ₹{response?.Fare?.PublishedFare}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: '#ffffff',
+                  fontWeight: 500,
+                }}>
+                For 1 Adult
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              width: 140,
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 8,
+              paddingHorizontal: 12,
+              margin: 4,
+              backgroundColor: '#ffffff',
+              height: 40,
+              borderRadius: 18,
+            }}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('PassengerFlightDetails', {
+                  data: responseData,
+                  response: response,
+                })
+              }>
+              <Text style={{fontSize: 20, fontWeight: '500', color: '#ffa236'}}>
+                Book Now
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ImageBackground>
     </View>
   );

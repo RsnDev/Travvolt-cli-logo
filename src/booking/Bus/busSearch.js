@@ -28,7 +28,7 @@ import {Picker} from '@react-native-picker/picker';
 
 const {width, height} = Dimensions.get('window');
 
-const SearchHoliday = ({route, navigation}) => {
+const BusSearch = ({route, navigation}) => {
   const data = route.params;
   const TokenIdd = data?.data;
 
@@ -102,15 +102,13 @@ const SearchHoliday = ({route, navigation}) => {
       const response3 = response2?.Results;
       const TraceId = response2?.TraceId;
       console.log(TraceId);
-      // console.log('TraceId', JSON.stringify(response2?.TraceId));
 
-      //  console.log('data===', response3);
       try {
         await AsyncStorage.setItem('trace', TraceId);
         const getTrace = await AsyncStorage.getItem('trace');
         console.log('trace : ', getTrace);
         ToastAndroid.show('Results', ToastAndroid.SHORT);
-        navigation.navigate('SearchFlights', {data: response3});
+        navigation.navigate('BusDetails', {data: response3});
       } catch (error) {
         console.log(error);
       }
@@ -211,7 +209,7 @@ const SearchHoliday = ({route, navigation}) => {
                 fontSize: 17,
                 fontWeight: '500',
               }}>
-              Holiday Packages
+              Bus Search
             </Text>
           </View>
 
@@ -652,9 +650,8 @@ const SearchHoliday = ({route, navigation}) => {
               marginTop: 10,
             }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('ResultHolidayPackages')}
-              // onPress={searchflight}
-            >
+              //  onPress={() => navigation.navigate("SearchFlights")}
+              onPress={searchflight}>
               <View
                 style={{
                   height: 40,
@@ -664,18 +661,18 @@ const SearchHoliday = ({route, navigation}) => {
                   alignItems: 'center',
                   borderRadius: 30,
                 }}>
-                {/* {visible ? (
+                {visible ? (
                   <ActivityIndicator color="#fff" />
-                ) : ( */}
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontSize: 14,
-                    fontWeight: '500',
-                  }}>
-                  Search
-                </Text>
-                {/* )} */}
+                ) : (
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontSize: 14,
+                      fontWeight: '500',
+                    }}>
+                    Search
+                  </Text>
+                )}
               </View>
             </TouchableOpacity>
           </View>
@@ -920,4 +917,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-export default SearchHoliday;
+
+export default BusSearch;
