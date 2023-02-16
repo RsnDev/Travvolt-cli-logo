@@ -730,8 +730,9 @@ const SearchHoliday = ({route, navigation}) => {
               marginTop: 10,
             }}>
             <TouchableOpacity
-              //  onPress={() => navigation.navigate("SearchFlights")}
-              onPress={searchflight}>
+              onPress={() => navigation.navigate('ResultHolidayPackages')}
+              // onPress={searchflight}
+            >
               <View
                 style={{
                   height: 40,
@@ -741,18 +742,18 @@ const SearchHoliday = ({route, navigation}) => {
                   alignItems: 'center',
                   borderRadius: 30,
                 }}>
-                {visible ? (
+                {/* {visible ? (
                   <ActivityIndicator color="#fff" />
-                ) : (
-                  <Text
-                    style={{
-                      color: '#fff',
-                      fontSize: 14,
-                      fontWeight: '500',
-                    }}>
-                    Search
-                  </Text>
-                )}
+                ) : ( */}
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: 14,
+                    fontWeight: '500',
+                  }}>
+                  Search
+                </Text>
+                {/* )} */}
               </View>
             </TouchableOpacity>
           </View>

@@ -1,60 +1,59 @@
-import React, { useState } from "react";
-
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
-  View,
   Text,
+  StatusBar,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Image,
   ImageBackground,
-  require,
-  TextInput,
-} from "react-native";
-import axios from "axios";
-import { debounce } from "lodash";
-//import App from "../../component/publicIp";
-const BookBus = ({ navigation }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState([]);
-
-  const handleSearch = debounce(async () => {
-    // const response = await fetch(
-    //   `https://api.example.com/search?term=${searchTerm}&key=YOUR_API_KEY`
-    // );
-    // const data = await response.json();
-    console.log();
-    setResults(data.results);
-  }, 500);
-
+  ToastAndroid,
+  ScrollView,
+} from 'react-native';
+const {width, height} = Dimensions.get('window');
+const BookBus = ({navigation}) => {
   return (
-    // <View>
-    //   <Text
-    //     style={{
-    //       fontSize: 30,
-    //       marginTop: 80,
-    //       alignContent: "center",
-    //     }}
-    //   >
-    //     Book Bus
-    //   </Text>
-    //   <View>{/* <App /> */}</View>
-    // </View>
-
     <View
       style={{
-        marginTop: 100,
-        backgroundColor: "yellow",
-      }}
-    >
-      <TextInput
-        placeholder="type here..."
-        value={searchTerm}
-        onChangeText={(text) => {
-          setSearchTerm(text);
-          handleSearch();
-        }}
-      />
-      {results.map((result) => (
-        <Text key={result.id}>{result.name}</Text>
-      ))}
+        height: height,
+        width: width,
+      }}>
+      <ImageBackground
+        source={require('../../../assets/image/bg.jpg')}
+        style={{height: height, width: width}}
+        resizeMode="stretch">
+        <ScrollView>
+          {/* header */}
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate("Holder")}> */}
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image
+                source={require('../../../assets/logo/back.png')}
+                style={{
+                  width: 19,
+                  height: 19,
+                  marginTop: 38,
+                  marginLeft: 14,
+                }}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                color: '#fff',
+                marginTop: 35,
+                marginLeft: 16,
+                fontSize: 17,
+                fontWeight: '500',
+              }}>
+              Bus Search
+            </Text>
+          </View>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
