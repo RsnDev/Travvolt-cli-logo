@@ -442,7 +442,9 @@ const PassengerFlightDetails = ({navigation, route}) => {
                 <Text>TERMINAL</Text>
               </View>
             </View>
-
+            <View style={{width: 100, height: 100, backgroundColor: 'red'}}>
+              <Text>Red</Text>
+            </View>
             {/* bag container */}
 
             <View

@@ -25,6 +25,8 @@ import Activities from './src/screens/Main_Home_Screens/Activities';
 import SearchFlights from './src/booking/Flights/searchFlight';
 import SelectedFlightDetails from './src/booking/Flights/selectedFlightDetails';
 import PassengerFlightDetails from './src/booking/Flights/PassengerFlightDetails';
+import FlightPayMentMode from './src/booking/Flights/flightPayMentMode.js';
+
 import SearchHotel from './src/booking/Hotels/searchHotel';
 import SelectedHotelDetails from './src/booking/Hotels/selectedHotelDetails';
 import SelectRoom from './src/booking/Hotels/selectRoom';
@@ -47,9 +49,9 @@ const Navigation = () => {
   return (
     <NavigationContainer ref={createRef()}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        {/* <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} /> */}
+        {/* <Stack.Screen name="Onboarding" component={Onboarding} />
+         <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} /> 
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
@@ -77,26 +79,28 @@ const Navigation = () => {
         <Stack.Screen
           name="PassengerFlightDetails"
           component={PassengerFlightDetails}
-        />
-        <Stack.Screen name="SearchHotel" component={SearchHotel} />
+        /> */}
+        <Stack.Screen name="FlightPayMentMode" component={FlightPayMentMode} />
+
+        {/* <Stack.Screen name="SearchHotel" component={SearchHotel} />
         <Stack.Screen name="Dummy" component={Dummy} />
         <Stack.Screen
           name="SelectedHotelDetails"
           component={SelectedHotelDetails}
         />
         <Stack.Screen name="SelectRoom" component={SelectRoom} />
-        <Stack.Screen name="ReviewBooking" component={ReviewBooking} />
+        <Stack.Screen name="ReviewBooking" component={ReviewBooking} /> */}
         {/* Bus */}
-        <Stack.Screen name="BusHome" component={Bus} />
+        {/* <Stack.Screen name="BusHome" component={Bus} />
         <Stack.Screen name="BusSearch" component={BusSearch} />
         <Stack.Screen name="BusDetails" component={BusDetails} />
-        <Stack.Screen name="BusReviewBooking" component={BusReviewBooking} />
+        <Stack.Screen name="BusReviewBooking" component={BusReviewBooking} /> */}
         {/* holidayPackages */}
-        <Stack.Screen name="SearchHoliday" component={SearchHoliday} />
+        {/* <Stack.Screen name="SearchHoliday" component={SearchHoliday} />
         <Stack.Screen
           name="ResultHolidayPackages"
           component={ResultHolidayPackages}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
