@@ -22,7 +22,7 @@ const SelectedFlightDetails = ({navigation, route}) => {
   const [response, setResponse] = useState(null);
   const [token, setToken] = useState(null);
   const [traceId, setTraceId] = useState(null);
-  console.log(ResultIndex);
+  // console.log(ResultIndex);
   useEffect(() => {
     const fetchData = async () => {
       try {

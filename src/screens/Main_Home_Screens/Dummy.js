@@ -62,8 +62,8 @@ const Dummy = ({navigation}) => {
   useEffect(() => {
     const requestBody = {
       EndUserIp: '103.154.247.218',
-      TokenId: '36caeebf-3780-4f0f-a6e4-cf3fe55b4e68',
-      TraceId: '7ab36c15-55b3-4712-ae88-c4606662e435',
+      TokenId: '93e860e8-c8d0-47f5-86a1-0b5fd1f02b94',
+      TraceId: '657acb13-cbef-4383-a357-7e5a2a85f313',
       ResultIndex: 'OB10',
     };
     axios
@@ -237,13 +237,27 @@ const Dummy = ({navigation}) => {
             {responseData?.map(data1 => {
               return data1?.map(data2 => {
                 const depTime = new Date(data2?.Origin?.DepTime);
-            const formattedDepTime = depTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-            const formatedDepTime = depTime.toLocaleDateString('default', {day: '2-digit', month: '2-digit', year: 'numeric'});   
-            const arrTime = new Date(data2?.Destination?.ArrTime);
-            const formattedArrTime = arrTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-            const formatedArrTime = arrTime.toLocaleDateString('default', {day: '2-digit', month: '2-digit', year: 'numeric'});              
-            
-            return (
+                const formattedDepTime = depTime.toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                });
+                const formatedDepTime = depTime.toLocaleDateString('default', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                });
+                const arrTime = new Date(data2?.Destination?.ArrTime);
+                const formattedArrTime = arrTime.toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                });
+                const formatedArrTime = arrTime.toLocaleDateString('default', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                });
+
+                return (
                   <View
                     style={{
                       justifyContent: 'space-around',

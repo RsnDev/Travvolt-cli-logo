@@ -49,9 +49,15 @@ const Navigation = () => {
   return (
     <NavigationContainer ref={createRef()}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
+<<<<<<< HEAD
         {/* <Stack.Screen name="Onboarding" component={Onboarding} />
          <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} /> 
+=======
+        <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+>>>>>>> refs/remotes/origin/master
         <Stack.Screen name="Holder" component={Holder} />
         <Stack.Screen name="Home" component={MHome} />
         <Stack.Screen name="OneWayFlight" component={OneWayFlight} />
